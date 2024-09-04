@@ -1,5 +1,13 @@
-.App {
+.search-box{
   text-align: center;
+} 
+.my-form{
+  align-items: center;
+  background-color: black;
+}
+
+.App {
+  /*text-align: center;*/
 }
 
 .App-logo {

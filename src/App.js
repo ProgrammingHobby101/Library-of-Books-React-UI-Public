@@ -1,29 +1,19 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+import { BookList } from './MyComponents/BookList.js';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header>
         <div>
-        <form action="/action_page.php">
+          <form>
             <label for="search">Search: </label>
             <input type="text" id="search" name="Search"/>
           </form>
         </div>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      <BookList/>
     </div>
   );
 }
