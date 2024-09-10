@@ -1,11 +1,12 @@
 .Book-Item {
     background-color: #fce305;
     min-height: 10px;
-    font-size: 0;
-    color: white;
+    border-style:groove; border-width:medium; border-color: #06b600;
+  }
+.book-info{
+    color:green;
   }
 .button{
-    display: inline-block;
     vertical-align: top;
   }
 .Book-Thumbnail{
@@ -13,7 +14,12 @@
     height: 8rem;
     width: 8rem;
     font-size: 0rem; 
-    vertical-align: bottom;
+    /* vertical-align: bottom; */
     /*left: 0px;*/
-    left: 5px;
+    left: 0px;
   }
+  .myText{
+    display: "block"; 
+    color: "black";
+     font-size: "0.5rem"; 
+    }
