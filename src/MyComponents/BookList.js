@@ -2,7 +2,7 @@ import { BookItem } from './BookItem.js';
 export function BookList() {
     var list = [];
     var myJSON = [{
-      "summary": "myTest",
+      "summary": "myTest1",
       "createdDate": "1,725,310,421,223",
       "reviewer": "Nicholas Donald",
       "rating": "3",
@@ -12,7 +12,7 @@ export function BookList() {
       "title": "myTestTitle1"
       },
       {
-          "summary": "myTest",
+          "summary": "myTest2",
           "createdDate": "1725311515699",
           "reviewer": "Nicholas Donald",
           "rating": "1",
@@ -33,7 +33,7 @@ export function BookList() {
       },];
 
     for(let x=0; x<myJSON.length; x++){//don't need because .map iterated through all of them
-      list.push(<BookItem bookJSON={myJSON[x]}/>);
+      list.push(<BookItem key={myJSON[x].id} bookJSON={myJSON[x]}/>);
       //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
     }
     

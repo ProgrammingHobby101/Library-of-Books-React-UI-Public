@@ -9,12 +9,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          <Route path="BookView" element={<BookView />} />
+          <Route path="BookView" element={<BookView/>} />
           <Route index element={<div className="App">
               <header>
                 <div>
                   <form className="my-form" >
-                    <label for="search">Search: </label>
+                    <label htmlFor="search">Search: </label>
                     <input className="search-box" type="text" id="search" name="Search"/>
                   </form>
                 </div>
