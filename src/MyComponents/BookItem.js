@@ -1,15 +1,34 @@
 import './BookItem.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
-export function BookItem(props) {
-    console.log("hello world title:"+props.bookJSON);
-    return (
-        <div className="Book-Item">
-                       
-            <img src={BookThumbnail} className="Book-Thumbnail" alt="BookThumbnail"></img>
-            <div className="myText">{props.bookJSON.title},{props.bookJSON.author}</div>
-            <button className="button" type="button">More Info...</button>
-            <button className="button" type="button">Delete</button>
-            
-        </div>
-    );
+import {useEffect, React} from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
+export function BookItem (props){
+    const navigate = useNavigate();
+    // componentDidMount() { 
+    //     console.log("hello world title:"+props.bookJSON);
+    //     props.setUserBookItem(props.bookJSON);
+    //     console.log("called setUserBookItem");
+    // }
+    useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount
+        console.log("hello world title:"+props.bookJSON);
+        props.setUserBookItem(props.bookJSON);
+        console.log("called setUserBookItem");
+      }, []);
+    function NavigateToBookView () {
+        console.log("called NavigateToBookView.");
+        navigate("/BookView");
+    }
+    
+        return (
+            <div className="Book-Item">
+                        
+                <img src={BookThumbnail} className="Book-Thumbnail" alt="BookThumbnail"></img>
+                <div className="myText">{props.bookJSON.title},{props.bookJSON.author}</div>
+                <button className="button" type="button" onClick={NavigateToBookView}>More Info...</button>
+                <button className="button" type="button">Delete</button>
+                
+            </div>
+        );
 }

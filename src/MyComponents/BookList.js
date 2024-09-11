@@ -1,5 +1,5 @@
 import { BookItem } from './BookItem.js';
-export function BookList() {
+export function BookList(props) {
     var list = [];
     var myJSON = [{
       "summary": "myTest",
@@ -33,7 +33,7 @@ export function BookList() {
       },];
 
     for(let x=0; x<myJSON.length; x++){//don't need because .map iterated through all of them
-      list.push(<BookItem bookJSON={myJSON[x]}/>);
+      list.push(<BookItem key={myJSON[x].id} bookJSON={myJSON[x]} setUserBookItem={props.setUserBookItem}/>);
       //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
     }
     
