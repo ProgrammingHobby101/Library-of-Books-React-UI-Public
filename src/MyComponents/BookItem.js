@@ -17,6 +17,7 @@ export function BookItem (props){
             console.log("hello world title:"+props.bookJSON);
             //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
           }//else do nothing
+          renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
          }, []);
     function NavigateToBookView () {
         console.log("called NavigateToBookView.");

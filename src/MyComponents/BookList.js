@@ -7,12 +7,12 @@ export function BookList (props) {
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
       if (!renderAfterCalled.current) { //only fetch once
-        renderAfterCalled.current = true;
         console.log("hello world fetch");
         fetch("https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?")
         .then((response) => response.json())
         .then((json) => { getList(json)});
       }//else do nothing
+      renderAfterCalled.current = true;
      }, []);
     // var myJSON = {};
     // var myJSONtest = [{
