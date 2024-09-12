@@ -1,0 +1,82 @@
+[
+    {
+        "summary": "Kids book about lion cub becoming king.",
+        "id": "2",
+        "reviewer": "Nicholas Donald",
+        "rating": "4",
+        "title": "Lion King",
+        "author": "Walt Disney, Don Ferguson"
+    },
+    {
+        "summary": "myTest",
+        "createdDate": "1725311515699",
+        "reviewer": "Nicholas Donald",
+        "rating": "1",
+        "modifiedDate": null,
+        "id": "8",
+        "author": "myTest",
+        "title": "myTest"
+    },
+    {
+        "summary": "myTest4",
+        "createdDate": "9/2/2024, 5:39:47 PM",
+        "reviewer": "Nicholas Donald",
+        "rating": "5",
+        "modifiedDate": "9/2/2024, 5:40:27 PM",
+        "id": "9",
+        "author": "myTest4",
+        "title": "myTest4"
+    },
+    {
+        "summary": "Kids book about egyptian king.",
+        "id": "1",
+        "reviewer": "Nicholas Donald",
+        "rating": "3",
+        "title": "Aladin",
+        "author": "Walt Disney, Don Ferguson"
+    },
+    {
+        "summary": "Collecting some of the most iconic tales from Mark Waid's run this first volume of the omnibus collection is one you cannot miss! Starting with a reimagining of the first meeting between Wally West and Barry Allen—and their first adventure together where Barry gives Wally his own Flash costume!",
+        "createdDate": "1725304952901",
+        "reviewer": "Nicholas Donald",
+        "rating": "5",
+        "modifiedDate": "Mon Sep 02 2024 19:58:51 GMT+0000 (Coordinated Universal Time)",
+        "id": "6",
+        "author": "Mark Waid, Graig Boldman, Gerard Jones, William Messner-Loebs, Len Strazewski",
+        "title": "The Flash Omnibus 1"
+    },
+    {
+        "summary": "Using the greatest material from his popular Blog Maverick, Cuban has collected and updated his postings on business and life to provide a catalog of insider knowledge on what it takes to become a thriving entrepreneur. He tells his own rags-to-riches story of how he went from selling powdered milk and sleeping on friends' couches to owning his own company and becoming a multibillion-dollar success story. His unconventional yet highly effective ideas on how to build a successful business offer entrepreneurs at any stage of their careers a huge edge over their competitors.",
+        "id": "5",
+        "reviewer": "Nicholas Donald",
+        "rating": "4",
+        "title": "How to Win at the Sport of Business: If I Can Do It, You Can Do It ",
+        "author": "Mark Cuban"
+    },
+    {
+        "summary": "This is a fun little curious collection of Cap stories in their original graphic form, printed in color in mass market format. It appeared in 1979, long before the internet, and even long before there were such things as easily accessible comics stores in every city or volumes of comics readily available in libraries, so it was a terrific way of introducing people to comics who had otherwise not had the opportunity. It kicks off with the Cap-joining-the-Avengers story, and continues with a couple of contemporary stories before back-tracking to some of the better Cap & Bucky adventures by Lee & Kirby from the 1960s. (You know, when Bucky was still dead.) Great, classic stuff, but in a format you needed a magnifying glass to read. Face front, true believers! Excelsior!",
+        "id": "4",
+        "reviewer": "Nicholas Donald",
+        "rating": "3",
+        "title": "Stan Lee presents: Captain America",
+        "author": "Stan Lee"
+    },
+    {
+        "summary": "myTest",
+        "createdDate": "1,725,310,421,223",
+        "reviewer": "Nicholas Donald",
+        "rating": "3",
+        "modifiedDate": null,
+        "id": "7",
+        "author": "myTest",
+        "title": "myTest"
+    },
+    {
+        "summary": "Swing into the action with the Amazing Spider-Man! Boys and girls will love learning all about this wall-crawling super hero's incredible powers and his fearsome foes in the Marvel The Amazing Spider-Man Little Golden Book!",
+        "id": "3",
+        "reviewer": "Nicholas Donald",
+        "rating": "5",
+        "title": "The Amazing Spider-Man: My Mighty Marvel",
+        "author": "Frank Berrios"
+    }
+]

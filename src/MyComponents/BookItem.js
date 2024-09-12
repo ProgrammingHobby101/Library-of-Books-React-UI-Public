@@ -1,33 +1,38 @@
 import './BookItem.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
-import {useEffect, React} from 'react';
+import {useEffect, React, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
 export function BookItem (props){
     const navigate = useNavigate();
+    // Set initial state
+    const [mytest, setMyTest] = useState(0);
+
+  
     // componentDidMount() { 
     //     console.log("hello world title:"+props.bookJSON);
     //     props.setUserBookItem(props.bookJSON);
     //     console.log("called setUserBookItem");
     // }
-    useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount
-        console.log("hello world title:"+props.bookJSON);
-        props.setUserBookItem(props.bookJSON);
-        console.log("called setUserBookItem");
-      }, []);
+    // useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount
+    //     console.log("hello world title:"+props.bookJSON);
+    //     props.setUserBookItem(props.bookJSON);
+    //     console.log("called setUserBookItem");
+    //   }, []);
     function NavigateToBookView () {
         console.log("called NavigateToBookView.");
         navigate("/BookView");
     }
-    
+    const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }
+        
         return (
             <div className="Book-Item">
                         
                 <img src={BookThumbnail} className="Book-Thumbnail" alt="BookThumbnail"></img>
-                <div className="myText">{props.bookJSON.title},{props.bookJSON.author}</div>
+                <div className="myText">{"mytest="+mytest},{props.bookJSON.author}</div>
                 <button className="button" type="button" onClick={NavigateToBookView}>More Info...</button>
-                <button className="button" type="button">Delete</button>
+                <button className="button" type="button" onClick={increment}>increment</button>
                 
             </div>
         );
