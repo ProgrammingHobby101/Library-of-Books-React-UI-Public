@@ -13,11 +13,12 @@ export function BookItem (props){
     // }
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount
         console.log("hello world title:"+props.bookJSON);
-        props.setUserBookItem(props.bookJSON);
-        console.log("called setUserBookItem");
+        //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
+        
       }, []);
     function NavigateToBookView () {
         console.log("called NavigateToBookView.");
+        props.setUserBookItem(props.bookJSON);
         navigate("/BookView");
     }
     
