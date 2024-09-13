@@ -1,13 +1,13 @@
 import './BookItem.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
-import {useEffect, useState, useRef, React} from 'react';
+import {useEffect, useRef, React} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
 export function BookItem (props){
     const navigate = useNavigate();
     // Set initial state
-    const [mytest, setMyTest] = useState(0);
+    //const [mytest, setMyTest] = useState(0);
 
   
     // componentDidMount() { 

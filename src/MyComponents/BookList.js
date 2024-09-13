@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState } from 'react';
-import {useRefresh} from 'react-tidy'
 import { BookItem } from './BookItem.js';
 var list = [];
 export function BookList (props) {
@@ -51,9 +50,6 @@ export function BookList (props) {
       //const refresh = useRefresh();
       //const [, forceRender] = useState({});
       //const forceUpdate = React.useReducer(bool => !bool, true)[1];
-    function startFetch() {
-      
-    }
     function getList (json) {
         //setMyJSON(json);
         console.log("json: "+json);
