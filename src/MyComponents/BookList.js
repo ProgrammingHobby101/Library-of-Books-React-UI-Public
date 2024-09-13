@@ -8,6 +8,7 @@ export function BookList (props) {
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
       if (!renderAfterCalled.current) { //only fetch once
         console.log("hello world fetch");
+        list = [];//reset list to prevent doubles of everything being displayed in the list 
         fetch("https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?")
         .then((response) => response.json())
         .then((json) => { getList(json)});

@@ -1,6 +1,6 @@
 import './BookItem.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
-import {useEffect, useRef, React} from 'react';
+import {useEffect, useState, useRef, React} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -28,15 +28,17 @@ export function BookItem (props){
         props.setUserBookItem(props.bookJSON);
         navigate("/BookView");
     }
-    const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }
-        
+    //const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }//test
+    function DeleteBook () {
+        console.log("deleting "+props.bookJSON.title);
+    }    
         return (
             <div className="Book-Item">
                         
                 <img src={BookThumbnail} className="Book-Thumbnail" alt="BookThumbnail"></img>
-                <div className="myText">{"mytest="+mytest},{props.bookJSON.author}</div>
+                <div className="myText">{props.bookJSON.title}, {props.bookJSON.author}</div>
                 <button className="button" type="button" onClick={NavigateToBookView}>More Info...</button>
-                <button className="button" type="button" onClick={increment}>increment</button>
+                <button className="button" type="button" onClick={DeleteBook}>Delete</button>
                 
             </div>
         );
