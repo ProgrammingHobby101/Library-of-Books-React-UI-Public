@@ -18,6 +18,7 @@ export function BookView(props) {
         console.log("(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) is: "+(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)));//test print
         if (JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) {
             console.log("rerouting back to homepage because props.UserBookItem was empty object because user went to BookView page without using homepage");
+            renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
             navigate("/");//route back to homepage
           }//else do nothing
         else {

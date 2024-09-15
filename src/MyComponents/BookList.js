@@ -1,7 +1,10 @@
 import React, {useEffect, useRef, useState } from 'react';
 import { BookItem } from './BookItem.js';
+import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px.svg';
+// import Spinner from 'react-bootstrap/Spinner';//delete later, didn't work
 var list = [];
 export function BookList (props) {
+    var [loading, setLoading] = useState(true);//show spinner
     var [myJSON, setMyJSON] = useState([]); 
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
@@ -17,7 +20,7 @@ export function BookList (props) {
     // var myJSON = {};
     // var myJSONtest = [{
     //   "summary": "myTest",
-    //   "createdDate": "1,725,310,421,223",
+    //   "createdDate": "1,725,310,421,223",p
     //   "reviewer": "Nicholas Donald",
     //   "rating": "3",
     //   "modifiedDate": null,
@@ -63,16 +66,15 @@ export function BookList (props) {
           //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
           console.log("running BookItem loop, count: "+x);
         }
-        setMyJSON(json);
+        setLoading(false);////hide spinner and rerender UI
+        setMyJSON(json);//rerender UI
         console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
-        /* force UI update */
-        //forceUpdate();
-        //refresh(); 
-        
-        // forceRender({});
+        console.log("loading: "+loading);
     }
       return (
-        list
+        <div className='booklist-container'> 
+        {(loading) ? <>Loading...<p></p><img src={Spinner} className='loading-spinner' /></>: (list) } 
+        </div>
       );
     
   }
