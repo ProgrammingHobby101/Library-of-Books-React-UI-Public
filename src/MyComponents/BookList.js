@@ -6,6 +6,7 @@ import {Grid, Typography} from "@mui/material";
 import Container from "@mui/material/Container";
 
 var list = [];
+var finishedList = null;
 export function BookList (props) {
     var [loading, setLoading] = useState(true);//show spinner
     var [myJSON, setMyJSON] = useState([]); 
@@ -74,6 +75,15 @@ export function BookList (props) {
           //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
           console.log("running BookItem loop, count: "+x);
         }
+        finishedList =  (
+          <Container maxwidth="1g">
+            <Typography variant="h4" align="center">
+              Books Reviewed: 
+            </Typography> 
+            <Grid container spacing={5} style={{ marginTop: "20px"}}>
+              {list} 
+             </Grid>
+           </Container> ) ;//added each book item to my "Material UI" library responsive grid code
         setLoading(false);//hide spinner and rerender UI
         setMyJSON(json);//rerender UI
         console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
@@ -85,15 +95,7 @@ export function BookList (props) {
         { (loading) ? <><center>Loading...<p></p><img src={Spinner} alt="loading spinner..." /></center></> 
       
         : 
-        // (
-        // <Container maxwidth="1g">
-        //   <Typography variant="h4" align="center">
-        //     Books Reviewed: 
-        //   </Typography> 
-        //   <Grid container spacing={5} style={{ marginTop: "20px"}}>
-            (list) 
-        //   </Grid>
-        // </Container> )
+            (finishedList) 
         } 
         
         {/*  </div> */}
