@@ -1,7 +1,10 @@
 import React, {useEffect, useRef, useState } from 'react';
 import { BookItem } from './BookItem.js';
+import './BookList.css';
 import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px.svg';
-// import Spinner from 'react-bootstrap/Spinner';//delete later, didn't work
+import {Grid, Typography} from "@mui/material";
+import Container from "@mui/material/Container";
+
 var list = [];
 export function BookList (props) {
     var [loading, setLoading] = useState(true);//show spinner
@@ -13,7 +16,7 @@ export function BookList (props) {
         list = [];//reset list to prevent doubles of everything being displayed in the list 
         fetch("https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?")
         .then((response) => response.json())
-        .then((json) => { getList(json)});
+        .then((json) =>  getList(json));
       }//else do nothing
       renderAfterCalled.current = true;
      }, []);
@@ -62,19 +65,39 @@ export function BookList (props) {
         });  
 
         for(let x=0; x<json.length; x++){//don't need because .map iterated through all of them
-          list.push(<BookItem key={json[x].id} bookJSON={json[x]} setUserBookItem={props.setUserBookItem}/>);
+          list.push(
+                <Grid item xs={12} sm={4} ms={4} key={json[x].id}>
+                  <BookItem key={json[x].id} bookJSON={json[x]} setUserBookItem={props.setUserBookItem}/>
+                </Grid>
+              );
+
           //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
           console.log("running BookItem loop, count: "+x);
         }
-        setLoading(false);////hide spinner and rerender UI
+        setLoading(false);//hide spinner and rerender UI
         setMyJSON(json);//rerender UI
         console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
-        console.log("loading: "+loading);
+        console.log("after setLoading, loading: "+loading);
     }
       return (
-        <div className='booklist-container'> 
-        {(loading) ? <>Loading...<p></p><img src={Spinner} className='loading-spinner' /></>: (list) } 
-        </div>
+        <>
+        {/* <div className='booklist-container'>  */}
+        { (loading) ? <><center>Loading...<p></p><img src={Spinner} alt="loading spinner..." /></center></> 
+      
+        : 
+        // (
+        // <Container maxwidth="1g">
+        //   <Typography variant="h4" align="center">
+        //     Books Reviewed: 
+        //   </Typography> 
+        //   <Grid container spacing={5} style={{ marginTop: "20px"}}>
+            (list) 
+        //   </Grid>
+        // </Container> )
+        } 
+        
+        {/*  </div> */}
+        </>
       );
     
   }

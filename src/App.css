@@ -1,4 +1,6 @@
- 
+.App{
+  background-color: #fce305;
+} 
 .my-form{
   align-items: center;
   background-color: black;

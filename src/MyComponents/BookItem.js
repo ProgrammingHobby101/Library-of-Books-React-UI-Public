@@ -2,6 +2,10 @@ import './BookItem.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
 import {useEffect, useRef, React} from 'react';
 import { useNavigate } from 'react-router-dom';
+//responsive cards
+import {Grid, Card, CardContent, Typography} from "@mui/material";
+import { CardActionArea } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
 
 
 export function BookItem (props){
@@ -33,13 +37,37 @@ export function BookItem (props){
         console.log("deleting "+props.bookJSON.title);
     }    
         return (
-            <div className="Book-Item">
+            // <div className="Book-Item">
                         
-                <img src={BookThumbnail} className="Book-Thumbnail" alt="BookThumbnail"></img>
-                <div className="myText">{props.bookJSON.title}, {props.bookJSON.author}</div>
-                <button className="button" type="button" onClick={NavigateToBookView}>More Info...</button>
-                <button className="button" type="button" onClick={DeleteBook}>Delete</button>
+            //     <img src={BookThumbnail} className="Book-Thumbnail" alt="BookThumbnail"></img>
+            //     <div className="myText">{props.bookJSON.title}, {props.bookJSON.author}</div>
+            //     <button className="button" type="button" onClick={NavigateToBookView}>More Info...</button>
+            //     <button className="button" type="button" onClick={DeleteBook}>Delete</button>
                 
-            </div>
+            // </div>
+
+            <>                
+                    <Card sx={{maxwidth: 345 }}> 
+                        <CardActionArea> 
+                            <CardMedia 
+                              component="img" 
+                              height="140" 
+                              image={BookThumbnail}
+                              alt="BookThumbnail"
+                            />
+                            <CardContent> 
+                                <Typography gutterBotton variant="h5" component="div">
+                                    {props.bookJSON.title} 
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary"> 
+                                    {props.bookJSON.author}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                {/* ))} */}
+
+            </>
+
         );
 }

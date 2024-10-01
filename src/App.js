@@ -25,7 +25,6 @@ function App() {
                 </div>
               </header>
               
-              
               <BookList setUserBookItem={setUserBookItem}/>
             </div> }/>
           
