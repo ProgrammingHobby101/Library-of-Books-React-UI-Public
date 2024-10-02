@@ -2,7 +2,8 @@ import React, {useEffect, useRef, useState } from 'react';
 import { BookItem } from './BookItem.js';
 import './BookList.css';
 import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px.svg';
-import {Grid, Typography} from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import {Grid, Typography, Button} from "@mui/material";
 import Container from "@mui/material/Container";
 
 var list = [];
@@ -10,6 +11,7 @@ var finishedList = null;
 export function BookList (props) {
     var [loading, setLoading] = useState(true);//show spinner
     var [myJSON, setMyJSON] = useState([]); 
+    const navigate = useNavigate();
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
       if (!renderAfterCalled.current) { //only fetch once
@@ -57,6 +59,11 @@ export function BookList (props) {
       //const refresh = useRefresh();
       //const [, forceRender] = useState({});
       //const forceUpdate = React.useReducer(bool => !bool, true)[1];
+      function NavigateToBookCreate () {
+        console.log("called NavigateToBookCreate.");
+        //props.setUserBookItem(props.bookJSON);
+        navigate("/BookCreate");
+    }
     function getList (json) {
         //setMyJSON(json);
         console.log("json: "+json);
@@ -80,6 +87,7 @@ export function BookList (props) {
             <Typography variant="h4" align="center">
               Books Reviewed: 
             </Typography> 
+            <Button variant="contained" size="medium" onClick={NavigateToBookCreate} style={{align: "center"}}>Create a Review</Button>
             <Grid container spacing={5} style={{ marginTop: "20px"}}>
               {list} 
              </Grid>

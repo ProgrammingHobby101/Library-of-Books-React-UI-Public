@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import { BookList } from './MyComponents/BookList.js';
 import { BookView } from './MyComponents/BookView.js';
+import { BookCreate } from './MyComponents/BookCreate.js';
 import { useState } from "react";
 
 //import { ClipLoader } from '@storybook/react';
@@ -14,7 +15,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          <Route path="BookView" element={<BookView UserBookItem={UserBookItem} />} />
           <Route index element={<div className="App">
               <header>
                 <div>
@@ -27,7 +27,8 @@ function App() {
               
               <BookList setUserBookItem={setUserBookItem}/>
             </div> }/>
-          
+            <Route path="BookView" element={<BookView UserBookItem={UserBookItem} />} />
+            <Route path="BookCreate" element={<BookCreate/>} />
           {/* <Route path="*" element={<NoPage />} /> */}
         </Route>
       </Routes>

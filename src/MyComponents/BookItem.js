@@ -3,22 +3,13 @@ import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
 import {useEffect, useRef, React} from 'react';
 import { useNavigate } from 'react-router-dom';
 //responsive cards
-import {Grid, Card, CardContent, Typography} from "@mui/material";
+import { Card, CardContent, Typography, CardActions, Button} from "@mui/material";
 import { CardActionArea } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 
 
 export function BookItem (props){
     const navigate = useNavigate();
-    // Set initial state
-    //const [mytest, setMyTest] = useState(0);
-
-  
-    // componentDidMount() { 
-    //     console.log("hello world title:"+props.bookJSON);
-    //     props.setUserBookItem(props.bookJSON);
-    //     console.log("called setUserBookItem");
-    // }
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
         if (!renderAfterCalled.current) { //only fetch once
@@ -54,9 +45,10 @@ export function BookItem (props){
                               height="140" 
                               image={BookThumbnail}
                               alt="BookThumbnail"
+                              style={{borderRadius: "5px"}}
                             />
                             <CardContent> 
-                                <Typography gutterBotton variant="h5" component="div">
+                                <Typography gutterBottom variant="h5" component="div">
                                     {props.bookJSON.title} 
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary"> 
@@ -64,6 +56,10 @@ export function BookItem (props){
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
+                        <CardActions> 
+                            <Button variant="contained" size="medium" onClick={NavigateToBookView}>Info</Button>
+                            <Button variant="contained" size="medium" onClick={DeleteBook}>Delete</Button> 
+                        </CardActions>
                     </Card>
                 {/* ))} */}
 

@@ -1,0 +1,24 @@
+.wrapper {
+    
+  }
+  
+  .dashed-box {
+    
+  }
+  .gold-box {
+    position: absolute;
+    z-index: 3; /* put .gold-box above .green-box and .dashed-box */
+    background: gold;
+    width: 80%;
+    left: 60px;
+    top: 3em;
+  }
+  .green-box {
+    position: absolute;
+    z-index: 1; /* put .green-box above .dashed-box */
+    width: 20%;
+    left: 0%;
+    top: 0px;
+    height: 7em;
+    opacity: 0.9;
+  }
