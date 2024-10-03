@@ -1,24 +1,28 @@
 .wrapper {
-    
+    position: relative;
   }
   
-  .dashed-box {
-    
+  .star-rating { /*dashed-box*/
+    position: relative;
+    z-index: 3;
+    opacity: 1;
+    background: white;
   }
-  .gold-box {
+  .cover-input-box-rating {
     position: absolute;
-    z-index: 3; /* put .gold-box above .green-box and .dashed-box */
-    background: gold;
-    width: 80%;
-    left: 60px;
-    top: 3em;
+    z-index: 2; /* put this div behind the star rating component and rating label but infront of input rating field */
+    background: white; /*change to gold to see test*/
+    width: 100%;
+    height: 100%;
+    left: -20%;
+    top: -2%;
+    opacity: 1;
   }
-  .green-box {
+  .input-box-rating { /*green-box*/
     position: absolute;
     z-index: 1; /* put .green-box above .dashed-box */
-    width: 20%;
+    /* width: 20%; */
     left: 0%;
-    top: 0px;
-    height: 7em;
+    top: 2%;
     opacity: 0.9;
   }
