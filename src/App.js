@@ -19,8 +19,10 @@ function App() {
               <header>
                 <div>
                   <form className="my-form" >
-                    <label htmlFor="search">Search: </label>
-                    <input className="search-box" type="text" id="search" name="Search"/>
+                      <center>
+                        <label htmlFor="search">Search: </label>
+                        <input className="search-box" type="text" id="search" name="Search"/>
+                      </center>
                   </form>
                 </div>
               </header>

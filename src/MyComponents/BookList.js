@@ -87,7 +87,7 @@ export function BookList (props) {
             <Typography variant="h4" align="center">
               Books Reviewed: 
             </Typography> 
-            <Button variant="contained" size="medium" onClick={NavigateToBookCreate} style={{align: "center"}}>Create a Review</Button>
+            <Button variant="contained" size="medium" onClick={NavigateToBookCreate}>Create a Review</Button>
             <Grid container spacing={5} style={{ marginTop: "20px"}}>
               {list} 
              </Grid>
