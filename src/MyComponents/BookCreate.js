@@ -10,8 +10,6 @@ export function BookCreate (props){
     const RatingInputField = useRef(null);
     const ReviewerIDFieldRef = useRef(null);
 
-    
-
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
         if (!renderAfterCalled.current) { //only fetch once
@@ -60,7 +58,7 @@ export function BookCreate (props){
                                                     console.log("star value: "+value);
                                                     setRating(value);
                                                 }}
-                                                tabIndex={0} /*prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted. */
+                                                tabIndex={null} /*Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted. */
                                                 />
                                                 <br></br>
                                                 <div class="cover-input-box-rating">
