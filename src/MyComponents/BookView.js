@@ -2,6 +2,7 @@ import './BookView.css';
 //import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
 import { useNavigate } from 'react-router-dom';
 import {useEffect, useRef} from 'react';
+import {Rating} from "@mui/material";
 
 export function BookView(props) {
     const navigate = useNavigate();//initilize navigation for homepage if needed.
@@ -36,7 +37,8 @@ export function BookView(props) {
             <h1 className='my-H-Tags'>Author</h1>
             {props.UserBookItem.author}
             <h3 className='my-H-Tags'>Rating</h3>
-            {(props.UserBookItem.rating>1) ?  props.UserBookItem.rating+" Stars":  props.UserBookItem.rating+" Star"}
+            <Rating name="read-only" value={props.UserBookItem.rating} readOnly />
+            {/* {(props.UserBookItem.rating>1) ?  props.UserBookItem.rating+" Stars":  props.UserBookItem.rating+" Star"}  //this is the old code for ratings display */}
             <h3 className='my-H-Tags'>Reviewer</h3>
             {props.UserBookItem.reviewer}
             <h4 className='my-H-Tags'>Created Date</h4>
