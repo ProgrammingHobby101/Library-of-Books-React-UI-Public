@@ -31,7 +31,7 @@ function App() {
             </div> }/>
             <Route path="BookView" element={<BookView UserBookItem={UserBookItem} />} />
             <Route path="BookCreate" element={<BookCreate/>} />
-          {/* <Route path="*" element={<NoPage />} /> */}
+          <Route path="*" element={<div><center>Sorry, Page not available</center></div>} />
         </Route>
       </Routes>
     </BrowserRouter>

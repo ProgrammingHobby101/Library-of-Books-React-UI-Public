@@ -38,6 +38,19 @@ export function BookCreate (props){
         //console.log(event.target.value);
         console.log("Data; TitleFieldRef: "+TitleFieldRef.current.value+", AuthorFieldRef: "+AuthorFieldRef.current.value+", StarValue: "+StarValue+", ReviewerFieldRef: "+ReviewerFieldRef.current.value+", SummaryFieldRef: "+SummaryFieldRef.current.value);
         alert("creating book");//test
+        fetch('http://localhost:5000/questions',{
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                        'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state)
+        }).then(response => {
+                console.log(response)
+            })
+            .catch(error =>{
+                console.log(error)
+            });
       };    
       function MoveFocusToReviewField () {
         ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
