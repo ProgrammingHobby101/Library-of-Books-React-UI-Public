@@ -11,7 +11,14 @@ on:
   # Added this because of build error from the Jameslves code  
   pull_request:
     branches: [ "master" ]  
-
+# Added this because of build error from the Jameslves code
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+  actions: write
+  checks: write
+  deployments: write
   # Allow you to run this workflow manually from the Actions tab
   workflow_dispatch: 
 env:
@@ -22,15 +29,6 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
-    # Added this because of build error from the Jameslves code
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-      pages: 'write'
-      actions: 'write'
-      checks: 'write'
-      deployments: 'write'
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
