@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
+        <Route path="/Library-of-Books-React-UI-Public"> {/*root path*/}
           <Route index element={<div className="App">
               <header>
                 <div>
