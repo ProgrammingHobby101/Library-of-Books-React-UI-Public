@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/Library-of-Books-React-UI-Public"> {/*root path*/}
+        <Route path="/Library-of-Books-React-UI-Public"> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
           <Route index element={<div className="App">
               <header>
                 <div>
@@ -31,7 +31,7 @@ function App() {
             </div> }/>
             <Route path="BookView" element={<BookView UserBookItem={UserBookItem} />} />
             <Route path="BookCreate" element={<BookCreate/>} />
-          <Route path="*" element={<div><center>Sorry, Page not available</center></div>} />
+          <Route path="*" element={<div><center>Sorry, Page not available. Please go back to the home page.</center></div>} />
         </Route>
       </Routes>
     </BrowserRouter>
