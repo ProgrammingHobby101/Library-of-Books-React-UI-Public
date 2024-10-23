@@ -29,8 +29,8 @@ function App() {
               
               <BookList setUserBookItem={setUserBookItem}/>
             </div> }/>
-            <Route path="BookView" element={<BookView UserBookItem={UserBookItem} />} />
-            <Route path="BookCreate" element={<BookCreate/>} />
+            <Route path="/Library-of-Books-React-UI-Public/BookView" element={<BookView UserBookItem={UserBookItem} />} />
+            <Route path="/Library-of-Books-React-UI-Public/BookCreate" element={<BookCreate/>} />
           <Route path="*" element={<div><center>Sorry, Page not available. Please go back to the home page.</center></div>} />
         </Route>
       </Routes>
