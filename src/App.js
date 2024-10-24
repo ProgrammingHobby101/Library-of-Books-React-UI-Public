@@ -12,9 +12,9 @@ function App() {
   const [UserBookItem, setUserBookItem] = useState({})
   
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Library-of-Books-React-UI-Public">
       <Routes>
-        <Route path="/Library-of-Books-React-UI-Public"> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
+        <Route path="/"> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
           <Route index element={<div className="App">
               <header>
                 <div>
@@ -29,8 +29,8 @@ function App() {
               
               <BookList setUserBookItem={setUserBookItem}/>
             </div> }/>
-            <Route path="/Library-of-Books-React-UI-Public/BookView" element={<BookView UserBookItem={UserBookItem} />} />
-            <Route path="/Library-of-Books-React-UI-Public/BookCreate" element={<BookCreate/>} />
+            <Route path="BookView" element={<BookView UserBookItem={UserBookItem} />} />
+            <Route path="BookCreate" element={<BookCreate/>} />
           <Route path="*" element={<div><center>Sorry, Page not available. Please go back to the home page.</center></div>} />
         </Route>
       </Routes>
