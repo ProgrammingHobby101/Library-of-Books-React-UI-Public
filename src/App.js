@@ -13,9 +13,8 @@ function App() {
   
   return (
     <BrowserRouter basename="/Library-of-Books-React-UI-Public">
-      <Routes>
-        <Route path="/"> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
-          <Route index element={<div className="App">
+      <Routes> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
+          <Route exact path="/Library-of-Books-React-UI-Public" element={<div className="App">
               <header>
                 <div>
                   <form className="my-form" >
@@ -29,10 +28,9 @@ function App() {
               
               <BookList setUserBookItem={setUserBookItem}/>
             </div> }/>
-            <Route path="BookView" element={<BookView UserBookItem={UserBookItem} />} />
-            <Route path="BookCreate" element={<BookCreate/>} />
+            <Route path="/BookView" element={<BookView UserBookItem={UserBookItem} />} />
+            <Route path="/BookCreate" element={<BookCreate/>} />
           <Route path="*" element={<div><center>Sorry, Page not available. Please go back to the home page.</center></div>} />
-        </Route>
       </Routes>
     </BrowserRouter>
     
