@@ -44,12 +44,13 @@ export function BookCreate (props){
         //console.log(event.target.value);
         console.log("Data; TitleFieldRef: "+TitleFieldRef.current.value+", AuthorFieldRef: "+AuthorFieldRef.current.value+", StarValue: "+StarValue+", ReviewerFieldRef: "+ReviewerFieldRef.current.value+", SummaryFieldRef: "+SummaryFieldRef.current.value);
         console.log("json stringify: "+JSON.stringify({"title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value }));
-        alert("creating book");//test
+        //alert("creating book");//test
         fetch('https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?',{
             method: 'PUT',
             mode: "cors",
             headers: {
                 //Accept: 'application/json',
+                "Origin": "https://programminghobby101.github.io",
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
             },
