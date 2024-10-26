@@ -19,6 +19,7 @@ export function BookCreate (props){
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
         if (!renderAfterCalled.current) { //only fetch once
             console.log("loaded book create page.");
+            setRating(0);//prevent rating UI from being set to the previous state. 
             //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
           }//else do nothing
           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
@@ -33,28 +34,34 @@ export function BookCreate (props){
         }
         console.log("star component value: "+value+", previous StarValue state: "+StarValue+", event.target.value: "+event.target.value+", StarRatingComponent.current.value: "+ StarRatingComponent.current.value);//this console.log uses the previous state of StarValue because  
     }
+    
+    function MoveFocusToReviewField () {
+        ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
+    }
+
     function onSubmit (event, data) {//TEST this alert later and add the empty box to end of useEffect.
         event.preventDefault();//prevent page refresh after submission
         //console.log(event.target.value);
         console.log("Data; TitleFieldRef: "+TitleFieldRef.current.value+", AuthorFieldRef: "+AuthorFieldRef.current.value+", StarValue: "+StarValue+", ReviewerFieldRef: "+ReviewerFieldRef.current.value+", SummaryFieldRef: "+SummaryFieldRef.current.value);
+        console.log("json stringify: "+JSON.stringify({"title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value }));
         alert("creating book");//test
-        fetch('http://localhost:5000/questions',{
-            method: 'POST',
+        fetch('https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?',{
+            method: 'PUT',
+            mode: "cors",
             headers: {
-                Accept: 'application/json',
-                        'Content-Type': 'application/json',
+                //Accept: 'application/json',
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
             },
-            body: JSON.stringify(this.state)
+            body: JSON.stringify({"title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value })
         }).then(response => {
-                console.log(response)
+                console.log("my success"+response)
             })
             .catch(error =>{
-                console.log(error)
+                console.log("my catch error: "+error)
             });
       };    
-      function MoveFocusToReviewField () {
-        ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
-      }
+      
         return (
 
             <div style={{background: "#fce305"}}>   
