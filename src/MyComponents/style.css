@@ -1,0 +1,46 @@
+
+
+/*This whole style sheet is from YouTube; https://www.youtube.com/watch?v=xkf0tJq-sNY */
+
+#semiTransparenDiv {
+	width:100%;
+	display: "block";
+    height: "100%";
+	/*-Lets Center the Spinner-*/
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    
+    /* transparent background color */
+    background-color: rgba(0, 0, 0, 0.375);
+    z-index:9999;
+}
+
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+
+#semiTransparenDiv::after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:80px;height:80px;
+    border-style:solid;
+    border: 5px solid rgb(255, 255, 255);
+	border-top-color: #6CC4EE;
+    border-width: 7px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    
+    /* Lets make it go round */
+    animation: spin .8s linear infinite;
+}
