@@ -1,20 +1,16 @@
 import './BookCreate.css';
 import {useEffect, useRef, useState, React} from 'react';
-import { useNavigate } from 'react-router-dom';
 //responsive cards
 import {Grid, Card, CardContent, Typography, Button, TextField, Rating} from "@mui/material";
 //Modal (React-bootstrap)
 import { Button as ModalButton } from 'react-bootstrap';//delete later because I don't need.
 import Modal from 'react-bootstrap/Modal';
-//Spinner (React-bootstrap)
-import Spinner from 'react-bootstrap/Spinner';
-import './Loader.css'
-import Loader from './Loader';
+// Spinner (React-bootstrap)
+//import Spinner from 'react-bootstrap/Spinner';
 // https://www.youtube.com/watch?v=xkf0tJq-sNY
 import './style.css'
 
 export function BookCreate (props){
-    const navigate = useNavigate();
     const [StarValue, setRating] = useState(null);
     const StarRatingComponent = useRef(null);//get state from the Star Rating component.
     
@@ -31,7 +27,7 @@ export function BookCreate (props){
     const handleShow = () => setShow(true);
 
     //SPINNER state
-    const [ShowSpinner, setShowSpinner] = useState(true);
+    const [ShowSpinner, setShowSpinner] = useState(false);
 
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
@@ -77,14 +73,21 @@ export function BookCreate (props){
                 setShowSpinner(false);//hide spinner
                 if(response.status === 201){
                     //alert("created book");//test
+                    /* Reset form fields */
+                    TitleFieldRef.current.value = null;
+                    AuthorFieldRef.current.value = null;
+                    StarRatingComponent.current.value = 0;
+                    ReviewerFieldRef.current.value = null;
+                    SummaryFieldRef.current.value = null;
+                    /* Show success modal*/ 
                     handleShow();
                     return response.text();//convert to string to print my API response
                 }else{
-                    alert("Something went wrong(in then else statement)");//test
+                    alert("Something went wrong(from then else statement)");//test
                     
                 }    
             }).then(textData => {
-                    console.log("my API success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                    console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
                     
                  })
             .catch(error =>{
@@ -116,7 +119,7 @@ export function BookCreate (props){
                     </Modal.Footer>
                 </Modal>
 
-                {/* { ShowSpinner ? <div id="cover-spin"> <Spinner id="myspinner" animation="border" variant="light"/> </div>: <></> } */}
+                
 
                 {/* <Modal
                 show={true}
@@ -132,9 +135,9 @@ export function BookCreate (props){
                 <div className="modal">
                     <Spinner id="myspinner" animation="border" variant="dark"/>
                 </div> */}
-                {/* https://www.youtube.com/watch?v=xkf0tJq-sNY */}
-                {/* <button id="ExecButton" type="buton" onclick="showLoader()"> Execute</button> */}
-                <div id="semiTransparenDiv" ></div>
+                {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
+                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }
+                
 
                 <Typography variant="h4" align="center">            
                     Book Review: 

@@ -72,14 +72,12 @@ export function BookList (props) {
             return b.id.localeCompare(a.id) // Sort Decending
         });  
 
-        for(let x=0; x<json.length; x++){//don't need because .map iterated through all of them
+        for(let x=0; x<json.length; x++){
           list.push(
                 <Grid item xs={12} sm={4} ms={4} key={json[x].id}>
                   <BookItem key={json[x].id} bookJSON={json[x]} setUserBookItem={props.setUserBookItem}/>
                 </Grid>
               );
-
-          //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
           console.log("running BookItem loop, count: "+x);
         }
         finishedList =  (

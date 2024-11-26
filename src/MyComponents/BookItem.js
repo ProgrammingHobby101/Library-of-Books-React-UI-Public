@@ -25,7 +25,42 @@ export function BookItem (props){
     }
     //const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }//test
     function DeleteBook () {
-        console.log("deleting "+props.bookJSON.title);
+        console.log("deleting title: "+props.bookJSON.title);//test
+        console.log("deleting id: "+props.bookJSON.id);
+
+
+        fetch('https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books/'+props.bookJSON.id,{
+            method: 'DELETE',
+            mode: "cors",
+            headers: {
+                //Accept: 'application/json',
+                //"Origin": "https://programminghobby101.github.io",
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+        }).then(response => {
+                //setShowSpinner(false);//hide spinner
+                if(response.status === 200){
+                    alert("deleted book");//test
+                    /* Show success modal*/ 
+                    //handleShow();
+                    //NOTE: I refreshed page in the next Then statement powered by the next line.
+                    return response.text();//convert to string to print my API response
+                }else{
+                    alert("Something went wrong(alert from then else statement)");//test
+                    
+                }    
+            }).then(textData => {
+                    console.log("my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                    navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+                 })
+            .catch(error =>{
+                alert("Something went wrong(alert from fetch's catch statement)");//test
+                //setShowSpinner(false);//hide spinner
+                //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+                console.log("my catch error: "+error)
+            });
+
     }    
         return (
             // <div className="Book-Item">
