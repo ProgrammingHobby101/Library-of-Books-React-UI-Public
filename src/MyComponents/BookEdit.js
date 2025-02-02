@@ -124,7 +124,7 @@ export function BookCreate (props){
                     <Modal.Title>Success</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        Successfully Created Book review!
+                        Successfully Edited Book review!
                     </Modal.Body>
                     <Modal.Footer>
                     <ModalButton variant="primary" onClick={handleClose}>
@@ -154,7 +154,7 @@ export function BookCreate (props){
                 
 
                 <Typography variant="h4" align="center">            
-                    Create Book Review: 
+                    Edit Book Review: 
                 </Typography>    
                     <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
                         <CardContent> 
