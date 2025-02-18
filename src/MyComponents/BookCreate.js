@@ -3,17 +3,35 @@ import {useEffect, useRef, useState, React} from 'react';
 import { useNavigate } from 'react-router-dom';
 //responsive cards
 import {Grid, Card, CardContent, Typography, Button, TextField, Rating} from "@mui/material";
+//Modal (React-bootstrap)
+import { Button as ModalButton } from 'react-bootstrap';//delete later because I don't need.
+import Modal from 'react-bootstrap/Modal';
+// Spinner (React-bootstrap)
+//import Spinner from 'react-bootstrap/Spinner';
+// https://www.youtube.com/watch?v=xkf0tJq-sNY
+
+//import './style.css'//need to check this file
 
 export function BookCreate (props){
     const navigate = useNavigate();
     const [StarValue, setRating] = useState(null);
     const StarRatingComponent = useRef(null);//get state from the Star Rating component.
     
+    //FORM state
     const TitleFieldRef = useRef(null);
     const AuthorFieldRef = useRef(null);
     const RatingInputField = useRef(null);
     const ReviewerFieldRef = useRef(null);
     const SummaryFieldRef = useRef(null);
+    
+    //MODAL state
+    const [show, setShow] = useState(false);//test change back to true after test
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    //SPINNER state
+    const [ShowSpinner, setShowSpinner] = useState(false);
+    
 
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
@@ -52,7 +70,11 @@ export function BookCreate (props){
                 console.log(error)
             });
       };    
-      function MoveFocusToReviewField () {
+      function MoveFocusToReviewField (event) {
+        if(StarValue != null) {
+            event.currentTarget.setCustomValidity('');
+            console.log("Ratings input detected, now hiding the ratings input validation message.");
+        }
         ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
       }
         return (
@@ -92,6 +114,7 @@ export function BookCreate (props){
                                                     name="RatingInput"
                                                     className='input-box-rating'
                                                     type="number"
+                                                    onInvalid={(e) => e.currentTarget.setCustomValidity('Please select a Rating') }
                                                     value={StarValue}
                                                     onFocus={MoveFocusToReviewField}
                                                     onChange={MoveFocusToReviewField}

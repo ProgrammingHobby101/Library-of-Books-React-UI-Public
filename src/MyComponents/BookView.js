@@ -32,6 +32,7 @@ export function BookView(props) {
         //     <div>{JSON.stringify(props.UserBookItem)}</div>
         // </div>
         <div className="book-container">
+          <center>
             <h1 className='my-H-Tags'>Title</h1>
             {props.UserBookItem.title}
             <h1 className='my-H-Tags'>Author</h1>
@@ -49,6 +50,7 @@ export function BookView(props) {
             {props.UserBookItem.summary}
             <h4 className='my-H-Tags'>ID</h4>
             {props.UserBookItem.id}
+          </center>
         </div>
     );
 }
