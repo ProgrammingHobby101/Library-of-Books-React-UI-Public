@@ -52,24 +52,48 @@ export function BookCreate (props){
         console.log("star component value: "+value+", previous StarValue state: "+StarValue+", event.target.value: "+event.target.value+", StarRatingComponent.current.value: "+ StarRatingComponent.current.value);//this console.log uses the previous state of StarValue because  
     }
     function onSubmit (event, data) {//TEST this alert later and add the empty box to end of useEffect.
+        setShowSpinner(true);//show spinner
         event.preventDefault();//prevent page refresh after submission
         //console.log(event.target.value);
         console.log("Data; TitleFieldRef: "+TitleFieldRef.current.value+", AuthorFieldRef: "+AuthorFieldRef.current.value+", StarValue: "+StarValue+", ReviewerFieldRef: "+ReviewerFieldRef.current.value+", SummaryFieldRef: "+SummaryFieldRef.current.value);
-        alert("creating book");//test
-        fetch('http://localhost:5000/questions',{
-            method: 'POST',
+        console.log("json stringify: "+JSON.stringify({"title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":""+StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value }));
+        fetch('https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?',{
+            method: 'PUT',
+            mode: "cors",
             headers: {
-                Accept: 'application/json',
-                        'Content-Type': 'application/json',
+                //Accept: 'application/json',
+                //"Origin": "https://programminghobby101.github.io",
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
             },
-            body: JSON.stringify(this.state)
+            body: JSON.stringify({"title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":""+StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value })
         }).then(response => {
-                console.log(response)
-            })
+                setShowSpinner(false);//hide spinner
+                if(response.status === 201){
+                    //alert("created book");//test
+                    /* Reset form fields */
+                    TitleFieldRef.current.value = null;
+                    AuthorFieldRef.current.value = null;
+                    StarRatingComponent.current.value = 0;
+                    ReviewerFieldRef.current.value = null;
+                    SummaryFieldRef.current.value = null;
+                    /* Show success modal*/ 
+                    handleShow();
+                    return response.text();//convert to string to print my API response
+                }else{
+                    alert("Something went wrong(from then else statement)");//test
+                    
+                }    
+            }).then(textData => {
+                    console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                    
+                 })
             .catch(error =>{
-                console.log(error)
+                setShowSpinner(false);//hide spinner
+                //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+                console.log("my catch error: "+error)
             });
-      };    
+      };   
       function MoveFocusToReviewField (event) {
         if(StarValue != null) {
             event.currentTarget.setCustomValidity('');
