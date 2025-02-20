@@ -13,7 +13,7 @@ import Modal from 'react-bootstrap/Modal';
 //import './style.css'//need to check this file
 
 export function BookCreate (props){
-    const navigate = useNavigate();
+    var CreatedResponseStatusCode = null;
     const [StarValue, setRating] = useState(null);
     const StarRatingComponent = useRef(null);//get state from the Star Rating component.
     
@@ -69,24 +69,38 @@ export function BookCreate (props){
             body: JSON.stringify({"title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":""+StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value })
         }).then(response => {
                 setShowSpinner(false);//hide spinner
+                CreatedResponseStatusCode = response.status;
                 if(response.status === 201){
                     //alert("created book");//test
                     /* Reset form fields */
                     TitleFieldRef.current.value = null;
                     AuthorFieldRef.current.value = null;
                     StarRatingComponent.current.value = 0;
+                    setRating(0);
                     ReviewerFieldRef.current.value = null;
                     SummaryFieldRef.current.value = null;
                     /* Show success modal*/ 
                     handleShow();
                     return response.text();//convert to string to print my API response
-                }else{
+                }
+                else if(response.status === 500){
+                    return response.json(); 
+                }
+                else{
                     alert("Something went wrong(from then else statement)");//test
-                    
+                    return response.text();
                 }    
             }).then(textData => {
-                    console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
-                    
+                    if(CreatedResponseStatusCode === 201) {
+                        console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                    }
+                    else if(CreatedResponseStatusCode == 500 ){
+                        console.log("my API create/put DB limit error"+textData );
+                    }
+                    else{
+                        console.log("Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
+                        
+                    }
                  })
             .catch(error =>{
                 setShowSpinner(false);//hide spinner
