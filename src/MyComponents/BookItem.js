@@ -2,6 +2,7 @@ import './BookItem.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
 import {useEffect, useRef, React} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router'
 //responsive cards
 import { Card, CardContent, Typography, CardActions, Button} from "@mui/material";
 import { CardActionArea } from '@mui/material';
@@ -10,6 +11,7 @@ import CardMedia from '@mui/material/CardMedia';
 
 export function BookItem (props){
     const navigate = useNavigate();
+    let location = useLocation();
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
         if (!renderAfterCalled.current) { //only fetch once
@@ -41,7 +43,7 @@ export function BookItem (props){
         }).then(response => {
                 //setShowSpinner(false);//hide spinner
                 if(response.status === 200){
-                    alert("deleted book");//test
+                    //alert("deleted book");//test
                     /* Show success modal*/ 
                     //handleShow();
                     //NOTE: I refreshed page in the next Then statement powered by the next line.
@@ -52,7 +54,8 @@ export function BookItem (props){
                 }    
             }).then(textData => {
                     console.log("my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
-                    navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+                    //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+                    window.location.reload();
                  })
             .catch(error =>{
                 alert("Something went wrong(alert from fetch's catch statement)");//test
