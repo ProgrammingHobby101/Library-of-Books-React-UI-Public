@@ -121,23 +121,24 @@ export function BookCreate (props){
             <div style={{background: "#fce305"}}> 
 
                 <Modal
-                    show={show}
-                    onHide={handleClose}
-                    backdrop="static"
-                    keyboard={false}
-                    >
-                        <Modal.Header closeButton>
-                        <Modal.Title>Success</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            Success, you've created a book review in our Library of reviews!
-                        </Modal.Body>
-                        <Modal.Footer>
-                        <ModalButton variant="primary" onClick={handleClose}>
-                            OK
-                        </ModalButton>
-                        </Modal.Footer>
-                </Modal> 
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+                >
+                    <Modal.Header closeButton>
+                    <Modal.Title>Success</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Success, you've created a book review in our Library of reviews!
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <ModalButton variant="primary" onClick={handleClose}>
+                        OK
+                    </ModalButton>
+                    </Modal.Footer>
+                </Modal>
+
                 
                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
                 { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> } 
