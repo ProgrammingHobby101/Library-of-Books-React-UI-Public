@@ -4,8 +4,11 @@ import {useEffect, useRef, useState, React} from 'react';
 import { useNavigate } from 'react-router-dom';
 //responsive cards
 import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mui/material";
+//modal
 import BasicModal from './BasicModal';
+//Redux
 import { useSelector, useDispatch } from 'react-redux';
+import { setBookCreateModalTitle, setBookCreateModalDescription, setShowBookCreateModal  } from '../librarySlice';
 // import Box from '@mui/material/Box';
 // // import MUI_Button from '@mui/material/Button';//I am going to use a different button style from Material UI don't need this one 
 // import Typography from '@mui/material/Typography';
@@ -88,10 +91,10 @@ export function BookCreate (props){
                     setRating(0);
                     ReviewerFieldRef.current.value = null;
                     SummaryFieldRef.current.value = null;
-                    /* Show success modal*/ 
-                    // dispatch(setBookCreateModalTitle("Success"));
-                    // dispatch(setBookCreateModalDescription("Success, you've created a book review in our Library of reviews! Redux time."));
-                    // dispatch(setShowBookCreateModal(true)); 
+                    /* Show success modal by using Redux*/ 
+                    dispatch(setBookCreateModalTitle("Success"));
+                    dispatch(setBookCreateModalDescription("Success, you've created a book review in our library of reviews!"));
+                    dispatch(setShowBookCreateModal(true)); 
 
                     return response.text();//convert to string to print my API response
                 }

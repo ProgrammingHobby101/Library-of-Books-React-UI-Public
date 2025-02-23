@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     BookCreateModalTitle: "my test title",
     BookCreateModalDescription: "my test description",
-    ShowBookCreateModal: true,
+    ShowBookCreateModal: false,
 }
 
 export const librarySlice = createSlice({

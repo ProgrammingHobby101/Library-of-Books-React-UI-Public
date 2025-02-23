@@ -20,11 +20,7 @@ const style = {
 };
 
 export default function BasicModal(props) {
-  const open = true;
-  // const [open, setOpen] = React.useState(props.show);//default is false
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-  // redux state
+  // Redux state and mutator
   const library = useSelector(state => state.library);
   const dispatch = useDispatch();
   
@@ -32,9 +28,7 @@ export default function BasicModal(props) {
     <div>
       <Modal
         open={library.ShowBookCreateModal}
-        // open={open}
         onClose={() => dispatch(setShowBookCreateModal(false)) }
-        // onClose={() => open = false}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
