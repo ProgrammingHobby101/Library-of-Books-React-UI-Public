@@ -1,18 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     BookCreateModalTitle: "my test title",
-    BookCreateModalDescription: "my test title",
-    ShowBookCreateModal: false,
+    BookCreateModalDescription: "my test description",
+    ShowBookCreateModal: true,
 }
 
 export const librarySlice = createSlice({
 name: 'library',
 initialState,
-reducers: {//mutate here
+reducers: {
         setBookCreateModalTitle: (state, action) => {
             state.BookCreateModalTitle = action.payload;
         },
-        
         setBookCreateModalDescription: (state, action) => {
             state.BookCreateModalDescription = action.payload;
         },

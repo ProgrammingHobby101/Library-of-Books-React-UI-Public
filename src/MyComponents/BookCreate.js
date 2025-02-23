@@ -89,9 +89,9 @@ export function BookCreate (props){
                     ReviewerFieldRef.current.value = null;
                     SummaryFieldRef.current.value = null;
                     /* Show success modal*/ 
-                    dispatch(setBookCreateModalTitle("Success"));
-                    dispatch(setBookCreateModalDescription("Success, you've created a book review in our Library of reviews! Redux time."));
-                    dispatch(setShowBookCreateModal(true)); 
+                    // dispatch(setBookCreateModalTitle("Success"));
+                    // dispatch(setBookCreateModalDescription("Success, you've created a book review in our Library of reviews! Redux time."));
+                    // dispatch(setShowBookCreateModal(true)); 
 
                     return response.text();//convert to string to print my API response
                 }

@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+//redux
+import { setShowBookCreateModal } from '../librarySlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const style = {
@@ -18,6 +20,7 @@ const style = {
 };
 
 export default function BasicModal(props) {
+  const open = true;
   // const [open, setOpen] = React.useState(props.show);//default is false
   // const handleOpen = () => setOpen(true);
   // const handleClose = () => setOpen(false);
@@ -29,7 +32,9 @@ export default function BasicModal(props) {
     <div>
       <Modal
         open={library.ShowBookCreateModal}
+        // open={open}
         onClose={() => dispatch(setShowBookCreateModal(false)) }
+        // onClose={() => open = false}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
