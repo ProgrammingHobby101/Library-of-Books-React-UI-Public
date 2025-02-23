@@ -3,16 +3,18 @@ import './spinner.css';
 import {useEffect, useRef, useState, React} from 'react';
 import { useNavigate } from 'react-router-dom';
 //responsive cards
-import {Grid, Card, CardContent, Typography, Button, TextField, Rating} from "@mui/material";
+import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mui/material";
+import BasicModal from './BasicModal';
+import { useSelector, useDispatch } from 'react-redux';
+// import Box from '@mui/material/Box';
+// // import MUI_Button from '@mui/material/Button';//I am going to use a different button style from Material UI don't need this one 
+// import Typography from '@mui/material/Typography';
+// import Modal from '@mui/material/Modal';
 //Modal (React-bootstrap)
-import { Button as ModalButton } from 'react-bootstrap';//delete later because I don't need.
-import Modal from 'react-bootstrap/Modal';
-// Spinner (React-bootstrap)
-//import Spinner from 'react-bootstrap/Spinner';
-// https://www.youtube.com/watch?v=xkf0tJq-sNY
-
-//import './style.css'//need to check this file
-
+ // import { Button as ModalButton } from 'react-bootstrap';//delete later because I don't need.
+ // import Modal from 'react-bootstrap/Modal';
+ // import 'bootstrap/dist/css/bootstrap.min.css';
+ 
 export function BookCreate (props){
     var CreatedResponseStatusCode = null;
     const [StarValue, setRating] = useState(null);
@@ -25,12 +27,18 @@ export function BookCreate (props){
     const ReviewerFieldRef = useRef(null);
     const SummaryFieldRef = useRef(null);
     
-    //MODAL state
-    const [show, setShow] = useState(false);//test change back to true after test
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    //SPINNER state
+    //Material UI Modal and redux
+    const library = useSelector(state => state.library);
+    const dispatch = useDispatch();
+    
+    const [title, setTitle] = useState(null);
+    const [description, setDescription] = useState(null);
+    const [open, setOpen] = useState(false);
+    
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => setOpen(false);
+    
+    ///SPINNER state
     const [ShowSpinner, setShowSpinner] = useState(false);
     
 
@@ -81,7 +89,10 @@ export function BookCreate (props){
                     ReviewerFieldRef.current.value = null;
                     SummaryFieldRef.current.value = null;
                     /* Show success modal*/ 
-                    handleShow();
+                    dispatch(setBookCreateModalTitle("Success"));
+                    dispatch(setBookCreateModalDescription("Success, you've created a book review in our Library of reviews! Redux time."));
+                    dispatch(setShowBookCreateModal(true)); 
+
                     return response.text();//convert to string to print my API response
                 }
                 else if(response.status === 500){
@@ -120,28 +131,31 @@ export function BookCreate (props){
             
             <div style={{background: "#fce305"}}> 
 
-                <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-                >
-                    <Modal.Header closeButton>
-                    <Modal.Title>Success</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        Success, you've created a book review in our Library of reviews!
-                    </Modal.Body>
-                    <Modal.Footer>
-                    <ModalButton variant="primary" onClick={handleClose}>
-                        OK
-                    </ModalButton>
-                    </Modal.Footer>
-                </Modal>
-
+                {/* <Modal
+                    show={show}
+                    onHide={handleClose}
+                    backdrop="static"
+                    keyboard={false}
+                    >
+                        <Modal.Header closeButton>
+                        <Modal.Title>Success</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Success, you've created a book review in our Library of reviews!
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <ModalButton variant="primary" onClick={handleClose}>
+                            OK
+                        </ModalButton>
+                        </Modal.Footer>
+                </Modal>  */}
                 
                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
                 { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> } 
+
+
+                {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
+                <BasicModal />
 
 
                 <Typography variant="h4" align="center">            
@@ -159,17 +173,17 @@ export function BookCreate (props){
                                     </Grid> 
                                     <Grid xs={12} item> 
                                         <Typography component="legend" className='star-rating'>Rating</Typography>
-                                            <div class="wrapper">
+                                            <div className="wrapper">
                                                 <Rating
                                                 ref={StarRatingComponent}//doesn't work
                                                 className='star-rating'
                                                 value={StarValue}
                                                 precision={1}
                                                 onChange={StarOnChange}
-                                                tabIndex={null} /*Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This set to zero prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted. */
+                                                tabIndex={null} //Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This set to zero prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted.
                                                 />
                                                 <br></br>
-                                                <div class="cover-input-box-rating">
+                                                <div className="cover-input-box-rating">
                                                     {/* cover element to overlay rating input field for form */}
                                                 </div>
                                                 <input
