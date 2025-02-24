@@ -39,6 +39,7 @@ export default function BasicModal(props) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {library.BookCreateModalDescription}
           </Typography>
+          <Button variant="contained" size="medium" style={{float: "right"}} onClick={()=> dispatch(setShowBookCreateModal(false))}>OK</Button>
         </Box>
       </Modal>
     </div>

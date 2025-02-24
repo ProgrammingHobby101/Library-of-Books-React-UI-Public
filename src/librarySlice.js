@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
-    BookCreateModalTitle: "my test title",
-    BookCreateModalDescription: "my test description",
+    BookCreateModalTitle: "Error, missing title.",
+    BookCreateModalDescription: "Error, missing description.",
     ShowBookCreateModal: false,
+    UserBookItem: {},//bookJSON
 }
 
 export const librarySlice = createSlice({
@@ -17,12 +18,16 @@ reducers: {
         },
         setShowBookCreateModal: (state, action) => {
             state.ShowBookCreateModal = action.payload;         
-        },
+        },        
+        setUserBookItem: (state, action) => {//mutate bookJSON
+            state.UserBookItem = action.payload;
+        }
     }
 });
 
 export const { setBookCreateModalTitle, 
                setBookCreateModalDescription, 
-               setShowBookCreateModal 
+               setShowBookCreateModal,
+               setUserBookItem, 
              } = librarySlice.actions;
 export default librarySlice.reducer;

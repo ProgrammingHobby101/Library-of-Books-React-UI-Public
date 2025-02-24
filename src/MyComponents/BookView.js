@@ -38,7 +38,7 @@ export function BookView(props) {
             <h1 className='my-H-Tags'>Author</h1>
             {props.UserBookItem.author}
             <h3 className='my-H-Tags'>Rating</h3>
-            <Rating name="read-only" value={props.UserBookItem.rating} readOnly />
+            <Rating name="read-only" value={Number(props.UserBookItem.rating)} readOnly />
             {/* {(props.UserBookItem.rating>1) ?  props.UserBookItem.rating+" Stars":  props.UserBookItem.rating+" Star"}  //this is the old code for ratings display */}
             <h3 className='my-H-Tags'>Reviewer</h3>
             {props.UserBookItem.reviewer}

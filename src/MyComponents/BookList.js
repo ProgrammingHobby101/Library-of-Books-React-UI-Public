@@ -3,7 +3,7 @@ import { BookItem } from './BookItem.js';
 import './BookList.css';
 import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px.svg';
 import { useNavigate } from 'react-router-dom';
-import {Grid, Typography, Button} from "@mui/material";
+import {Grid, Typography, Button} from "@mui/material";//don't upgrade Grid to Grid2 because Grid2 looks bad.
 import Container from "@mui/material/Container";
 
 var list = [];
@@ -69,7 +69,7 @@ export function BookList (props) {
         console.log("json: "+json);
         console.log("myJSON.length: "+json.length);
         json.sort((a,b) => {
-            return b.id.localeCompare(a.id) // Sort Decending
+            return b.id.localeCompare(a.id) // Sort Descending, try modifiedDate
         });  
 
         for(let x=0; x<json.length; x++){//don't need because .map iterated through all of them
