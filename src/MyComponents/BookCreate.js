@@ -111,6 +111,9 @@ export function BookCreate (props){
                     }
                     else if(CreatedResponseStatusCode == 500 ){
                         console.log("my API create/put DB limit error"+textData );
+                        dispatch(setBookCreateModalTitle("Error"));
+                        dispatch(setBookCreateModalDescription("Error, Library book creation limit of "+JSON.stringify(textData).error+" books reached. Please try creating your book review after deleting atleast one book review on our homepage."));
+                        dispatch(setShowBookCreateModal(true)); 
                     }
                     else{
                         console.log("Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component

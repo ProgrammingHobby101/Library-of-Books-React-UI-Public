@@ -7,28 +7,30 @@ import Modal from '@mui/material/Modal';
 import { setShowBookCreateModal } from '../librarySlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
+var style = {}
 export default function BasicModal(props) {
   // Redux state and mutator
   const library = useSelector(state => state.library);
   const dispatch = useDispatch();
+  style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    color: library.BookCreateModalTitle === 'Error' ? 'red' : 'green' ,//success/fail message 
+  };
+  
   
   return (
     <div>
       <Modal
         open={library.ShowBookCreateModal}
-        onClose={() => dispatch(setShowBookCreateModal(false)) }
+        onClose={() => dispatch(setShowBookCreateModal(true)) }
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

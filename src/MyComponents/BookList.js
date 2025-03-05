@@ -68,10 +68,12 @@ export function BookList (props) {
         //setMyJSON(json);
         console.log("json: "+json);
         console.log("myJSON.length: "+json.length);
+        // json.sort((a,b) => { // Old sorting method
+        //     return b.modifiedDate.localeCompare(a.modifiedDate) // Sort Descending, try modifiedDate
+        // });  
         json.sort((a,b) => {
-            return b.id.localeCompare(a.id) // Sort Descending, try modifiedDate
-        });  
-
+              return new Date(b.modifiedDate) - new Date(a.modifiedDate) // Sort Descending, try modifiedDate
+          });
         for(let x=0; x<json.length; x++){//don't need because .map iterated through all of them
           list.push(
                 <Grid item xs={12} sm={4} ms={4} key={json[x].id}>
@@ -100,7 +102,7 @@ export function BookList (props) {
       return (
         <>
         {/* <div className='booklist-container'>  */}
-        { (loading) ? <><center>Loading...<p></p><img src={Spinner} alt="loading spinner..." /></center></> 
+        { (loading) ? <><center>Loading...<p></p><img src={Spinner} style={{height: "100vh"}} alt="loading spinner..." /></center></> 
       
         : 
             (finishedList) 
