@@ -1,33 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { BookCreate } from './MyComponents/BookCreate';
 const initialState = {
-    BookCreateModalTitle: "Error, missing title.",
-    BookCreateModalDescription: "Error, missing description.",
-    ShowBookCreateModal: false,
-    UserBookItem: {},//bookJSON
+    BasicModalTitle: "Error, missing title.",
+    BasicModalDescription: "Error, missing description.",
+    ShowBasicModal: false,
+    BookCreateUsingModal: false,
+    BookItemUsingModal: false,
 }
 
 export const librarySlice = createSlice({
 name: 'library',
 initialState,
 reducers: {
-        setBookCreateModalTitle: (state, action) => {
-            state.BookCreateModalTitle = action.payload;
+        setBasicModalTitle: (state, action) => {
+            state.BasicModalTitle = action.payload;
         },
-        setBookCreateModalDescription: (state, action) => {
-            state.BookCreateModalDescription = action.payload;
+        setBasicModalDescription: (state, action) => {
+            state.BasicModalDescription = action.payload;
         },
-        setShowBookCreateModal: (state, action) => {
-            state.ShowBookCreateModal = action.payload;         
+        setShowBasicModal: (state, action) => {
+            state.ShowBasicModal = action.payload;         
         },        
-        setUserBookItem: (state, action) => {//mutate bookJSON
-            state.UserBookItem = action.payload;
-        }
+        setBookCreateUsingModal: (state, action) => {//mutate
+            state.BookCreateUsingModal = action.payload;
+        },
+        setBookItemUsingModal: (state, action) => {//mutate
+            state.BookItemUsingModal = action.payload;
+        },
     }
 });
 
-export const { setBookCreateModalTitle, 
-               setBookCreateModalDescription, 
-               setShowBookCreateModal,
-               setUserBookItem, 
+export const { setBasicModalTitle, 
+               setBasicModalDescription, 
+               setShowBasicModal,
+               setBookCreateUsingModal,
+               setBookItemUsingModal,
              } = librarySlice.actions;
 export default librarySlice.reducer;

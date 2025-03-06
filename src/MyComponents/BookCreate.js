@@ -8,7 +8,7 @@ import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mu
 import BasicModal from './BasicModal';
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { setBookCreateModalTitle, setBookCreateModalDescription, setShowBookCreateModal  } from '../librarySlice';
+import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookCreateUsingModal  } from '../librarySlice';
 // import Box from '@mui/material/Box';
 // // import MUI_Button from '@mui/material/Button';//I am going to use a different button style from Material UI don't need this one 
 // import Typography from '@mui/material/Typography';
@@ -92,9 +92,10 @@ export function BookCreate (props){
                     ReviewerFieldRef.current.value = null;
                     SummaryFieldRef.current.value = null;
                     /* Show success modal by using Redux*/ 
-                    dispatch(setBookCreateModalTitle("Success"));
-                    dispatch(setBookCreateModalDescription("Success, you've created a book review in our library of reviews!"));
-                    dispatch(setShowBookCreateModal(true)); 
+                    dispatch(setBasicModalTitle("Success"));
+                    dispatch(setBasicModalDescription("Success, you've created a book review in our library of reviews!"));
+                    dispatch(setBookCreateUsingModal(true));
+                    dispatch(setShowBasicModal(true)); 
 
                     return response.text();//convert to string to print my API response
                 }
@@ -111,9 +112,11 @@ export function BookCreate (props){
                     }
                     else if(CreatedResponseStatusCode == 500 ){
                         console.log("my API create/put DB limit error"+textData );
-                        dispatch(setBookCreateModalTitle("Error"));
-                        dispatch(setBookCreateModalDescription("Error, Library book creation limit of "+JSON.stringify(textData).error+" books reached. Please try creating your book review after deleting atleast one book review on our homepage."));
-                        dispatch(setShowBookCreateModal(true)); 
+                        /* Show error modal by using Redux*/
+                        dispatch(setBasicModalTitle("Error"));
+                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review after deleting atleast one book review on our homepage."));
+                        dispatch(setBookCreateUsingModal(true));
+                        dispatch(setShowBasicModal(true)); 
                     }
                     else{
                         console.log("Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
