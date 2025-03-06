@@ -26,14 +26,15 @@ export default function BasicModal(props) {
   };
   
   function OnModalClose(){
-    if(library.BookCreateUsingModal == true){
-      dispatch(setBookCreateUsingModal(false)); //reset for next component to reuse modal
-      dispatch(setShowBasicModal(false)) //close modal
-    }
-    else if(library.BookItemUsingModal == true){
+    if(library.BookItemUsingModal == true){
       dispatch(setBookItemUsingModal(false)); //reset for next component to reuse modal
       dispatch(setShowBasicModal(false)) // close model
       window.location.reload();       
+    }
+    else {
+      // library.BookCreateUsingModal == true
+      // dispatch(setBookCreateUsingModal(false)); //reset for next component to reuse modal
+      dispatch(setShowBasicModal(false)) //close modal
     }
   }
   return (
