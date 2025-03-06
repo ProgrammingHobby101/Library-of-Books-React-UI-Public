@@ -3,7 +3,7 @@ import { BookItem } from './BookItem.js';
 import './BookList.css';
 import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px.svg';
 import { useNavigate } from 'react-router-dom';
-import {Grid, Typography, Button} from "@mui/material";
+import {Grid, Typography, Button} from "@mui/material";//don't upgrade Grid to Grid2 because Grid2 looks bad.
 import Container from "@mui/material/Container";
 
 var list = [];
@@ -68,11 +68,13 @@ export function BookList (props) {
         //setMyJSON(json);
         console.log("json: "+json);
         console.log("myJSON.length: "+json.length);
+        // json.sort((a,b) => { // Old sorting method
+        //     return b.modifiedDate.localeCompare(a.modifiedDate) // Sort Descending, try modifiedDate
+        // });  
         json.sort((a,b) => {
-            return b.id.localeCompare(a.id) // Sort Decending
-        });  
-
-        for(let x=0; x<json.length; x++){
+              return new Date(b.modifiedDate) - new Date(a.modifiedDate) // Sort Descending, try modifiedDate
+          });
+        for(let x=0; x<json.length; x++){//don't need because .map iterated through all of them
           list.push(
                 <Grid item xs={12} sm={4} ms={4} key={json[x].id}>
                   <BookItem key={json[x].id} bookJSON={json[x]} setUserBookItem={props.setUserBookItem}/>
@@ -98,7 +100,7 @@ export function BookList (props) {
       return (
         <>
         {/* <div className='booklist-container'>  */}
-        { (loading) ? <><center>Loading...<p></p><img src={Spinner} alt="loading spinner..." /></center></> 
+        { (loading) ? <><center>Loading...<p></p><img src={Spinner} style={{height: "100vh"}} alt="loading spinner..." /></center></> 
       
         : 
             (finishedList) 

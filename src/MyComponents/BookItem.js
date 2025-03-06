@@ -2,14 +2,26 @@ import './BookItem.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
 import {useEffect, useRef, React} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router'
 //responsive cards
 import { Card, CardContent, Typography, CardActions, Button} from "@mui/material";
 import { CardActionArea } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
+//stuff for basic modal
+import BasicModal from './BasicModal';
+import { useSelector, useDispatch } from 'react-redux';
+import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
 
 
+var CreatedResponseStatusCode = 0;
 export function BookItem (props){
     const navigate = useNavigate();
+    let location = useLocation();//old way of refreshing homepage/list-view
+
+    //Material UI Modal and redux
+    const library = useSelector(state => state.library);
+    const dispatch = useDispatch();
+
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
         if (!renderAfterCalled.current) { //only fetch once
@@ -28,7 +40,6 @@ export function BookItem (props){
         console.log("deleting title: "+props.bookJSON.title);//test
         console.log("deleting id: "+props.bookJSON.id);
 
-
         fetch('https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books/'+props.bookJSON.id,{
             method: 'DELETE',
             mode: "cors",
@@ -39,29 +50,45 @@ export function BookItem (props){
                 "Access-Control-Allow-Origin": "*",
             },
         }).then(response => {
+                CreatedResponseStatusCode = response.status;
                 //setShowSpinner(false);//hide spinner
-                if(response.status === 200){
-                    alert("deleted book");//test
+                // if(response.status === 200){
+                    //alert("deleted book");//test
                     /* Show success modal*/ 
                     //handleShow();
                     //NOTE: I refreshed page in the next Then statement powered by the next line.
                     return response.text();//convert to string to print my API response
-                }else{
-                    alert("Something went wrong(alert from then else statement)");//test
-                    
-                }    
+                //}
             }).then(textData => {
-                    console.log("my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
-                    navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+                    if(CreatedResponseStatusCode === 200){
+                        /* Show success modal by using Redux*/ 
+                        dispatch(setBasicModalTitle("Success"));
+                        dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
+                        dispatch(setBookItemUsingModal(true));
+                        dispatch(setShowBasicModal(true)); 
+                        console.log("my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                        //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+                        // window.location.reload(); // this worked before the modal.
+                    } else if (CreatedResponseStatusCode === 404){
+                        console.log("404 status code returned. Book review id not found.");
+                    }else{
+                        console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
+                        throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
+                    }    
                  })
             .catch(error =>{
-                alert("Something went wrong(alert from fetch's catch statement)");//test
+                /* Show error modal by using Redux*/ 
+                dispatch(setBasicModalTitle("Error"));
+                dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
+                dispatch(setBookItemUsingModal(true));
+                dispatch(setShowBasicModal(true));
+                console.log("Something went wrong(alert from fetch's catch statement)");//test
                 //setShowSpinner(false);//hide spinner
                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
                 console.log("my catch error: "+error)
             });
 
-    }    
+    }
         return (
             // <div className="Book-Item">
                         
@@ -72,7 +99,8 @@ export function BookItem (props){
                 
             // </div>
 
-            <>                
+            <>          
+                    <BasicModal />      
                     <Card sx={{maxwidth: 345 }}> 
                         <CardActionArea> 
                             <CardMedia 

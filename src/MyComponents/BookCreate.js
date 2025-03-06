@@ -1,16 +1,24 @@
 import './BookCreate.css';
+import './spinner.css';
 import {useEffect, useRef, useState, React} from 'react';
 //responsive cards
-import {Grid, Card, CardContent, Typography, Button, TextField, Rating} from "@mui/material";
+import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mui/material";
+//modal
+import BasicModal from './BasicModal';
+//Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookCreateUsingModal  } from '../librarySlice';
+// import Box from '@mui/material/Box';
+// // import MUI_Button from '@mui/material/Button';//I am going to use a different button style from Material UI don't need this one 
+// import Typography from '@mui/material/Typography';
+// import Modal from '@mui/material/Modal';
 //Modal (React-bootstrap)
-import { Button as ModalButton } from 'react-bootstrap';//delete later because I don't need.
-import Modal from 'react-bootstrap/Modal';
-// Spinner (React-bootstrap)
-//import Spinner from 'react-bootstrap/Spinner';
-// https://www.youtube.com/watch?v=xkf0tJq-sNY
-import './style.css'
-
+ // import { Button as ModalButton } from 'react-bootstrap';//delete later because I don't need.
+ // import Modal from 'react-bootstrap/Modal';
+ // import 'bootstrap/dist/css/bootstrap.min.css';
+ 
 export function BookCreate (props){
+    var CreatedResponseStatusCode = null;
     const [StarValue, setRating] = useState(null);
     const StarRatingComponent = useRef(null);//get state from the Star Rating component.
     
@@ -20,14 +28,24 @@ export function BookCreate (props){
     const RatingInputField = useRef(null);
     const ReviewerFieldRef = useRef(null);
     const SummaryFieldRef = useRef(null);
+    
+    //Material UI Modal and redux
+    const library = useSelector(state => state.library);
+    const dispatch = useDispatch();
+    // const [title, setTitle] = useState(null);
+    // const [description, setDescription] = useState(null);
+    // const [open, setOpen] = useState(false);
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => setOpen(false);
+    
+    ///SPINNER state
+    const [ShowSpinner, setShowSpinner] = useState(false);
+    
 
     //MODAL state
     const [show, setShow] = useState(false);//test change back to true after test
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    //SPINNER state
-    const [ShowSpinner, setShowSpinner] = useState(false);
 
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
@@ -85,73 +103,91 @@ export function BookCreate (props){
             body: JSON.stringify({"title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":""+StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value })
         }).then(response => {
                 setShowSpinner(false);//hide spinner
+                CreatedResponseStatusCode = response.status;
                 if(response.status === 201){
                     //alert("created book");//test
                     /* Reset form fields */
                     TitleFieldRef.current.value = null;
                     AuthorFieldRef.current.value = null;
                     StarRatingComponent.current.value = 0;
+                    setRating(0);
                     ReviewerFieldRef.current.value = null;
                     SummaryFieldRef.current.value = null;
-                    /* Show success modal*/ 
-                    handleShow();
+                    /* Show success modal by using Redux*/ 
+                    dispatch(setBasicModalTitle("Success"));
+                    dispatch(setBasicModalDescription("Success, you've created a book review in our library of reviews!"));
+                    dispatch(setBookCreateUsingModal(true));
+                    dispatch(setShowBasicModal(true)); 
+
                     return response.text();//convert to string to print my API response
-                }else{
+                }
+                else if(response.status === 500){
+                    return response.json(); 
+                }
+                else{
                     alert("Something went wrong(from then else statement)");//test
-                    
+                    return response.text();
                 }    
             }).then(textData => {
-                    console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
-                    
+                    if(CreatedResponseStatusCode === 201) {
+                        console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                    }
+                    else if(CreatedResponseStatusCode == 500 ){
+                        console.log("my API create/put DB limit error"+textData );
+                        /* Show error modal by using Redux*/
+                        dispatch(setBasicModalTitle("Error"));
+                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review after deleting atleast one book review on our homepage."));
+                        dispatch(setBookCreateUsingModal(true));
+                        dispatch(setShowBasicModal(true)); 
+                    }
+                    else{
+                        console.log("Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
+                        
+                    }
                  })
             .catch(error =>{
                 setShowSpinner(false);//hide spinner
                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
                 console.log("my catch error: "+error)
             });
-      };    
-      
+      };   
+      function MoveFocusToReviewField (event) {
+        if(StarValue != null) {
+            event.currentTarget.setCustomValidity('');
+            console.log("Ratings input detected, now hiding the ratings input validation message.");
+        }
+        ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
+      }
         return (
-
-            <div style={{background: "#fce305", height: "100%", width: "100%"}}> 
-                <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-                >
-                    <Modal.Header closeButton>
-                    <Modal.Title>Success</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        Successfully Created Book review!
-                    </Modal.Body>
-                    <Modal.Footer>
-                    <ModalButton variant="primary" onClick={handleClose}>
-                        OK
-                    </ModalButton>
-                    </Modal.Footer>
-                </Modal>
-
-                
+            
+            <div style={{background: "#fce305"}}> 
 
                 {/* <Modal
-                show={true}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-                style={{margin: "auto"}}
-                >
-                    <Spinner id="myspinner" animation="border" variant="dark"/> 
-                </Modal> */}
-                {/* <Loader></Loader> */}
-                {/* 
-                <div className="modal">
-                    <Spinner id="myspinner" animation="border" variant="dark"/>
-                </div> */}
-                {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
-                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }
+                    show={show}
+                    onHide={handleClose}
+                    backdrop="static"
+                    keyboard={false}
+                    >
+                        <Modal.Header closeButton>
+                        <Modal.Title>Success</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Success, you've created a book review in our Library of reviews!
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <ModalButton variant="primary" onClick={handleClose}>
+                            OK
+                        </ModalButton>
+                        </Modal.Footer>
+                </Modal>  */}
                 
+                {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
+                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> } 
+
+
+                {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
+                <BasicModal />
+
 
                 <Typography variant="h4" align="center">            
                     Create Book Review: 
@@ -168,17 +204,17 @@ export function BookCreate (props){
                                     </Grid> 
                                     <Grid xs={12} item> 
                                         <Typography component="legend" className='star-rating'>Rating</Typography>
-                                            <div class="wrapper">
+                                            <div className="wrapper">
                                                 <Rating
                                                 ref={StarRatingComponent}//doesn't work
                                                 className='star-rating'
                                                 value={StarValue}
                                                 precision={1}
                                                 onChange={StarOnChange}
-                                                tabIndex={null} /*Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This set to zero prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted. */
+                                                tabIndex={null} //Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This set to zero prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted.
                                                 />
                                                 <br></br>
-                                                <div class="cover-input-box-rating">
+                                                <div className="cover-input-box-rating">
                                                     {/* cover element to overlay rating input field for form */}
                                                 </div>
                                                 <input
@@ -187,6 +223,7 @@ export function BookCreate (props){
                                                     name="RatingInput"
                                                     className='input-box-rating'
                                                     type="number"
+                                                    onInvalid={(e) => e.currentTarget.setCustomValidity('Please select a Rating') }
                                                     value={StarValue}
                                                     onFocus={MoveFocusToReviewField}
                                                     onChange={MoveFocusToReviewField}
