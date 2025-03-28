@@ -8,7 +8,7 @@ import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mu
 import BasicModal from './BasicModal';
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookCreateUsingModal  } from '../librarySlice';
+import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal } from '../librarySlice';
 // import Box from '@mui/material/Box';
 // // import MUI_Button from '@mui/material/Button';//I am going to use a different button style from Material UI don't need this one 
 // import Typography from '@mui/material/Typography';
@@ -94,7 +94,6 @@ export function BookCreate (props){
                     /* Show success modal by using Redux*/ 
                     dispatch(setBasicModalTitle("Success"));
                     dispatch(setBasicModalDescription("Success, you've created a book review in our library of reviews!"));
-                    dispatch(setBookCreateUsingModal(true));
                     dispatch(setShowBasicModal(true)); 
 
                     return response.text();//convert to string to print my API response
@@ -115,7 +114,6 @@ export function BookCreate (props){
                         /* Show error modal by using Redux*/
                         dispatch(setBasicModalTitle("Error"));
                         dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review after deleting atleast one book review on our homepage."));
-                        dispatch(setBookCreateUsingModal(true));
                         dispatch(setShowBasicModal(true)); 
                     }
                     else{
@@ -129,13 +127,17 @@ export function BookCreate (props){
                 console.log("my catch error: "+error)
             });
       };   
-      function MoveFocusToReviewField (event) {
-        if(StarValue != null) {
-            event.currentTarget.setCustomValidity('');
-            console.log("Ratings input detected, now hiding the ratings input validation message.");
-        }
-        ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
-      }
+         
+     // function MoveFocusToReviewField (event) {
+     //     if(StarValue != null) {
+     //         event.currentTarget.setCustomValidity('');
+     //         console.log("Ratings input detected, now hiding the ratings input validation message.");
+     //     }
+     //     ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
+     //   }
+     function MoveFocusToReviewField () {
+         ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
+     }
         return (
             
             <div style={{background: "#fce305"}}> 

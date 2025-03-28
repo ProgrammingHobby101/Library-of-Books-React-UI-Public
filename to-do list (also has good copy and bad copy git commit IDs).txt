@@ -1,0 +1,46 @@
+(+)- pass props from bookcreate to modal component.
+(+)- test hiding the Material UI ratings element, then see what the html input element.
+- test if any of the StarOnChange values used in the function are null when using keyboard to control star ratings component.
+(+)- need to copy youtube folder(for the react npm run deploy for production deploys)
+- need to print in console the 400 error of PUT request in BookCreate
+- need to add loading and success/failure status for delete request to BookList.
+- BookCreate why do I have to hit the submit button twice to submit form request?
+- round edges of all modals. 
+(+)- need to refresh BookList
+- check styles.css.
+- possibly change the star ratings component to this one; https://www.geeksforgeeks.org/how-to-create-a-rating-component-in-reactjs/
+(+)- delete gh-pages branch on the remote? looks like no because that branch is the one that works to deploy app to GitHub pages.
+(+)- good copy;
+  commit 422fe2921300c6f6762f61264351ad1362746227 (HEAD)
+  Author: Nicholas <nsdonaldwebmail@gmail.com>
+  Date:   Fri Oct 25 14:19:27 2024 -0400
+- "git diff" to get rid of star component bug.
+draft-good-copy-before-ratings-bug-on-BookCreate-page-new-master-to-be  
+new changes id <b5f6ae4076bc9b1612cbaf0d3d9d5622ee6f4503>   
+old commit id <a57fc7e6b694be7908e09632c06d36349c69f991>
+
+new changes comment: 
+this commit has BUG, where the star ratings component does not work, going to try the 'draft-good-copy-before-ratings-bug-on-BookCreate-page' . Simplified the BasicModal calls. added book list count to BookList page.
+
+- diff to check if these commits are the only one's needed to fix star component bug.
+new changes id <b5f6ae4076bc9b1612cbaf0d3d9d5622ee6f4503>   
+old commit id <8d0e53f80880447abb9bf59ba5f2ea7c4537c24d>
+
+  //After I get everything working again, Add this to BookCreate.css
+  .input-box-rating { /*green-box*/
+    position: absolute;
+    z-index: 3; /* put .green-box above .dashed-box */
+    /* width: 20%; */
+    left: 0%;
+    top: 2%;
+    opacity: 0; /*set this to one to see and edit it.*/
+  }
+- todo list; 
+  ->make the MUI rating go to five stars when going from one star, and same for vice versa.
+  ->make 
+- bad copy; 
+  commit bdccbc7af27af02961799b1b0ad3362342d42cc0 (HEAD -> master, origin/master)
+  Date:   Mon Nov 25 20:20:32 2024 -0500
+
+
+need to print in console the 400 error of PUT request in BookCreate. Need to add delete request to BookList. BookCreate why do I have to hit the submit button twice to submit form request?

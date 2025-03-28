@@ -8,6 +8,7 @@ import Container from "@mui/material/Container";
 
 var list = [];
 var finishedList = null;
+var BooksReviewedCount = 0;
 export function BookList (props) {
     var [loading, setLoading] = useState(true);//show spinner
     var [myJSON, setMyJSON] = useState([]); 
@@ -68,6 +69,7 @@ export function BookList (props) {
         //setMyJSON(json);
         console.log("json: "+json);
         console.log("myJSON.length: "+json.length);
+        BooksReviewedCount = json.length;
         // json.sort((a,b) => { // Old sorting method
         //     return b.modifiedDate.localeCompare(a.modifiedDate) // Sort Descending, try modifiedDate
         // });  
@@ -87,7 +89,7 @@ export function BookList (props) {
         finishedList =  (
           <Container maxwidth="1g">
             <Typography variant="h4" align="center">
-              Books Reviewed: 
+            {BooksReviewedCount} Books Reviewed: 
             </Typography> 
             <Button variant="contained" size="medium" onClick={NavigateToBookCreate}>Create a Review</Button>
             <Grid container spacing={5} style={{ marginTop: "20px"}}>
