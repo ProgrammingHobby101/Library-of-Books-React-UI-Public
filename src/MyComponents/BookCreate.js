@@ -128,16 +128,14 @@ export function BookCreate (props){
             });
       };   
          
-     // function MoveFocusToReviewField (event) {
-     //     if(StarValue != null) {
-     //         event.currentTarget.setCustomValidity('');
-     //         console.log("Ratings input detected, now hiding the ratings input validation message.");
-     //     }
-     //     ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
-     //   }
-     function MoveFocusToReviewField () {
+     function MoveFocusToReviewField (event) {
+         if(StarValue != null) {
+             event.currentTarget.setCustomValidity('');
+             console.log("Ratings input detected, now hiding the ratings input validation message.");
+         }
          ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
-     }
+       }
+       
         return (
             
             <div style={{background: "#fce305"}}> 
