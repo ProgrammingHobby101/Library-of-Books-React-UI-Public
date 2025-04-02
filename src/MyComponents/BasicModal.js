@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 //redux
-import { setShowBasicModal, setBookCreateUsingModal, setBookItemUsingModal } from '../librarySlice';
+import { setShowBasicModal, setBookItemUsingModal } from '../librarySlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 var style = {}
@@ -26,7 +26,7 @@ export default function BasicModal(props) {
   };
   
   function OnModalClose(){
-    if(library.BookItemUsingModal == true){
+    if(library.BookItemUsingModal === true){
       dispatch(setBookItemUsingModal(false)); //reset for next component to reuse modal
       dispatch(setShowBasicModal(false)) // close model
       window.location.reload();       

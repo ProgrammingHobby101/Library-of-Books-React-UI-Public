@@ -104,7 +104,7 @@ export function BookList (props) {
       return (
         <>
         {/* <div className='booklist-container'>  */}
-        { (loading) ? <><center>Loading...<p></p><img src={Spinner} style={{height: "100vh"}} alt="loading spinner..." /></center></> 
+        { (loading) ? <><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></> 
       
         : 
             (finishedList) 

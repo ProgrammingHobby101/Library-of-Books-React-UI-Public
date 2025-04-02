@@ -2,24 +2,24 @@ import './BookItem.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
 import {useEffect, useRef, React} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router'
+//import { useLocation } from 'react-router'
 //responsive cards
 import { Card, CardContent, Typography, CardActions, Button} from "@mui/material";
 import { CardActionArea } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 //stuff for basic modal
 import BasicModal from './BasicModal';
-import { useSelector, useDispatch } from 'react-redux';
+import { /*useSelector,*/ useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
 
 
 var CreatedResponseStatusCode = 0;
 export function BookItem (props){
     const navigate = useNavigate();
-    let location = useLocation();//old way of refreshing homepage/list-view
+    //let location = useLocation();//old way of refreshing homepage/list-view
 
     //Material UI Modal and redux
-    const library = useSelector(state => state.library);
+    //const library = useSelector(state => state.library);
     const dispatch = useDispatch();
 
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.

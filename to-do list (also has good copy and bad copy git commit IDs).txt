@@ -44,3 +44,5 @@ old commit id <8d0e53f80880447abb9bf59ba5f2ea7c4537c24d>
 
 
 need to print in console the 400 error of PUT request in BookCreate. Need to add delete request to BookList. BookCreate why do I have to hit the submit button twice to submit form request?
+
+- commit 4-2-2025; Made/fixed background of parent div on BookCreate page, to extend full height and width of page. updated 'node_modules/caniuse-lite'. Deleted or added or commented out a lot of code to get rid of most warnings. Added "Create" to the title of the BookCreate page. Changed homepage(BookList page) spinner to be 50% of page.

@@ -1,13 +1,12 @@
 import './BookCreate.css';
 import './spinner.css';
 import {useEffect, useRef, useState, React} from 'react';
-import { useNavigate } from 'react-router-dom';
 //responsive cards
 import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mui/material";
 //modal
 import BasicModal from './BasicModal';
 //Redux
-import { useSelector, useDispatch } from 'react-redux';
+import { /*useSelector, */ useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal } from '../librarySlice';
 // import Box from '@mui/material/Box';
 // // import MUI_Button from '@mui/material/Button';//I am going to use a different button style from Material UI don't need this one 
@@ -31,15 +30,8 @@ export function BookCreate (props){
     const SummaryFieldRef = useRef(null);
     
     //Material UI Modal and redux
-    const library = useSelector(state => state.library);
+    //const library = useSelector(state => state.library);
     const dispatch = useDispatch();
-    
-    const [title, setTitle] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [open, setOpen] = useState(false);
-    
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
     
     ///SPINNER state
     const [ShowSpinner, setShowSpinner] = useState(false);
@@ -109,7 +101,7 @@ export function BookCreate (props){
                     if(CreatedResponseStatusCode === 201) {
                         console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
                     }
-                    else if(CreatedResponseStatusCode == 500 ){
+                    else if(CreatedResponseStatusCode === 500 ){
                         console.log("my API create/put DB limit error"+textData );
                         /* Show error modal by using Redux*/
                         dispatch(setBasicModalTitle("Error"));
@@ -135,29 +127,10 @@ export function BookCreate (props){
          }
          ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
        }
-       
+
         return (
             
-            <div style={{background: "#fce305"}}> 
-
-                {/* <Modal
-                    show={show}
-                    onHide={handleClose}
-                    backdrop="static"
-                    keyboard={false}
-                    >
-                        <Modal.Header closeButton>
-                        <Modal.Title>Success</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            Success, you've created a book review in our Library of reviews!
-                        </Modal.Body>
-                        <Modal.Footer>
-                        <ModalButton variant="primary" onClick={handleClose}>
-                            OK
-                        </ModalButton>
-                        </Modal.Footer>
-                </Modal>  */}
+            <div style={{background: "#fce305", width: "100%", height:"100%", position: "absolute", /* margin: "auto", display: "block" */}}> {/**/}
                 
                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
                 { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> } 
@@ -168,14 +141,14 @@ export function BookCreate (props){
 
 
                 <Typography variant="h4" align="center">            
-                    Book Review: 
+                    Create Book Review: 
                 </Typography>    
                     <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
                         <CardContent> 
                             <form onSubmit={onSubmit}> 
                                 <Grid container spacing={2}> 
                                     <Grid xs={12} item> 
-                                        <TextField label="Title" placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
+                                        <TextField label="Title" placeholder="Enter Title"  inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
                                     </Grid> 
                                     <Grid xs={12} item> 
                                         <TextField label="Author" placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
@@ -185,7 +158,7 @@ export function BookCreate (props){
                                             <div className="wrapper">
                                                 <Rating
                                                 ref={StarRatingComponent}//doesn't work
-                                                className='star-rating'
+                                                className='star-rating' 
                                                 value={StarValue}
                                                 precision={1}
                                                 onChange={StarOnChange}
@@ -212,7 +185,7 @@ export function BookCreate (props){
                                             </div>
                                     </Grid> 
                                     <Grid xs={12} item> 
-                                        <TextField label="Reviewer" inputRef={ReviewerFieldRef} id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
+                                        <TextField label="Reviewer" inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
                                     </Grid> 
                                     <Grid xs={12} item> 
                                         <TextField label="Summary" inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
@@ -225,6 +198,5 @@ export function BookCreate (props){
                         </CardContent>
                     </Card>
         </div>
-
         );
 }
