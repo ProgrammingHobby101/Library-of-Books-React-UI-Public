@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, Typography, CardActions, Button} from "@mui/material";
 import { CardActionArea } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
+//import DeleteIcon from '@mui/icons-material/Delete';
 //stuff for basic modal
 import BasicModal from './BasicModal';
 import { /*useSelector,*/ useDispatch } from 'react-redux';
@@ -121,7 +122,7 @@ export function BookItem (props){
                         </CardActionArea>
                         <CardActions> 
                             <Button variant="contained" size="medium" onClick={NavigateToBookView}>Info</Button>
-                            <Button variant="contained" size="medium" onClick={DeleteBook}>Delete</Button> 
+                            <Button variant="outlined" size="medium" onClick={DeleteBook} /*startIcon={<DeleteIcon />}*/> Delete </Button>
                         </CardActions>
                     </Card>
                 {/* ))} */}

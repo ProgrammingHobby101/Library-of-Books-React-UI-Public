@@ -18,8 +18,9 @@ export default function BasicModal(props) {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: 'background.paper',
+    bgcolor: library.BasicModalTitle === 'Error' ? "#ffcdd2" /*pink*/ : "#b9f6ca"/*green*/ ,
     border: '2px solid #000',
+    borderradius: '25px',
     boxShadow: 24,
     p: 4,
     color: library.BasicModalTitle === 'Error' ? 'red' : 'green' ,//success/fail message 

@@ -1,5 +1,8 @@
 .book-container{
     background-color: #fce305;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 .my-H-Tags{
     text-decoration: underline;

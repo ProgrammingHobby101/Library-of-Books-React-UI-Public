@@ -148,10 +148,10 @@ export function BookCreate (props){
                             <form onSubmit={onSubmit}> 
                                 <Grid container spacing={2}> 
                                     <Grid xs={12} item> 
-                                        <TextField label="Title" placeholder="Enter Title"  inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
+                                        <TextField label="Title" className='responsivelayout' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
                                     </Grid> 
                                     <Grid xs={12} item> 
-                                        <TextField label="Author" placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
+                                        <TextField label="Author" className='responsivelayout' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
                                     </Grid> 
                                     <Grid xs={12} item> 
                                         <Typography component="legend" className='star-rating'>Rating</Typography>
@@ -185,7 +185,7 @@ export function BookCreate (props){
                                             </div>
                                     </Grid> 
                                     <Grid xs={12} item> 
-                                        <TextField label="Reviewer" inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
+                                        <TextField label="Reviewer" className='responsivelayout' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
                                     </Grid> 
                                     <Grid xs={12} item> 
                                         <TextField label="Summary" inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
