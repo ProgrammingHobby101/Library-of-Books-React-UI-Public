@@ -1,6 +1,7 @@
 import './BookCreate.css';
 import './spinner.css';
 import {useEffect, useRef, useState, React} from 'react';
+import { useNavigate } from 'react-router-dom';
 //responsive cards
 import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mui/material";
 //modal
@@ -21,7 +22,8 @@ export function BookCreate (props){
     var CreatedResponseStatusCode = null;
     const [StarValue, setRating] = useState(null);
     const StarRatingComponent = useRef(null);//get state from the Star Rating component.
-    
+    const navigate = useNavigate();//initilize navigation for homepage if needed.
+
     //FORM state
     const TitleFieldRef = useRef(null);
     const AuthorFieldRef = useRef(null);
@@ -127,22 +129,28 @@ export function BookCreate (props){
          }
          ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
        }
+     function NavigateToBookList() {//for home button
+        console.log("called NavigateToBookList(Homepage).");
+        navigate("/");
+      }
 
         return (
             
             <div style={{background: "#fce305", width: "100%", height:"100%", position: "absolute", /* margin: "auto", display: "block" */}}> {/**/}
                 
                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
-                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> } 
+                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/} 
 
 
                 {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
                 <BasicModal />
 
 
-                <Typography variant="h4" align="center">            
-                    Create Book Review: 
-                </Typography>    
+                <center>
+                    <Button variant="contained" size="medium" align="center" style={{color: "ffffff", fontweight:"bolder",display:"inline-block", left:"-14%",}} onClick={NavigateToBookList}>Home</Button>
+                    <Typography variant="h4" style={{display:"inline-block"}}> Create Book Review: </Typography>
+                </center>
+                
                     <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
                         <CardContent> 
                             <form onSubmit={onSubmit}> 

@@ -1,3 +1,8 @@
+# How I generated my library reviews project logo (A.I. converstion with Gemini)
+https://gemini.google.com/share/bbd47e8b1979
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

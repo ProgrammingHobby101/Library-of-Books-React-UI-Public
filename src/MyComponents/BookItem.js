@@ -9,7 +9,7 @@ import { CardActionArea } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import MyDeleteIcon from '@mui/icons-material/DeleteRounded ';
-//stuff for basic modal
+//stuff for basic modal with redux
 import BasicModal from './BasicModal';
 import { /*useSelector,*/ useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
@@ -68,7 +68,7 @@ export function BookItem (props){
                         dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
                         dispatch(setBookItemUsingModal(true));
                         dispatch(setShowBasicModal(true)); 
-                        console.log("my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                        console.log("From BookItem page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
                         //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
                         // window.location.reload(); // this worked before the modal.
                     } else if (CreatedResponseStatusCode === 404){
@@ -84,7 +84,7 @@ export function BookItem (props){
                 dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
                 dispatch(setBookItemUsingModal(true));
                 dispatch(setShowBasicModal(true));
-                console.log("Something went wrong(alert from fetch's catch statement)");//test
+                console.log("From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
                 //setShowSpinner(false);//hide spinner
                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
                 console.log("my catch error: "+error)
@@ -122,9 +122,9 @@ export function BookItem (props){
                             </CardContent>
                         </CardActionArea>
                         <CardActions> 
-                        <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+                            <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
                             <Button variant="contained" size="medium" onClick={NavigateToBookView}>Info</Button>
-                            
+                            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
                         </CardActions>
                     </Card>
                 {/* ))} */}

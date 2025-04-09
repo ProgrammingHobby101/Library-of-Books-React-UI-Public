@@ -4,6 +4,7 @@ const initialState = {
     BasicModalDescription: "Error, missing description.",
     ShowBasicModal: false,
     BookItemUsingModal: false,
+    BookViewUsingModal: false,
 }
 
 export const librarySlice = createSlice({
@@ -22,6 +23,9 @@ reducers: {
         setBookItemUsingModal: (state, action) => {//mutate
             state.BookItemUsingModal = action.payload;
         },
+        setBookViewUsingModal: (state, action) => {//mutate
+            state.BookViewUsingModal = action.payload;
+        },
     }
 });
 
@@ -29,5 +33,6 @@ export const { setBasicModalTitle,
                setBasicModalDescription, 
                setShowBasicModal,
                setBookItemUsingModal,
+               setBookViewUsingModal,
              } = librarySlice.actions;
 export default librarySlice.reducer;

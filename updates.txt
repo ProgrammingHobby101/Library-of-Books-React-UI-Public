@@ -1,0 +1,414 @@
+diff --git a/README.md b/README.md
+index 58beeac..27740cf 100644
+--- a/README.md
++++ b/README.md
+@@ -1,3 +1,8 @@
++# How I generated my library reviews project logo (A.I. converstion with Gemini)
++https://gemini.google.com/share/bbd47e8b1979
++
++
++
+ # Getting Started with Create React App
+ 
+ This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+diff --git a/public/favicon.ico b/public/favicon.ico
+deleted file mode 100644
+index a11777c..0000000
+Binary files a/public/favicon.ico and /dev/null differ
+diff --git a/public/index.html b/public/index.html
+index 48c09be..7bd0212 100644
+--- a/public/index.html
++++ b/public/index.html
+@@ -3,7 +3,7 @@
+   <head>
+     <meta charset="utf-8" />
+     <meta name="viewport" content="width=device-width" initial-scale="1.00" maximum-scale="1.0" />
+-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
++    <link rel="icon" href="%PUBLIC_URL%/favicon.jpg" />
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <meta name="theme-color" content="#000000" />
+     <meta
+diff --git a/src/MyComponents/BasicModal.js b/src/MyComponents/BasicModal.js
+index 4faf0cc..b13f43e 100644
+--- a/src/MyComponents/BasicModal.js
++++ b/src/MyComponents/BasicModal.js
+@@ -3,15 +3,18 @@ import Box from '@mui/material/Box';
+ import Button from '@mui/material/Button';
+ import Typography from '@mui/material/Typography';
+ import Modal from '@mui/material/Modal';
++import { useNavigate } from 'react-router-dom';
+ //redux
+-import { setShowBasicModal, setBookItemUsingModal } from '../librarySlice';
++import { setShowBasicModal, setBookItemUsingModal, setBookViewUsingModal } from '../librarySlice';
+ import { useSelector, useDispatch } from 'react-redux';
+ 
+ var style = {}
+ export default function BasicModal(props) {
++  const navigate = useNavigate();
+   // Redux state and mutator
+   const library = useSelector(state => state.library);
+   const dispatch = useDispatch();
++  //Modal style
+   style = {
+     position: 'absolute',
+     top: '50%',
+@@ -24,13 +27,20 @@ export default function BasicModal(props) {
+     boxShadow: 24,
+     p: 4,
+     color: library.BasicModalTitle === 'Error' ? 'red' : 'green' ,//success/fail message 
++    //opacity: '0.1',
+   };
+   
+   function OnModalClose(){
+-    if(library.BookItemUsingModal === true){
++    if(library.BookItemUsingModal === true){//for the delete action on BookItem page
+       dispatch(setBookItemUsingModal(false)); //reset for next component to reuse modal
+       dispatch(setShowBasicModal(false)) // close model
+       window.location.reload();       
++    }
++    else if(library.BookViewUsingModal === true) {//for the delete action on BookView 
++        dispatch(setBookViewUsingModal(false)); //reset for next component to reuse modal
++        dispatch(setShowBasicModal(false)) // close model
++        console.log("Navigating To BookLIst.");
++        navigate("/");
+     }
+      else {
+        // library.BookCreateUsingModal == true
+@@ -41,7 +51,7 @@ export default function BasicModal(props) {
+   return (
+     <div>
+       <Modal
+-        open={library.ShowBasicModal}
++        open={library.ShowBasicModal}//library.ShowBasicModal
+         onClose={() => dispatch(setShowBasicModal(true))}//keep modal open
+         aria-labelledby="modal-modal-title"
+         aria-describedby="modal-modal-description"
+diff --git a/src/MyComponents/BookCreate.css b/src/MyComponents/BookCreate.css
+index 6ae483c..dd839c6 100644
+--- a/src/MyComponents/BookCreate.css
++++ b/src/MyComponents/BookCreate.css
+@@ -2,13 +2,13 @@
+     position: relative;
+   }
+   
+-  @media screen and (max-width: 600px) {/*Galaxy Z Fold 4*/
++  @media screen and (max-width: 600px) {/*Galaxy Z Fold 4 (it's small screen)*/
+     .responsivelayout {
+       width: 100%;
+       /*margin-top: 0;*/
+     }
+   }
+-  @media screen and (min-width: 601px) {/*Galaxy Z Fold 4*/
++  @media screen and (min-width: 601px) {/*laptop and tablet*/
+     .responsivelayout {
+       width: 60%;
+       /*margin-top: 0;*/
+diff --git a/src/MyComponents/BookCreate.js b/src/MyComponents/BookCreate.js
+index 7d6bf77..dc1aa62 100644
+--- a/src/MyComponents/BookCreate.js
++++ b/src/MyComponents/BookCreate.js
+@@ -1,6 +1,7 @@
+ import './BookCreate.css';
+ import './spinner.css';
+ import {useEffect, useRef, useState, React} from 'react';
++import { useNavigate } from 'react-router-dom';
+ //responsive cards
+ import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mui/material";
+ //modal
+@@ -21,7 +22,8 @@ export function BookCreate (props){
+     var CreatedResponseStatusCode = null;
+     const [StarValue, setRating] = useState(null);
+     const StarRatingComponent = useRef(null);//get state from the Star Rating component.
+-    
++    const navigate = useNavigate();//initilize navigation for homepage if needed.
++
+     //FORM state
+     const TitleFieldRef = useRef(null);
+     const AuthorFieldRef = useRef(null);
+@@ -127,22 +129,28 @@ export function BookCreate (props){
+          }
+          ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
+        }
++     function NavigateToBookList() {//for home button
++        console.log("called NavigateToBookList(Homepage).");
++        navigate("/");
++      }
+ 
+         return (
+             
+             <div style={{background: "#fce305", width: "100%", height:"100%", position: "absolute", /* margin: "auto", display: "block" */}}> {/**/}
+                 
+                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
+-                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> } 
++                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/} 
+ 
+ 
+                 {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
+                 <BasicModal />
+ 
+ 
+-                <Typography variant="h4" align="center">            
+-                    Create Book Review: 
+-                </Typography>    
++                <center>
++                    <Button variant="contained" size="medium" align="center" style={{color: "ffffff", fontweight:"bolder",display:"inline-block", left:"-14%",}} onClick={NavigateToBookList}>Home</Button>
++                    <Typography variant="h4" style={{display:"inline-block"}}> Create Book Review: </Typography>
++                </center>
++                
+                     <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
+                         <CardContent> 
+                             <form onSubmit={onSubmit}> 
+diff --git a/src/MyComponents/BookItem.js b/src/MyComponents/BookItem.js
+index fdc0b24..b57a868 100644
+--- a/src/MyComponents/BookItem.js
++++ b/src/MyComponents/BookItem.js
+@@ -9,7 +9,7 @@ import { CardActionArea } from '@mui/material';
+ import CardMedia from '@mui/material/CardMedia';
+ // import DeleteIcon from '@mui/icons-material/Delete';
+ // import MyDeleteIcon from '@mui/icons-material/DeleteRounded ';
+-//stuff for basic modal
++//stuff for basic modal with redux
+ import BasicModal from './BasicModal';
+ import { /*useSelector,*/ useDispatch } from 'react-redux';
+ import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
+@@ -68,7 +68,7 @@ export function BookItem (props){
+                         dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
+                         dispatch(setBookItemUsingModal(true));
+                         dispatch(setShowBasicModal(true)); 
+-                        console.log("my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
++                        console.log("From BookItem page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                         //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+                         // window.location.reload(); // this worked before the modal.
+                     } else if (CreatedResponseStatusCode === 404){
+@@ -84,7 +84,7 @@ export function BookItem (props){
+                 dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
+                 dispatch(setBookItemUsingModal(true));
+                 dispatch(setShowBasicModal(true));
+-                console.log("Something went wrong(alert from fetch's catch statement)");//test
++                console.log("From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
+                 //setShowSpinner(false);//hide spinner
+                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+                 console.log("my catch error: "+error)
+@@ -122,9 +122,9 @@ export function BookItem (props){
+                             </CardContent>
+                         </CardActionArea>
+                         <CardActions> 
+-                        <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
++                            <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+                             <Button variant="contained" size="medium" onClick={NavigateToBookView}>Info</Button>
+-                            
++                            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
+                         </CardActions>
+                     </Card>
+                 {/* ))} */}
+diff --git a/src/MyComponents/BookList.js b/src/MyComponents/BookList.js
+index ef7dd03..eebd353 100644
+--- a/src/MyComponents/BookList.js
++++ b/src/MyComponents/BookList.js
+@@ -104,7 +104,7 @@ export function BookList (props) {
+       return (
+         <>
+         {/* <div className='booklist-container'>  */}
+-        { (loading) ? <><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></> 
++        { (loading) ? <div style={{ background: "#fce305",position: "absolute", height:"100%", width: "100%"}}><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></div> 
+       
+         : 
+             (finishedList) 
+diff --git a/src/MyComponents/BookView.js b/src/MyComponents/BookView.js
+index ea9dcaf..28fbb56 100644
+--- a/src/MyComponents/BookView.js
++++ b/src/MyComponents/BookView.js
+@@ -2,9 +2,18 @@ import './BookView.css';
+ //import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
+ import { useNavigate } from 'react-router-dom';
+ import {useEffect, useRef} from 'react';
+-import {Rating} from "@mui/material";
++import {Rating, Button, Typography} from "@mui/material";
++//stuff for basic modal with redux
++import BasicModal from './BasicModal';
++import { /*useSelector,*/ useDispatch } from 'react-redux';
++import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookViewUsingModal  } from '../librarySlice';
+ 
++
++var CreatedResponseStatusCode = 0;
+ export function BookView(props) {
++    //Material UI Modal and redux
++    const dispatch = useDispatch();
++    
+     const navigate = useNavigate();//initilize navigation for homepage if needed.
+     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
+     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
+@@ -18,7 +27,7 @@ export function BookView(props) {
+         var emptyObj = {};//using var for comparison since adding {} to if condition always returns false.
+         console.log("(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) is: "+(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)));//test print
+         if (JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) {
+-            console.log("rerouting back to homepage because props.UserBookItem was empty object because user went to BookView page without using homepage");
++            console.log("rerouting back to homepage because props.UserBookItem was empty object because user went to BookView page without using homepage, and if I allow this it will cause the BookView page to not have any book/movie review data.");
+             renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
+             navigate("/");//route back to homepage
+           }//else do nothing
+@@ -26,6 +35,63 @@ export function BookView(props) {
+             console.log("NOT rerouting back to homepage because props.UserBookItem was defined so this means user went to homepage and use the app to navigate to BookView page");
+         }
+     }
++
++    function DeleteBook () {
++      console.log("deleting title: "+props.UserBookItem.title);//test
++      console.log("deleting id: "+props.UserBookItem.id);
++
++      fetch('https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books/'+props.UserBookItem.id,{
++          method: 'DELETE',
++          mode: "cors",
++          headers: {
++              //Accept: 'application/json',
++              //"Origin": "https://programminghobby101.github.io",
++              'Content-Type': 'application/json',
++              "Access-Control-Allow-Origin": "*",
++          },
++      }).then(response => {
++              CreatedResponseStatusCode = response.status;
++              //setShowSpinner(false);//hide spinner
++              // if(response.status === 200){
++                  //alert("deleted book");//test
++                  /* Show success modal*/ 
++                  //handleShow();
++                  //NOTE: I refreshed page in the next Then statement powered by the next line.
++                  return response.text();//convert to string to print my API response
++              //}
++          }).then(textData => {
++                  if(CreatedResponseStatusCode === 200){
++                      /* Show success modal by using Redux*/ 
++                      dispatch(setBasicModalTitle("Success"));
++                      dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
++                      dispatch(setBookViewUsingModal(true));
++                      dispatch(setShowBasicModal(true)); 
++                      console.log("From BookView page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
++                      navigate("/");//Go to homepage after deleting item on the BookView page, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
++                      // window.location.reload(); // this worked before the modal.
++                  } else if (CreatedResponseStatusCode === 404){
++                      console.log("404 status code returned. Book review id not found.");
++                  }else{
++                      console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
++                      throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
++                  }    
++               })
++          .catch(error =>{
++              /* Show error modal by using Redux*/ 
++              dispatch(setBasicModalTitle("Error"));
++              dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
++              dispatch(setBookViewUsingModal(true));
++              dispatch(setShowBasicModal(true));
++              console.log("Something went wrong(alert from fetch's catch statement)");//test
++              //setShowSpinner(false);//hide spinner
++              //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
++              console.log("my catch error: "+error)
++          });
++    }
++     function NavigateToBookList() {
++        console.log("called  NavigateToBookList(Homepage).");
++        navigate("/");
++      }
+     return (
+         // <div>
+         //     <p>hello world!</p>
+@@ -33,6 +99,10 @@ export function BookView(props) {
+         // </div>
+         <div className="book-container">
+           <center>
++            <Button variant="contained" size="small" style={{color: "ffffff !important",fontweight:"bolder", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button> 
++            <Button variant="contained" size="medium" style={{color: "ffffff", fontweight:"bolder"}} onClick={NavigateToBookList}>Home</Button>
++            <Button variant="contained" size="medium" style={{color: "ffffff",fontweight:"bolder", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
++            
+             <h1 className='my-H-Tags'>Title</h1>
+             {props.UserBookItem.title}
+             <h1 className='my-H-Tags'>Author</h1>
+diff --git a/src/MyComponents/spinner.css b/src/MyComponents/spinner.css
+index d72dc7f..a602bec 100644
+--- a/src/MyComponents/spinner.css
++++ b/src/MyComponents/spinner.css
+@@ -30,19 +30,39 @@
+ 	to {transform:rotate(360deg);}
+ }
+ 
+-#semiTransparenDiv::after {
+-    content:'';
+-    display:block;
+-    position:absolute;
+-    left:48%;top:40%;
+-    width:80px;height:80px;
+-    border-style:solid;
+-    border: 5px solid rgb(255, 255, 255);
+-	border-top-color: #6CC4EE;
+-    border-width: 7px;
+-    border-radius:50%;
+-    -webkit-animation: spin .8s linear infinite;
+-    
+-    /* Lets make it go round */
+-    animation: spin .8s linear infinite;
++@media screen and (max-width: 600px) {/*Galaxy Z Fold 4*/
++    #semiTransparenDiv::after {
++        content:'';
++        display:block;
++        position:absolute;
++        left:35%;top:40%;
++        width:80px; height:80px;
++        border-style:solid;
++        border: 5rem solid rgb(255, 255, 255);
++        border-top-color: #6CC4EE;
++        border-width: 0.5rem;
++        border-radius:50%;
++        -webkit-animation: spin .8s linear infinite;
++        
++        /* Lets make it go round */
++        animation: spin .8s linear infinite;
++    }
++}
++@media screen and (min-width: 601px) {/*Galaxy Z Fold 4*/
++    #semiTransparenDiv::after {
++        content:'';
++        display:block;
++        position:absolute;
++        left:48%;top:40%;
++        width:80px; height:80px;
++        border-style:solid;
++        border: 5px solid rgb(255, 255, 255);
++        border-top-color: #6CC4EE;
++        border-width: 7px;
++        border-radius:50%;
++        -webkit-animation: spin .8s linear infinite;
++        
++        /* Lets make it go round */
++        animation: spin .8s linear infinite;
++    }
+ }
+\ No newline at end of file
+diff --git a/src/librarySlice.js b/src/librarySlice.js
+index 4d47772..e88f9dd 100644
+--- a/src/librarySlice.js
++++ b/src/librarySlice.js
+@@ -4,6 +4,7 @@ const initialState = {
+     BasicModalDescription: "Error, missing description.",
+     ShowBasicModal: false,
+     BookItemUsingModal: false,
++    BookViewUsingModal: false,
+ }
+ 
+ export const librarySlice = createSlice({
+@@ -22,6 +23,9 @@ reducers: {
+         setBookItemUsingModal: (state, action) => {//mutate
+             state.BookItemUsingModal = action.payload;
+         },
++        setBookViewUsingModal: (state, action) => {//mutate
++            state.BookViewUsingModal = action.payload;
++        },
+     }
+ });
+ 
+@@ -29,5 +33,6 @@ export const { setBasicModalTitle,
+                setBasicModalDescription, 
+                setShowBasicModal,
+                setBookItemUsingModal,
++               setBookViewUsingModal,
+              } = librarySlice.actions;
+ export default librarySlice.reducer;
+\ No newline at end of file
