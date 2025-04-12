@@ -96,10 +96,11 @@ export function BookCreate (props){
                     return response.json(); 
                 }
                 else{
-                    alert("Something went wrong(from then else statement)");//test
+                    console.log("CODE 1.1; Something went wrong(from then else statement)");//test
                     return response.text();
                 }    
             }).then(textData => {
+                //throw new Error('CODE test...; Something went wrong(from then-then else statement) "+textData');//for testing catch only
                     if(CreatedResponseStatusCode === 201) {
                         console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
                     }
@@ -111,14 +112,19 @@ export function BookCreate (props){
                         dispatch(setShowBasicModal(true)); 
                     }
                     else{
-                        console.log("Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
-                        
+                        console.log("CODE 1.2; Tried creating a book review, Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
+                        throw new Error('CODE 1.2; Something went wrong(from then-then else statement) "+textData');
                     }
                  })
             .catch(error =>{
                 setShowSpinner(false);//hide spinner
+                
+                console.log("CODE 1.3; my catch error: "+error);
+                /* Show thrown error modal by using Redux*/
+                dispatch(setBasicModalTitle("Error"));
+                dispatch(setBasicModalDescription("Error while creating your book review, please try again later. CODE 1.3"));
+                dispatch(setShowBasicModal(true)); 
                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
-                console.log("my catch error: "+error)
             });
       };   
          

@@ -15,12 +15,12 @@ function App() {
     <HashRouter >
       <Routes> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
           <Route index path="/" element={<div className="App">
-              <header>
-                <div>
-                  <form className="my-form" >
-                      <center>
-                        <label htmlFor="search">Search: </label>
-                        <input className="search-box" type="text" id="search" name="Search"/>
+              <header style={{height:"2.5rem"}}>
+                <div style={{height:" 100%"}}>
+                  <form className="my-form" style={{height:" 100%"}}>
+                      <center style={{height:" 100%"}}>
+                        <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label>
+                        <input className="search-box" type="text" id="search" name="Search" style={{height:" 75%", width:"50%"}}/>
                       </center>
                   </form>
                 </div>

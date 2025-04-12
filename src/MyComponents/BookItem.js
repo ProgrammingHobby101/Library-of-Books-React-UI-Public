@@ -1,6 +1,7 @@
 import './BookItem.css';
+import './spinner.css';
 import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
-import {useEffect, useRef, React} from 'react';
+import {useEffect, useRef, useState, React} from 'react';
 import { useNavigate } from 'react-router-dom';
 //import { useLocation } from 'react-router'
 //responsive cards
@@ -11,7 +12,7 @@ import CardMedia from '@mui/material/CardMedia';
 // import MyDeleteIcon from '@mui/icons-material/DeleteRounded ';
 //stuff for basic modal with redux
 import BasicModal from './BasicModal';
-import { /*useSelector,*/ useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
 
 
@@ -24,6 +25,9 @@ export function BookItem (props){
     //const library = useSelector(state => state.library);
     const dispatch = useDispatch();
 
+    ///SPINNER state
+    const [ShowSpinner, setShowSpinner] = useState(false);
+
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
         if (!renderAfterCalled.current) { //only fetch once
@@ -31,6 +35,7 @@ export function BookItem (props){
             //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
           }//else do nothing
           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
+          // eslint-disable-next-line
          }, []);
     function NavigateToBookView () {
         console.log("called NavigateToBookView.");
@@ -39,6 +44,7 @@ export function BookItem (props){
     }
     //const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }//test
     function DeleteBook () {
+        setShowSpinner(true);//show spinner
         console.log("deleting title: "+props.bookJSON.title);//test
         console.log("deleting id: "+props.bookJSON.id);
 
@@ -52,8 +58,8 @@ export function BookItem (props){
                 "Access-Control-Allow-Origin": "*",
             },
         }).then(response => {
+                setShowSpinner(false);//hide spinner
                 CreatedResponseStatusCode = response.status;
-                //setShowSpinner(false);//hide spinner
                 // if(response.status === 200){
                     //alert("deleted book");//test
                     /* Show success modal*/ 
@@ -62,6 +68,7 @@ export function BookItem (props){
                     return response.text();//convert to string to print my API response
                 //}
             }).then(textData => {
+                //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only   
                     if(CreatedResponseStatusCode === 200){
                         /* Show success modal by using Redux*/ 
                         dispatch(setBasicModalTitle("Success"));
@@ -72,22 +79,28 @@ export function BookItem (props){
                         //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
                         // window.location.reload(); // this worked before the modal.
                     } else if (CreatedResponseStatusCode === 404){
-                        console.log("404 status code returned. Book review id not found.");
+                        /* Show error modal by using Redux*/ 
+                        console.log("CODE 1.1; 404 status code returned. Book review id not found.");
+                        dispatch(setBasicModalTitle("Error"));
+                        dispatch(setBasicModalDescription("Error, CODE 1.1 failed to delete a book review, please try again later!"));
+                        dispatch(setBookItemUsingModal(true));
+                        dispatch(setShowBasicModal(true));
                     }else{
-                        console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
-                        throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
+                        console.log("CODE 1.2; Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
+                        throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch.");                   
                     }    
                  })
             .catch(error =>{
+                setShowSpinner(false);//hide spinner
                 /* Show error modal by using Redux*/ 
                 dispatch(setBasicModalTitle("Error"));
-                dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
+                dispatch(setBasicModalDescription("Error, CODE 1.3 Something went wrong! Sorry the book review you selected was not deleted out of our library of reviews. Please try again later."));
                 dispatch(setBookItemUsingModal(true));
                 dispatch(setShowBasicModal(true));
-                console.log("From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
+                console.log("CODE 1.3; From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
                 //setShowSpinner(false);//hide spinner
                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
-                console.log("my catch error: "+error)
+                console.log("CODE 1.3 my catch error: "+error)
             });
 
     }
@@ -101,7 +114,10 @@ export function BookItem (props){
                 
             // </div>
 
-            <>          
+            <>      
+                    {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
+                    { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}     
+                    
                     <BasicModal />      
                     <Card sx={{maxwidth: 345 }}> 
                         <CardActionArea> 
