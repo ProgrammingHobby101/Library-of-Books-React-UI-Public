@@ -3,7 +3,7 @@ import './spinner.css';
 //import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
 import { useNavigate } from 'react-router-dom';
 import {useEffect, useRef, useState} from 'react';
-import {Rating, Button, Typography} from "@mui/material";
+import {Rating, Button} from "@mui/material";
 //stuff for basic modal with redux
 import BasicModal from './BasicModal';
 import { /*useSelector,*/ useDispatch } from 'react-redux';
@@ -17,10 +17,6 @@ export function BookView(props) {
 
     //Material UI Modal and redux
     const dispatch = useDispatch();
-    dispatch(setBasicModalTitle("Error"));
-    dispatch(setBasicModalDescription("Error,testing at top of BOOKView page."));
-    dispatch(setBookViewUsingModal(true));
-    dispatch(setShowBasicModal(true));
 
     //navigate
     const navigate = useNavigate();//initilize navigation for homepage if needed.
@@ -73,7 +69,7 @@ export function BookView(props) {
               //}
           }).then(textData => {
                   setShowSpinner(false);//hide spinner
-                  throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only 
+                  //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only 
                   if(CreatedResponseStatusCode === 200){
                       /* Show success modal by using Redux*/ 
                       dispatch(setBasicModalTitle("Success"));
@@ -91,11 +87,6 @@ export function BookView(props) {
                       dispatch(setShowBasicModal(true));
                   }else{
                     /* Show error modal by using Redux*/ 
-                    console.log("CODE 1.2; 404 status code returned. Book review id not found.");
-                    dispatch(setBasicModalTitle("Error"));
-                    dispatch(setBasicModalDescription("Error, CODE 1.2; failed to delete a book review, please try again later!"));
-                    dispatch(setBookViewUsingModal(true));
-                    dispatch(setShowBasicModal(true));
                     console.log("CODE 1.2; Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
                     throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch."); 
                   }    
@@ -126,29 +117,32 @@ export function BookView(props) {
 
             {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
             { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}
+            
+            {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
+            <BasicModal />
 
           <center>
             <Button variant="contained" size="small" style={{color: "ffffff !important",fontweight:"bolder", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button> 
             <Button variant="contained" size="medium" style={{color: "ffffff", fontweight:"bolder"}} onClick={NavigateToBookList}>Home</Button>
             <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
             
-            <h1 className='my-H-Tags'>Title</h1>
-            {props.UserBookItem.title}
-            <h1 className='my-H-Tags'>Author</h1>
-            {props.UserBookItem.author}
-            <h3 className='my-H-Tags'>Rating</h3>
-            <Rating name="read-only" value={Number(props.UserBookItem.rating)} readOnly />
-            {/* {(props.UserBookItem.rating>1) ?  props.UserBookItem.rating+" Stars":  props.UserBookItem.rating+" Star"}  //this is the old code for ratings display */}
-            <h3 className='my-H-Tags'>Reviewer</h3>
-            {props.UserBookItem.reviewer}
-            <h4 className='my-H-Tags'>Created Date</h4>
-            {props.UserBookItem.createdDate}
-            <h4 className='my-H-Tags'>Modified Date</h4>
-            {(props.UserBookItem.modifiedDate === null) ?  "N/A": props.UserBookItem.modifiedDate}
-            <h3 className='my-H-Tags'>Summary</h3>
-            {props.UserBookItem.summary}
-            <h4 className='my-H-Tags'>ID</h4>
-            {props.UserBookItem.id}
+                <h1 className='my-H-Tags'>Title</h1>
+                {props.UserBookItem.title}
+                <h1 className='my-H-Tags'>Author</h1>
+                {props.UserBookItem.author}
+                <h3 className='my-H-Tags'>Rating</h3>
+                <Rating name="read-only" value={Number(props.UserBookItem.rating)} readOnly />
+                {/* {(props.UserBookItem.rating>1) ?  props.UserBookItem.rating+" Stars":  props.UserBookItem.rating+" Star"}  //this is the old code for ratings display */}
+                <h3 className='my-H-Tags'>Reviewer</h3>
+                {props.UserBookItem.reviewer}
+                <h4 className='my-H-Tags'>Created Date</h4>
+                {props.UserBookItem.createdDate}
+                <h4 className='my-H-Tags'>Modified Date</h4>
+                {(props.UserBookItem.modifiedDate === null) ?  "N/A": props.UserBookItem.modifiedDate}
+                <h3 className='my-H-Tags'>Summary</h3>
+                {props.UserBookItem.summary}
+                <h4 className='my-H-Tags'>ID</h4>
+                {props.UserBookItem.id}
           </center>
         </div>
     );
