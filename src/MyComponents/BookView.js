@@ -25,7 +25,8 @@ export function BookView(props) {
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
           checkIfDataExistFromBookItem();
           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
-    }, []);
+          // eslint-disable-next-line 
+    }, [checkIfDataExistFromBookItem()]);
     function checkIfDataExistFromBookItem(){
         console.log("hello world title:"+props.UserBookItem.title);//test prints
         console.log("hello world:"+JSON.stringify(props.UserBookItem));//test prints
