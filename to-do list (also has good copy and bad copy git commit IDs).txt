@@ -1,13 +1,14 @@
+- components that I need to test their http requests; (+)BookCreate, (+)BookList, (+)BookItem, (+)BookView, 
 (+)- pass props from bookcreate to modal component.
 (+)- test hiding the Material UI ratings element, then see what the html input element.
 - test if any of the StarOnChange values used in the function are null when using keyboard to control star ratings component.
 (+)- need to copy youtube folder(for the react npm run deploy for production deploys)
 - need to print in console the 400 error of PUT request in BookCreate
-- need to add loading and success/failure status for delete request to BookList.
+(+)- need to add loading and success/failure status for delete request to BookList.
 - BookCreate why do I have to hit the submit button twice to submit form request?
-- round edges of all modals. 
+(+)- round edges of all modals. 
 (+)- need to refresh BookList
-- check styles.css.
+(+)- check styles.css.
 - possibly change the star ratings component to this one; https://www.geeksforgeeks.org/how-to-create-a-rating-component-in-reactjs/
 (+)- delete gh-pages branch on the remote? looks like no because that branch is the one that works to deploy app to GitHub pages.
 (+)- good copy;

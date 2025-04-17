@@ -5,6 +5,7 @@ const initialState = {
     ShowBasicModal: false,
     BookItemUsingModal: false,
     BookViewUsingModal: false,
+    BookListUsingModal: false,
 }
 
 export const librarySlice = createSlice({
@@ -26,6 +27,9 @@ reducers: {
         setBookViewUsingModal: (state, action) => {//mutate
             state.BookViewUsingModal = action.payload;
         },
+        setBookListUsingModal: (state, action) => {//mutate
+            state.BookListUsingModal = action.payload;
+        },
     }
 });
 
@@ -34,5 +38,6 @@ export const { setBasicModalTitle,
                setShowBasicModal,
                setBookItemUsingModal,
                setBookViewUsingModal,
+               setBookListUsingModal,
              } = librarySlice.actions;
 export default librarySlice.reducer;

@@ -17,9 +17,11 @@ import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBoo
 
 
 var CreatedResponseStatusCode = 0;
+//var myStyle = {minWidth: "220px"};
 export function BookItem (props){
     const navigate = useNavigate();
     //let location = useLocation();//old way of refreshing homepage/list-view
+    
 
     //Material UI Modal and redux
     //const library = useSelector(state => state.library);
@@ -60,6 +62,7 @@ export function BookItem (props){
         }).then(response => {
                 setShowSpinner(false);//hide spinner
                 CreatedResponseStatusCode = response.status;
+                //  CreatedResponseStatusCode = 500;//test only
                 // if(response.status === 200){
                     //alert("deleted book");//test
                     /* Show success modal*/ 
@@ -69,7 +72,7 @@ export function BookItem (props){
                 //}
             }).then(textData => {
                 //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only   
-                    if(CreatedResponseStatusCode === 200){
+                    if(CreatedResponseStatusCode === 200){//tested works!
                         /* Show success modal by using Redux*/ 
                         dispatch(setBasicModalTitle("Success"));
                         dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
@@ -78,11 +81,11 @@ export function BookItem (props){
                         console.log("From BookItem page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
                         //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
                         // window.location.reload(); // this worked before the modal.
-                    } else if (CreatedResponseStatusCode === 404){
+                    } else if (CreatedResponseStatusCode === 404){//tested works!
                         /* Show error modal by using Redux*/ 
                         console.log("CODE 1.1; 404 status code returned. Book review id not found.");
                         dispatch(setBasicModalTitle("Error"));
-                        dispatch(setBasicModalDescription("Error, CODE 1.1 failed to delete a book review, please try again later!"));
+                        dispatch(setBasicModalDescription("Error, CODE 1.1 failed to delete a book review, please try again later."));
                         dispatch(setBookItemUsingModal(true));
                         dispatch(setShowBasicModal(true));
                     }else{
@@ -90,7 +93,7 @@ export function BookItem (props){
                         throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch.");                   
                     }    
                  })
-            .catch(error =>{
+            .catch(error =>{//tested works!
                 setShowSpinner(false);//hide spinner
                 /* Show error modal by using Redux*/ 
                 dispatch(setBasicModalTitle("Error"));
@@ -100,7 +103,7 @@ export function BookItem (props){
                 console.log("CODE 1.3; From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
                 //setShowSpinner(false);//hide spinner
                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
-                console.log("CODE 1.3 my catch error: "+error)
+                console.log("CODE 1.3 my catch error: "+error.stack)
             });
 
     }
@@ -119,14 +122,13 @@ export function BookItem (props){
                     { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}     
                     
                     <BasicModal />      
-                    <Card sx={{maxwidth: 345 }}> 
+                    <Card id="booklistitem" sx={{maxwidth: 345, }}> 
                         <CardActionArea> 
                             <CardMedia 
                               component="img" 
-                              height="140" 
+                              height="140.m/l" 
                               image={BookThumbnail}
                               alt="BookThumbnail"
-                              style={{borderRadius: "5px"}}
                             />
                             <CardContent> 
                                 <Typography gutterBottom variant="h5" component="div">
@@ -138,9 +140,9 @@ export function BookItem (props){
                             </CardContent>
                         </CardActionArea>
                         <CardActions> 
-                            <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
-                            <Button variant="contained" size="medium" onClick={NavigateToBookView}>Info</Button>
-                            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
+                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" onClick={NavigateToBookView}>Info</Button>
+                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
                         </CardActions>
                     </Card>
                 {/* ))} */}

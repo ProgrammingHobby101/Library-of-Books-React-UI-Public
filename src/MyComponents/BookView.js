@@ -66,33 +66,34 @@ export function BookView(props) {
                   /* Show success modal*/ 
                   //handleShow();
                   //NOTE: I refreshed page in the next Then statement powered by the next line.
-                  return response.text();//convert to string to print my API response
+                  return response.json();//convert to string to print my API response
               //}
-          }).then(textData => {
+          }).then(json => {
                   setShowSpinner(false);//hide spinner
+                //   CreatedResponseStatusCode = 500;//TEST ONLY
                   //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only 
-                  if(CreatedResponseStatusCode === 200){
+                  if(CreatedResponseStatusCode === 200){//tested works!
                       /* Show success modal by using Redux*/ 
                       dispatch(setBasicModalTitle("Success"));
                       dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
                       dispatch(setBookViewUsingModal(true));
                       dispatch(setShowBasicModal(true)); 
-                      console.log("From BookView page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                      console.log("From BookView page, my API delete success response: "+json); // Now you have the string data , // Use the json as needed in your component
                       navigate("/");//Go to homepage after deleting item on the BookView page, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
                       // window.location.reload(); // this worked before the modal.
-                  } else if (CreatedResponseStatusCode === 404){
+                  } else if (CreatedResponseStatusCode === 404){//tested works!
                       console.log("CODE 1.1; 404 status code returned. Book review id not found.");
                       dispatch(setBasicModalTitle("Error"));
                       dispatch(setBasicModalDescription("Error, Code 1.1 failed to delete a book review, please try again later!"));
                       dispatch(setBookViewUsingModal(true));
                       dispatch(setShowBasicModal(true));
-                  }else{
+                  }else{//tested works!
                     /* Show error modal by using Redux*/ 
                     console.log("CODE 1.2; Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
                     throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch."); 
                   }    
                })
-          .catch(error =>{
+          .catch(error =>{ // tested works!
               /* Show error modal by using Redux*/ 
               dispatch(setBasicModalTitle("Error"));
               dispatch(setBasicModalDescription("Error,CODE 1.3; Something went wrong! Sorry the book review you selected was not deleted out of our library of reviews. Please try again later."));

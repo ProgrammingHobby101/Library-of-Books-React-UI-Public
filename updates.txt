@@ -1,932 +1,1492 @@
-diff --git a/src/MyComponents/BookCreate.css b/src/MyComponents/BookCreate.css
-index dd839c6..43e9a5f 100644
---- a/src/MyComponents/BookCreate.css
-+++ b/src/MyComponents/BookCreate.css
-@@ -2,18 +2,37 @@
-     position: relative;
-   }
-   
--  @media screen and (max-width: 600px) {/*Galaxy Z Fold 4 (it's small screen)*/
--    .responsivelayout {
-+  /* following makes form fields responsive */
-+  @media screen and (max-width: 600px) {/*for form fields, Galaxy Z Fold 4 (it's small screen)*/
-+    .responsivelayoutforWidth {
-       width: 100%;
-       /*margin-top: 0;*/
-     }
-   }
--  @media screen and (min-width: 601px) {/*laptop and tablet*/
--    .responsivelayout {
-+  @media screen and (min-width: 601px) {/*for form fields, laptop and tablet*/
-+    .responsivelayoutforWidth {
-       width: 60%;
-       /*margin-top: 0;*/
-     }
-   }
+diff --git a/README.md b/README.md
+index 27740cf..ab6b364 100644
+--- a/README.md
++++ b/README.md
+@@ -5,44 +5,7 @@ https://gemini.google.com/share/bbd47e8b1979
+ 
+ # Getting Started with Create React App
+ 
+-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+-
+-## Available Scripts
+-
+-In the project directory, you can run:
+-
+-### `npm start`
+-
+-Runs the app in the development mode.\
+-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-
+-The page will reload when you make changes.\
+-You may also see any lint errors in the console.
+-
+-### `npm test`
+-
+-Launches the test runner in the interactive watch mode.\
+-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-
+-### `npm run build`
+-
+-Builds the app for production to the `build` folder.\
+-It correctly bundles React in production mode and optimizes the build for the best performance.
+-
+-The build is minified and the filenames include the hashes.\
+-Your app is ready to be deployed!
+-
+-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-
+-### `npm run eject`
+-
+-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+-
+-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-
+-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+-
+-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
++This project was bootstrapped with [Create React App](https://github.com/facebook/create
+ 
+ ## Learn More
+ 
+@@ -50,10 +13,6 @@ You can learn more in the [Create React App documentation](https://facebook.gith
+ 
+ To learn React, check out the [React documentation](https://reactjs.org/).
+ 
+-### Code Splitting
+-
+-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-
+ ### Analyzing the Bundle Size
+ 
+ This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+@@ -72,4 +31,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
+ 
+ ### `npm run build` fails to minify
+ 
+-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
++This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+\ No newline at end of file
+diff --git a/public/index.html b/public/index.html
+index 7bd0212..573e611 100644
+--- a/public/index.html
++++ b/public/index.html
+@@ -26,6 +26,20 @@
+       Learn how to configure a non-root public URL by running `npm run build`.
+     -->
+     <title>Library Books App</title>
 +
-+  /*following responsive-layout-for-height  class makes component container div background color stretch across the page in all situations.*/
-+  @media screen and (max-height: 635px) { /*for form fields, Galaxy Z Fold 4 (it's small screen)*/
-+    .responsive-layout-for-height {
-+      position: relative;
-+      background: #fce305; 
-+      width: 100%; 
-+      height: 100%;
-+    }
-+  }
-+  @media screen and (min-height: 636px) {  /*for form fields, laptop and tablet*/
-+    .responsive-layout-for-height {
-+      position: absolute;
-+      background: #fce305; 
-+      width: 100%; 
-+      height:100%;
-+    }
-+  }
-   
-   .star-rating { /*dashed-box*/
-     position: relative;
++    <style>
++      body {
++        background-color: yellow;
++      }
++      
++      @media screen and (min-width: 600px) {  /*for form fields, laptop and tablet*/ 
++      .responsive-layout-for-buttons-BookItem {
++        width: 100%; 
++        height:100%;
++        display: block;
++      }
++    } 
++      </style>
+   </head>
+   <body>
+     <noscript>You need to enable JavaScript to run this app.</noscript>
+diff --git a/src/App.js b/src/App.js
+index c9f54b6..b797b88 100644
+--- a/src/App.js
++++ b/src/App.js
+@@ -16,11 +16,11 @@ function App() {
+       <Routes> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
+           <Route index path="/" element={<div className="App">
+               <header style={{height:"2.5rem"}}>
+-                <div style={{height:" 100%"}}>
++                <div style={{height:"100%"}}>
+                   <form className="my-form" style={{height:" 100%"}}>
+                       <center style={{height:" 100%"}}>
+                         <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label>
+-                        <input className="search-box" type="text" id="search" name="Search" style={{height:" 75%", width:"50%"}}/>
++                        <input className="search-box" type="text" id="search" name="Search" style={{height:" 75%", width:"50%", borderRadius:"1rem"}}/>
+                       </center>
+                   </form>
+                 </div>
+diff --git a/src/MyComponents/BasicModal.js b/src/MyComponents/BasicModal.js
+index b13f43e..5cb9016 100644
+--- a/src/MyComponents/BasicModal.js
++++ b/src/MyComponents/BasicModal.js
+@@ -20,10 +20,10 @@ export default function BasicModal(props) {
+     top: '50%',
+     left: '50%',
+     transform: 'translate(-50%, -50%)',
+-    width: 400,
++    width: "55%",//was==400
+     bgcolor: library.BasicModalTitle === 'Error' ? "#ffcdd2" /*pink*/ : "#b9f6ca"/*green*/ ,
+-    border: '2px solid #000',
+-    borderradius: '25px',
++    border: '2px solid #000',//was==2px
++    "borderRadius": '1rem',//was==25 border-radius only works with quotations just like it was used directly inline css.
+     boxShadow: 24,
+     p: 4,
+     color: library.BasicModalTitle === 'Error' ? 'red' : 'green' ,//success/fail message 
 diff --git a/src/MyComponents/BookCreate.js b/src/MyComponents/BookCreate.js
-index 2f56271..15c0a54 100644
+index 15c0a54..7d2f26f 100644
 --- a/src/MyComponents/BookCreate.js
 +++ b/src/MyComponents/BookCreate.js
-@@ -108,7 +108,7 @@ export function BookCreate (props){
-                         console.log("my API create/put DB limit error"+textData );
+@@ -76,7 +76,8 @@ export function BookCreate (props){
+         }).then(response => {
+                 setShowSpinner(false);//hide spinner
+                 CreatedResponseStatusCode = response.status;
+-                if(response.status === 201){
++                // CreatedResponseStatusCode = 400;//test only
++                if(response.status === 201){//tested works!
+                     //alert("created book");//test
+                     /* Reset form fields */
+                     TitleFieldRef.current.value = null;
+@@ -90,39 +91,40 @@ export function BookCreate (props){
+                     dispatch(setBasicModalDescription("Success, you've created a book review in our library of reviews!"));
+                     dispatch(setShowBasicModal(true)); 
+ 
+-                    return response.text();//convert to string to print my API response
++                    return response.json();//convert to string to print my API response
+                 }
+-                else if(response.status === 500){
+-                    return response.json(); 
+-                }
+-                else{
++                // else if(response.status === 500){//this is not being used, instead the 500 status request is being handled in the next .then promise.
++                //     return response.json(); 
++                // }
++                else{//Tested works!
+                     console.log("CODE 1.1; Something went wrong(from then else statement)");//test
+-                    return response.text();
++                    return response.json();
+                 }    
+-            }).then(textData => {
+-                //throw new Error('CODE test...; Something went wrong(from then-then else statement) "+textData');//for testing catch only
+-                    if(CreatedResponseStatusCode === 201) {
+-                        console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
++            }).then((json) => {
++                //throw new Error('CODE test...; Something went wrong(from then-then else statement) "+json');//for testing catch only
++                    if(CreatedResponseStatusCode === 201) {//tested works!
++                        console.log("my API create/put success response: "+json); // Now you have the string data , // Use the json as needed in your component
+                     }
+-                    else if(CreatedResponseStatusCode === 500 ){
+-                        console.log("my API create/put DB limit error"+textData );
++                    else if(CreatedResponseStatusCode === 500 ){//tested works!
++                        console.log("my API create/put DB limit error"+json );
++                        console.log("Library book creation limit of "+JSON.parse(json).limit+" books reached.");
                          /* Show error modal by using Redux*/
++                        var errorJSON = JSON.parse(json);
                          dispatch(setBasicModalTitle("Error"));
--                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review after deleting atleast one book review on our homepage."));
-+                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review, after deleting at least one book review on our homepage."));
+-                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review, after deleting at least one book review on our homepage."));
++                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+errorJSON.limit+" books reached. Please try creating your book review, after deleting at least one book review on our homepage."));
                          dispatch(setShowBasicModal(true)); 
                      }
-                     else{
-@@ -141,8 +141,9 @@ export function BookCreate (props){
-       }
- 
-         return (
--            
--            <div style={{background: "#fce305", width: "100%", height:"100%", position: "absolute", /* margin: "auto", display: "block" */}}> {/**/}
-+            <div>
-+                
-+                <div className="responsive-layout-for-height" style={{ width: "100%",height:"100%",}}> {/*container for the entire page*/}
-                 
-                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
-                 { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/} 
-@@ -151,66 +152,69 @@ export function BookCreate (props){
-                 {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
-                 <BasicModal />
- 
--
--                <center>
--                    <Button variant="contained" size="medium" align="center" style={{color: "ffffff", fontweight:"bolder",display:"inline-block", left:"-14%",}} onClick={NavigateToBookList}>Home</Button>
--                    <Typography variant="h4" style={{display:"inline-block"}}> Create Book Review: </Typography>
--                </center>
+-                    else{
+-                        console.log("CODE 1.2; Tried creating a book review, Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
+-                        throw new Error('CODE 1.2; Something went wrong(from then-then else statement) "+textData');
++                    else{//Tested works!
++                        console.log("CODE 1.2; Tried creating a book review, Something went wrong(from then-then else statement) "+json); // Now you have the string data , // Use the json as needed in your component
++                        throw new Error('CODE 1.2; Something went wrong(from then-then else statement) "+json');
+                     }
+                  })
+-            .catch(error =>{
++            .catch((error) =>{//Tested works!
+                 setShowSpinner(false);//hide spinner
 -                
--                    <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
--                        <CardContent> 
--                            <form onSubmit={onSubmit}> 
--                                <Grid container spacing={2}> 
--                                    <Grid xs={12} item> 
--                                        <TextField label="Title" className='responsivelayout' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
--                                    </Grid> 
--                                    <Grid xs={12} item> 
--                                        <TextField label="Author" className='responsivelayout' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
--                                    </Grid> 
--                                    <Grid xs={12} item> 
--                                        <Typography component="legend" className='star-rating'>Rating</Typography>
--                                            <div className="wrapper">
--                                                <Rating
--                                                ref={StarRatingComponent}//doesn't work
--                                                className='star-rating' 
--                                                value={StarValue}
--                                                precision={1}
--                                                onChange={StarOnChange}
--                                                tabIndex={null} //Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This set to zero prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted.
--                                                />
--                                                <br></br>
--                                                <div className="cover-input-box-rating">
--                                                    {/* cover element to overlay rating input field for form */}
--                                                </div>
--                                                <input
--                                                    ref={RatingInputField}
--                                                    id="RatingInput"
--                                                    name="RatingInput"
--                                                    className='input-box-rating'
--                                                    type="number"
--                                                    onInvalid={(e) => e.currentTarget.setCustomValidity('Please select a Rating') }
-+                {/* I used the following in the container below to match the Card that the form is on, did this to left align home button to left edge of Card with form on it, this mostly worked because I matched the container width to "maxWidth:800" just like the card(with the form on it). );  maxWidth:800, margin: "0 auto", padding: "20px 5px" */}
-+                <div id="container-for-left-aligning-home-button" style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}} >
-+                    {/* I used 'display: inline-block' on next three elements to put button and page title on same line. */}
-+                    <Button variant="contained" size="medium" style={{color: "ffffff", display:"inline-block",}} onClick={NavigateToBookList}>Home</Button>
-+                    <div style={{display:"inline-block",position: "relative",/* Move the element to the right by 50% of the container's width */left: "40%",/* Calculates 50% of the element's width, and moves it by that amount across the X-axis to the left */transform: "translateX(-50%)"}}>   
-+                        <Typography variant="h4" style={{display:"inline-block", fontSize:"1.8rem"}}> Create Book Review: </Typography>
-+                    </div>        
-+                        <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
-+                            <CardContent> 
-+                                <form onSubmit={onSubmit}> 
-+                                    <Grid container spacing={2}> 
-+                                        <Grid xs={12} item> 
-+                                            <TextField label="Title" className='responsivelayoutforWidth' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
-+                                        </Grid> 
-+                                        <Grid xs={12} item> 
-+                                            <TextField label="Author" className='responsivelayoutforWidth' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
-+                                        </Grid> 
-+                                        <Grid xs={12} item> 
-+                                            <Typography component="legend" className='star-rating'>Rating</Typography>
-+                                                <div className="wrapper">
-+                                                    <Rating
-+                                                    ref={StarRatingComponent}//doesn't work
-+                                                    className='star-rating' 
-                                                     value={StarValue}
--                                                    onFocus={MoveFocusToReviewField}
--                                                    onChange={MoveFocusToReviewField}
--                                                    //hidden
--                                                    //readOnly
--                                                    required
--                                                />
--                                            </div>
--                                    </Grid> 
--                                    <Grid xs={12} item> 
--                                        <TextField label="Reviewer" className='responsivelayout' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
--                                    </Grid> 
--                                    <Grid xs={12} item> 
--                                        <TextField label="Summary" inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
--                                    </Grid> 
--                                    <Grid xs={12} item> 
--                                        <Button type="submit" variant="contained" color="primary" fullwidth>Submit</Button>
--                                    </Grid >
--                                </Grid > 
--                            </form >
--                        </CardContent>
--                    </Card>
-+                                                    precision={1}
-+                                                    onChange={StarOnChange}
-+                                                    tabIndex={null} //Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This set to zero prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted.
-+                                                    />
-+                                                    <br></br>
-+                                                    <div className="cover-input-box-rating">
-+                                                        {/* cover element to overlay rating input field for form */}
-+                                                    </div>
-+                                                    <input
-+                                                        ref={RatingInputField}
-+                                                        id="RatingInput"
-+                                                        name="RatingInput"
-+                                                        className='input-box-rating'
-+                                                        type="number"
-+                                                        onInvalid={(e) => e.currentTarget.setCustomValidity('Please select a Rating') }
-+                                                        value={StarValue}
-+                                                        onFocus={MoveFocusToReviewField}
-+                                                        onChange={MoveFocusToReviewField}
-+                                                        //hidden
-+                                                        //readOnly
-+                                                        required
-+                                                    />
-+                                                </div>
-+                                        </Grid> 
-+                                        <Grid xs={12} item> 
-+                                            <TextField label="Reviewer" className='responsivelayoutforWidth' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
-+                                        </Grid> 
-+                                        <Grid xs={12} item> 
-+                                            <TextField label="Summary" inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
-+                                        </Grid> 
-+                                        <Grid xs={12} item> 
-+                                            <Button type="submit" variant="contained" color="primary" fullwidth>Submit</Button>
-+                                        </Grid >
-+                                    </Grid > 
-+                                </form >
-+                            </CardContent>
-+                        </Card>
-+                </div>
-+            </div>    
-         </div>
-         );
- }
+                 console.log("CODE 1.3; my catch error: "+error);
+                 /* Show thrown error modal by using Redux*/
+                 dispatch(setBasicModalTitle("Error"));
+-                dispatch(setBasicModalDescription("Error while creating your book review, please try again later. CODE 1.3"));
++                dispatch(setBasicModalDescription("CODE 1.3; Error while creating your book review, please try again later."));
+                 dispatch(setShowBasicModal(true)); 
+                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+             });
+diff --git a/src/MyComponents/BookItem.css b/src/MyComponents/BookItem.css
+index 5106e47..8f6a440 100644
+--- a/src/MyComponents/BookItem.css
++++ b/src/MyComponents/BookItem.css
+@@ -22,4 +22,15 @@
+     display: "block"; 
+     color: "black";
+      font-size: "0.5rem"; 
+-    }
 \ No newline at end of file
++    }
++    @media screen and (max-width: 780px) {/*for form fields, Galaxy Z Fold 4 (it's small screen)*/
++      #booklistitem{
++        min-width: "15rem";
++        width: 100%;
++      }
++      .responsive-layout-for-buttons-BookItem
++      {
++        width: 100%;
++      }
++    }
++  
+\ No newline at end of file
+diff --git a/src/MyComponents/BookItem.js b/src/MyComponents/BookItem.js
+index abfec6f..9237939 100644
+--- a/src/MyComponents/BookItem.js
++++ b/src/MyComponents/BookItem.js
+@@ -17,9 +17,11 @@ import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBoo
+ 
+ 
+ var CreatedResponseStatusCode = 0;
++//var myStyle = {minWidth: "220px"};
+ export function BookItem (props){
+     const navigate = useNavigate();
+     //let location = useLocation();//old way of refreshing homepage/list-view
++    
+ 
+     //Material UI Modal and redux
+     //const library = useSelector(state => state.library);
+@@ -60,6 +62,7 @@ export function BookItem (props){
+         }).then(response => {
+                 setShowSpinner(false);//hide spinner
+                 CreatedResponseStatusCode = response.status;
++                //  CreatedResponseStatusCode = 500;//test only
+                 // if(response.status === 200){
+                     //alert("deleted book");//test
+                     /* Show success modal*/ 
+@@ -69,7 +72,7 @@ export function BookItem (props){
+                 //}
+             }).then(textData => {
+                 //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only   
+-                    if(CreatedResponseStatusCode === 200){
++                    if(CreatedResponseStatusCode === 200){//tested works!
+                         /* Show success modal by using Redux*/ 
+                         dispatch(setBasicModalTitle("Success"));
+                         dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
+@@ -78,11 +81,11 @@ export function BookItem (props){
+                         console.log("From BookItem page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+                         //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+                         // window.location.reload(); // this worked before the modal.
+-                    } else if (CreatedResponseStatusCode === 404){
++                    } else if (CreatedResponseStatusCode === 404){//tested works!
+                         /* Show error modal by using Redux*/ 
+                         console.log("CODE 1.1; 404 status code returned. Book review id not found.");
+                         dispatch(setBasicModalTitle("Error"));
+-                        dispatch(setBasicModalDescription("Error, CODE 1.1 failed to delete a book review, please try again later!"));
++                        dispatch(setBasicModalDescription("Error, CODE 1.1 failed to delete a book review, please try again later."));
+                         dispatch(setBookItemUsingModal(true));
+                         dispatch(setShowBasicModal(true));
+                     }else{
+@@ -90,7 +93,7 @@ export function BookItem (props){
+                         throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch.");                   
+                     }    
+                  })
+-            .catch(error =>{
++            .catch(error =>{//tested works!
+                 setShowSpinner(false);//hide spinner
+                 /* Show error modal by using Redux*/ 
+                 dispatch(setBasicModalTitle("Error"));
+@@ -100,7 +103,7 @@ export function BookItem (props){
+                 console.log("CODE 1.3; From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
+                 //setShowSpinner(false);//hide spinner
+                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+-                console.log("CODE 1.3 my catch error: "+error)
++                console.log("CODE 1.3 my catch error: "+error.stack)
+             });
+ 
+     }
+@@ -119,14 +122,13 @@ export function BookItem (props){
+                     { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}     
+                     
+                     <BasicModal />      
+-                    <Card sx={{maxwidth: 345 }}> 
++                    <Card id="booklistitem" sx={{maxwidth: 345, }}> 
+                         <CardActionArea> 
+                             <CardMedia 
+                               component="img" 
+-                              height="140" 
++                              height="140.m/l" 
+                               image={BookThumbnail}
+                               alt="BookThumbnail"
+-                              style={{borderRadius: "5px"}}
+                             />
+                             <CardContent> 
+                                 <Typography gutterBottom variant="h5" component="div">
+@@ -138,9 +140,9 @@ export function BookItem (props){
+                             </CardContent>
+                         </CardActionArea>
+                         <CardActions> 
+-                            <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+-                            <Button variant="contained" size="medium" onClick={NavigateToBookView}>Info</Button>
+-                            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
++                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
++                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" onClick={NavigateToBookView}>Info</Button>
++                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
+                         </CardActions>
+                     </Card>
+                 {/* ))} */}
+diff --git a/src/MyComponents/BookList.css b/src/MyComponents/BookList.css
+index 7aed28c..58f0cb3 100644
+--- a/src/MyComponents/BookList.css
++++ b/src/MyComponents/BookList.css
+@@ -16,4 +16,4 @@
+     top: 50%;
+     -webkit-transform: translate(-50%, -50%);
+     transform: translate(-50%, -50%);
+-  }
+\ No newline at end of file
++  }
+diff --git a/src/MyComponents/BookList.js b/src/MyComponents/BookList.js
+index eebd353..0dc12fe 100644
+--- a/src/MyComponents/BookList.js
++++ b/src/MyComponents/BookList.js
+@@ -5,13 +5,23 @@ import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px.svg';
+ import { useNavigate } from 'react-router-dom';
+ import {Grid, Typography, Button} from "@mui/material";//don't upgrade Grid to Grid2 because Grid2 looks bad.
+ import Container from "@mui/material/Container";
+-
++//stuff for basic modal with redux
++import BasicModal from './BasicModal';
++import { useDispatch } from 'react-redux';
++import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookListUsingModal  } from '../librarySlice';
++ 
+ var list = [];
+ var finishedList = null;
+ var BooksReviewedCount = 0;
++var CreatedResponseStatusCode = 0;
+ export function BookList (props) {
+     var [loading, setLoading] = useState(true);//show spinner
+     var [myJSON, setMyJSON] = useState([]); 
++    
++    //Material UI Modal and redux
++    //const library = useSelector(state => state.library);
++    const dispatch = useDispatch();
++
+     const navigate = useNavigate();
+     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
+     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
+@@ -19,8 +29,69 @@ export function BookList (props) {
+         console.log("hello world fetch");
+         list = [];//reset list to prevent doubles of everything being displayed in the list 
+         fetch("https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?")
+-        .then((response) => response.json())
+-        .then((json) =>  getList(json));
++        .then((response) => {
++          CreatedResponseStatusCode = response.status;
++          return response.json()
++        })
++        .then((json) =>  {//tested works
++          // CreatedResponseStatusCode = 404;// tested error
++          //CreatedResponseStatusCode = 500;// tested error
++          //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//tested and test only   
++          if(CreatedResponseStatusCode === 200){ //tested works!
++            //console.log("json.length or json string: "+json);
++            getList(json);//create list of cards
++            //IMPORTANT! No need to display success modal 
++              /* Show success modal by using Redux*/ 
++              // dispatch(setBasicModalTitle("Success"));
++              // dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
++              // dispatch(setBookItemUsingModal(true));
++              // dispatch(setShowBasicModal(true)); 
++              // console.log("From BookItem page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
++              //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
++              // window.location.reload(); // this worked before the modal.
++          } else if (CreatedResponseStatusCode === 404){//tested works! // maybe change this and the API to 200 later, because that's what Stackoverflow says.
++            finishedList =  (
++              <Container maxwidth="1g">
++                <Typography variant="h4" align="center">
++                {0} Books Reviewed: 
++                </Typography> 
++                <Button variant="contained" size="medium" onClick={NavigateToBookCreate}>Create a Review</Button>
++                <Grid container spacing={5} style={{ marginTop: "20px"}}>
++                  {list} 
++                 </Grid>
++               </Container> ) ;//added each book item to my "Material UI" library responsive grid code
++              
++              setLoading(false);//hide spinner and rerender UI
++              /* Show error modal by using Redux*/ 
++              console.log("CODE 1.1; 404 status code returned. Empty list of Book reviews.");
++              dispatch(setBasicModalTitle("Error"));
++              dispatch(setBasicModalDescription("Error, CODE 1.1; our Book reviews list is empty, please either create a Book review or visit our website again later."));
++              dispatch(setBookListUsingModal(true));
++              dispatch(setShowBasicModal(true));
++          }else{//tested works!
++              //no need to hide loading spinner here because it will be hidden in the catch.
++              console.log("CODE 1.2; Tried Retrieving the list of book reviews, Something else went wrong!, in the else of then.then of fetch.");//test 
++              throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch.");                   
++          }  
++        })
++        .catch(error => {//tested works!
++          finishedList =  (
++            <Container maxwidth="1g">
++              <Typography variant="h4" align="center">
++                 This website is running into errors, we apologize for the inconvience. Please revisit our homepage later...
++              </Typography> 
++             </Container> ) ;
++          setLoading(false);//hide spinner and rerender UI
++          /* Show error modal by using Redux*/ 
++          dispatch(setBasicModalTitle("Error"));
++          dispatch(setBasicModalDescription("Error, CODE 1.3 Something went wrong! Sorry the Book review list is not avaialble. Please try visiting this homepage again later."));
++          dispatch(setBookListUsingModal(true));
++          dispatch(setShowBasicModal(true));
++          console.log("CODE 1.3; From BookList page, Something went wrong(alert from fetch's catch statement)");//test
++          //setShowSpinner(false);//hide spinner
++          //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
++          console.log("CODE 1.3 my catch error: "+error.stack)
++        });
+       }//else do nothing
+       renderAfterCalled.current = true;
+      }, []);
+@@ -103,14 +174,15 @@ export function BookList (props) {
+     }
+       return (
+         <>
+-        {/* <div className='booklist-container'>  */}
+-        { (loading) ? <div style={{ background: "#fce305",position: "absolute", height:"100%", width: "100%"}}><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></div> 
+-      
+-        : 
+-            (finishedList) 
+-        } 
+-        
+-        {/*  </div> */}
++            <BasicModal />   
++            {/* <div className='booklist-container'>  */}
++            { (loading) ? <div style={{ background: "#fce305",position: "absolute", height:"100%", width: "100%"}}><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></div> 
++          
++            : 
++                (finishedList) 
++            } 
++            
++            {/*  </div> */}
+         </>
+       );
+     
 diff --git a/src/MyComponents/BookView.js b/src/MyComponents/BookView.js
-index dcce526..9ee1db1 100644
+index 9ee1db1..0a49cb3 100644
 --- a/src/MyComponents/BookView.js
 +++ b/src/MyComponents/BookView.js
-@@ -25,7 +25,8 @@ export function BookView(props) {
-     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
-           checkIfDataExistFromBookItem();
-           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
--    }, []);
-+          // eslint-disable-next-line 
-+    }, [checkIfDataExistFromBookItem()]);
-     function checkIfDataExistFromBookItem(){
-         console.log("hello world title:"+props.UserBookItem.title);//test prints
-         console.log("hello world:"+JSON.stringify(props.UserBookItem));//test prints
+@@ -66,33 +66,34 @@ export function BookView(props) {
+                   /* Show success modal*/ 
+                   //handleShow();
+                   //NOTE: I refreshed page in the next Then statement powered by the next line.
+-                  return response.text();//convert to string to print my API response
++                  return response.json();//convert to string to print my API response
+               //}
+-          }).then(textData => {
++          }).then(json => {
+                   setShowSpinner(false);//hide spinner
++                //   CreatedResponseStatusCode = 500;//TEST ONLY
+                   //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only 
+-                  if(CreatedResponseStatusCode === 200){
++                  if(CreatedResponseStatusCode === 200){//tested works!
+                       /* Show success modal by using Redux*/ 
+                       dispatch(setBasicModalTitle("Success"));
+                       dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
+                       dispatch(setBookViewUsingModal(true));
+                       dispatch(setShowBasicModal(true)); 
+-                      console.log("From BookView page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
++                      console.log("From BookView page, my API delete success response: "+json); // Now you have the string data , // Use the json as needed in your component
+                       navigate("/");//Go to homepage after deleting item on the BookView page, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+                       // window.location.reload(); // this worked before the modal.
+-                  } else if (CreatedResponseStatusCode === 404){
++                  } else if (CreatedResponseStatusCode === 404){//tested works!
+                       console.log("CODE 1.1; 404 status code returned. Book review id not found.");
+                       dispatch(setBasicModalTitle("Error"));
+                       dispatch(setBasicModalDescription("Error, Code 1.1 failed to delete a book review, please try again later!"));
+                       dispatch(setBookViewUsingModal(true));
+                       dispatch(setShowBasicModal(true));
+-                  }else{
++                  }else{//tested works!
+                     /* Show error modal by using Redux*/ 
+                     console.log("CODE 1.2; Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
+                     throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch."); 
+                   }    
+                })
+-          .catch(error =>{
++          .catch(error =>{ // tested works!
+               /* Show error modal by using Redux*/ 
+               dispatch(setBasicModalTitle("Error"));
+               dispatch(setBasicModalDescription("Error,CODE 1.3; Something went wrong! Sorry the book review you selected was not deleted out of our library of reviews. Please try again later."));
+diff --git a/src/librarySlice.js b/src/librarySlice.js
+index e88f9dd..c51610f 100644
+--- a/src/librarySlice.js
++++ b/src/librarySlice.js
+@@ -5,6 +5,7 @@ const initialState = {
+     ShowBasicModal: false,
+     BookItemUsingModal: false,
+     BookViewUsingModal: false,
++    BookListUsingModal: false,
+ }
+ 
+ export const librarySlice = createSlice({
+@@ -26,6 +27,9 @@ reducers: {
+         setBookViewUsingModal: (state, action) => {//mutate
+             state.BookViewUsingModal = action.payload;
+         },
++        setBookListUsingModal: (state, action) => {//mutate
++            state.BookListUsingModal = action.payload;
++        },
+     }
+ });
+ 
+@@ -34,5 +38,6 @@ export const { setBasicModalTitle,
+                setShowBasicModal,
+                setBookItemUsingModal,
+                setBookViewUsingModal,
++               setBookListUsingModal,
+              } = librarySlice.actions;
+ export default librarySlice.reducer;
+\ No newline at end of file
+diff --git a/to-do list (also has good copy and bad copy git commit IDs).txt b/to-do list (also has good copy and bad copy git commit IDs).txt
+index 126e8c4..b619973 100644
+--- a/to-do list (also has good copy and bad copy git commit IDs).txt	
++++ b/to-do list (also has good copy and bad copy git commit IDs).txt	
+@@ -1,13 +1,14 @@
++- components that I need to test their http requests; (+)BookCreate, (+)BookList, (+)BookItem, (+)BookView, 
+ (+)- pass props from bookcreate to modal component.
+ (+)- test hiding the Material UI ratings element, then see what the html input element.
+ - test if any of the StarOnChange values used in the function are null when using keyboard to control star ratings component.
+ (+)- need to copy youtube folder(for the react npm run deploy for production deploys)
+ - need to print in console the 400 error of PUT request in BookCreate
+-- need to add loading and success/failure status for delete request to BookList.
++(+)- need to add loading and success/failure status for delete request to BookList.
+ - BookCreate why do I have to hit the submit button twice to submit form request?
+-- round edges of all modals. 
++(+)- round edges of all modals. 
+ (+)- need to refresh BookList
+-- check styles.css.
++(+)- check styles.css.
+ - possibly change the star ratings component to this one; https://www.geeksforgeeks.org/how-to-create-a-rating-component-in-reactjs/
+ (+)- delete gh-pages branch on the remote? looks like no because that branch is the one that works to deploy app to GitHub pages.
+ (+)- good copy;
 diff --git a/updates.txt b/updates.txt
-index 673cefc..4912a68 100644
+index ab30d1f..de22e31 100644
 --- a/updates.txt
 +++ b/updates.txt
-@@ -1,712 +0,0 @@
--diff --git a/src/App.js b/src/App.js
--index 2d8039e..c9f54b6 100644
----- a/src/App.js
--+++ b/src/App.js
--@@ -15,12 +15,12 @@ function App() {
--     <HashRouter >
--       <Routes> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
--           <Route index path="/" element={<div className="App">
---              <header>
---                <div>
---                  <form className="my-form" >
---                      <center>
---                        <label htmlFor="search">Search: </label>
---                        <input className="search-box" type="text" id="search" name="Search"/>
--+              <header style={{height:"2.5rem"}}>
--+                <div style={{height:" 100%"}}>
--+                  <form className="my-form" style={{height:" 100%"}}>
--+                      <center style={{height:" 100%"}}>
--+                        <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label>
--+                        <input className="search-box" type="text" id="search" name="Search" style={{height:" 75%", width:"50%"}}/>
--                       </center>
--                   </form>
--                 </div>
+@@ -1,932 +0,0 @@
+-diff --git a/src/MyComponents/BookCreate.css b/src/MyComponents/BookCreate.css
+-index dd839c6..43e9a5f 100644
+---- a/src/MyComponents/BookCreate.css
+-+++ b/src/MyComponents/BookCreate.css
+-@@ -2,18 +2,37 @@
+-     position: relative;
+-   }
+-   
+--  @media screen and (max-width: 600px) {/*Galaxy Z Fold 4 (it's small screen)*/
+--    .responsivelayout {
+-+  /* following makes form fields responsive */
+-+  @media screen and (max-width: 600px) {/*for form fields, Galaxy Z Fold 4 (it's small screen)*/
+-+    .responsivelayoutforWidth {
+-       width: 100%;
+-       /*margin-top: 0;*/
+-     }
+-   }
+--  @media screen and (min-width: 601px) {/*laptop and tablet*/
+--    .responsivelayout {
+-+  @media screen and (min-width: 601px) {/*for form fields, laptop and tablet*/
+-+    .responsivelayoutforWidth {
+-       width: 60%;
+-       /*margin-top: 0;*/
+-     }
+-   }
+-+
+-+  /*following responsive-layout-for-height  class makes component container div background color stretch across the page in all situations.*/
+-+  @media screen and (max-height: 635px) { /*for form fields, Galaxy Z Fold 4 (it's small screen)*/
+-+    .responsive-layout-for-height {
+-+      position: relative;
+-+      background: #fce305; 
+-+      width: 100%; 
+-+      height: 100%;
+-+    }
+-+  }
+-+  @media screen and (min-height: 636px) {  /*for form fields, laptop and tablet*/
+-+    .responsive-layout-for-height {
+-+      position: absolute;
+-+      background: #fce305; 
+-+      width: 100%; 
+-+      height:100%;
+-+    }
+-+  }
+-   
+-   .star-rating { /*dashed-box*/
+-     position: relative;
 -diff --git a/src/MyComponents/BookCreate.js b/src/MyComponents/BookCreate.js
--index dc1aa62..2f56271 100644
+-index 2f56271..15c0a54 100644
 ---- a/src/MyComponents/BookCreate.js
 -+++ b/src/MyComponents/BookCreate.js
--@@ -96,10 +96,11 @@ export function BookCreate (props){
--                     return response.json(); 
--                 }
--                 else{
---                    alert("Something went wrong(from then else statement)");//test
--+                    console.log("CODE 1.1; Something went wrong(from then else statement)");//test
--                     return response.text();
--                 }    
--             }).then(textData => {
--+                //throw new Error('CODE test...; Something went wrong(from then-then else statement) "+textData');//for testing catch only
--                     if(CreatedResponseStatusCode === 201) {
--                         console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
--                     }
--@@ -111,14 +112,19 @@ export function BookCreate (props){
+-@@ -108,7 +108,7 @@ export function BookCreate (props){
+-                         console.log("my API create/put DB limit error"+textData );
+-                         /* Show error modal by using Redux*/
+-                         dispatch(setBasicModalTitle("Error"));
+--                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review after deleting atleast one book review on our homepage."));
+-+                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review, after deleting at least one book review on our homepage."));
 -                         dispatch(setShowBasicModal(true)); 
 -                     }
 -                     else{
---                        console.log("Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
---                        
--+                        console.log("CODE 1.2; Tried creating a book review, Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
--+                        throw new Error('CODE 1.2; Something went wrong(from then-then else statement) "+textData');
--                     }
--                  })
--             .catch(error =>{
--                 setShowSpinner(false);//hide spinner
+-@@ -141,8 +141,9 @@ export function BookCreate (props){
+-       }
+- 
+-         return (
+--            
+--            <div style={{background: "#fce305", width: "100%", height:"100%", position: "absolute", /* margin: "auto", display: "block" */}}> {/**/}
+-+            <div>
 -+                
--+                console.log("CODE 1.3; my catch error: "+error);
--+                /* Show thrown error modal by using Redux*/
--+                dispatch(setBasicModalTitle("Error"));
--+                dispatch(setBasicModalDescription("Error while creating your book review, please try again later. CODE 1.3"));
--+                dispatch(setShowBasicModal(true)); 
--                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
---                console.log("my catch error: "+error)
--             });
--       };   
--          
--diff --git a/src/MyComponents/BookItem.js b/src/MyComponents/BookItem.js
--index b57a868..abfec6f 100644
----- a/src/MyComponents/BookItem.js
--+++ b/src/MyComponents/BookItem.js
--@@ -1,6 +1,7 @@
-- import './BookItem.css';
--+import './spinner.css';
-- import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
---import {useEffect, useRef, React} from 'react';
--+import {useEffect, useRef, useState, React} from 'react';
-- import { useNavigate } from 'react-router-dom';
-- //import { useLocation } from 'react-router'
-- //responsive cards
--@@ -11,7 +12,7 @@ import CardMedia from '@mui/material/CardMedia';
-- // import MyDeleteIcon from '@mui/icons-material/DeleteRounded ';
-- //stuff for basic modal with redux
-- import BasicModal from './BasicModal';
---import { /*useSelector,*/ useDispatch } from 'react-redux';
--+import { useDispatch } from 'react-redux';
-- import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
-- 
-- 
--@@ -24,6 +25,9 @@ export function BookItem (props){
--     //const library = useSelector(state => state.library);
--     const dispatch = useDispatch();
-- 
--+    ///SPINNER state
--+    const [ShowSpinner, setShowSpinner] = useState(false);
--+
--     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
--     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
--         if (!renderAfterCalled.current) { //only fetch once
--@@ -31,6 +35,7 @@ export function BookItem (props){
--             //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
--           }//else do nothing
--           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
--+          // eslint-disable-next-line
--          }, []);
--     function NavigateToBookView () {
--         console.log("called NavigateToBookView.");
--@@ -39,6 +44,7 @@ export function BookItem (props){
--     }
--     //const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }//test
--     function DeleteBook () {
--+        setShowSpinner(true);//show spinner
--         console.log("deleting title: "+props.bookJSON.title);//test
--         console.log("deleting id: "+props.bookJSON.id);
-- 
--@@ -52,8 +58,8 @@ export function BookItem (props){
--                 "Access-Control-Allow-Origin": "*",
--             },
--         }).then(response => {
--+                setShowSpinner(false);//hide spinner
--                 CreatedResponseStatusCode = response.status;
---                //setShowSpinner(false);//hide spinner
--                 // if(response.status === 200){
--                     //alert("deleted book");//test
--                     /* Show success modal*/ 
--@@ -62,6 +68,7 @@ export function BookItem (props){
--                     return response.text();//convert to string to print my API response
--                 //}
--             }).then(textData => {
--+                //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only   
--                     if(CreatedResponseStatusCode === 200){
--                         /* Show success modal by using Redux*/ 
--                         dispatch(setBasicModalTitle("Success"));
--@@ -72,22 +79,28 @@ export function BookItem (props){
--                         //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
--                         // window.location.reload(); // this worked before the modal.
--                     } else if (CreatedResponseStatusCode === 404){
---                        console.log("404 status code returned. Book review id not found.");
--+                        /* Show error modal by using Redux*/ 
--+                        console.log("CODE 1.1; 404 status code returned. Book review id not found.");
--+                        dispatch(setBasicModalTitle("Error"));
--+                        dispatch(setBasicModalDescription("Error, CODE 1.1 failed to delete a book review, please try again later!"));
--+                        dispatch(setBookItemUsingModal(true));
--+                        dispatch(setShowBasicModal(true));
--                     }else{
---                        console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
---                        throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
--+                        console.log("CODE 1.2; Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
--+                        throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch.");                   
--                     }    
--                  })
--             .catch(error =>{
--+                setShowSpinner(false);//hide spinner
--                 /* Show error modal by using Redux*/ 
--                 dispatch(setBasicModalTitle("Error"));
---                dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
--+                dispatch(setBasicModalDescription("Error, CODE 1.3 Something went wrong! Sorry the book review you selected was not deleted out of our library of reviews. Please try again later."));
--                 dispatch(setBookItemUsingModal(true));
--                 dispatch(setShowBasicModal(true));
---                console.log("From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
--+                console.log("CODE 1.3; From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
--                 //setShowSpinner(false);//hide spinner
--                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
---                console.log("my catch error: "+error)
--+                console.log("CODE 1.3 my catch error: "+error)
--             });
-- 
--     }
--@@ -101,7 +114,10 @@ export function BookItem (props){
+-+                <div className="responsive-layout-for-height" style={{ width: "100%",height:"100%",}}> {/*container for the entire page*/}
 -                 
--             // </div>
+-                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
+-                 { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/} 
+-@@ -151,66 +152,69 @@ export function BookCreate (props){
+-                 {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
+-                 <BasicModal />
 - 
---            <>          
--+            <>      
--+                    {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
--+                    { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}     
--+                    
--                     <BasicModal />      
--                     <Card sx={{maxwidth: 345 }}> 
--                         <CardActionArea> 
+--
+--                <center>
+--                    <Button variant="contained" size="medium" align="center" style={{color: "ffffff", fontweight:"bolder",display:"inline-block", left:"-14%",}} onClick={NavigateToBookList}>Home</Button>
+--                    <Typography variant="h4" style={{display:"inline-block"}}> Create Book Review: </Typography>
+--                </center>
+--                
+--                    <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
+--                        <CardContent> 
+--                            <form onSubmit={onSubmit}> 
+--                                <Grid container spacing={2}> 
+--                                    <Grid xs={12} item> 
+--                                        <TextField label="Title" className='responsivelayout' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
+--                                    </Grid> 
+--                                    <Grid xs={12} item> 
+--                                        <TextField label="Author" className='responsivelayout' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
+--                                    </Grid> 
+--                                    <Grid xs={12} item> 
+--                                        <Typography component="legend" className='star-rating'>Rating</Typography>
+--                                            <div className="wrapper">
+--                                                <Rating
+--                                                ref={StarRatingComponent}//doesn't work
+--                                                className='star-rating' 
+--                                                value={StarValue}
+--                                                precision={1}
+--                                                onChange={StarOnChange}
+--                                                tabIndex={null} //Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This set to zero prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted.
+--                                                />
+--                                                <br></br>
+--                                                <div className="cover-input-box-rating">
+--                                                    {/* cover element to overlay rating input field for form */}
+--                                                </div>
+--                                                <input
+--                                                    ref={RatingInputField}
+--                                                    id="RatingInput"
+--                                                    name="RatingInput"
+--                                                    className='input-box-rating'
+--                                                    type="number"
+--                                                    onInvalid={(e) => e.currentTarget.setCustomValidity('Please select a Rating') }
+-+                {/* I used the following in the container below to match the Card that the form is on, did this to left align home button to left edge of Card with form on it, this mostly worked because I matched the container width to "maxWidth:800" just like the card(with the form on it). );  maxWidth:800, margin: "0 auto", padding: "20px 5px" */}
+-+                <div id="container-for-left-aligning-home-button" style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}} >
+-+                    {/* I used 'display: inline-block' on next three elements to put button and page title on same line. */}
+-+                    <Button variant="contained" size="medium" style={{color: "ffffff", display:"inline-block",}} onClick={NavigateToBookList}>Home</Button>
+-+                    <div style={{display:"inline-block",position: "relative",/* Move the element to the right by 50% of the container's width */left: "40%",/* Calculates 50% of the element's width, and moves it by that amount across the X-axis to the left */transform: "translateX(-50%)"}}>   
+-+                        <Typography variant="h4" style={{display:"inline-block", fontSize:"1.8rem"}}> Create Book Review: </Typography>
+-+                    </div>        
+-+                        <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
+-+                            <CardContent> 
+-+                                <form onSubmit={onSubmit}> 
+-+                                    <Grid container spacing={2}> 
+-+                                        <Grid xs={12} item> 
+-+                                            <TextField label="Title" className='responsivelayoutforWidth' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
+-+                                        </Grid> 
+-+                                        <Grid xs={12} item> 
+-+                                            <TextField label="Author" className='responsivelayoutforWidth' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
+-+                                        </Grid> 
+-+                                        <Grid xs={12} item> 
+-+                                            <Typography component="legend" className='star-rating'>Rating</Typography>
+-+                                                <div className="wrapper">
+-+                                                    <Rating
+-+                                                    ref={StarRatingComponent}//doesn't work
+-+                                                    className='star-rating' 
+-                                                     value={StarValue}
+--                                                    onFocus={MoveFocusToReviewField}
+--                                                    onChange={MoveFocusToReviewField}
+--                                                    //hidden
+--                                                    //readOnly
+--                                                    required
+--                                                />
+--                                            </div>
+--                                    </Grid> 
+--                                    <Grid xs={12} item> 
+--                                        <TextField label="Reviewer" className='responsivelayout' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
+--                                    </Grid> 
+--                                    <Grid xs={12} item> 
+--                                        <TextField label="Summary" inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
+--                                    </Grid> 
+--                                    <Grid xs={12} item> 
+--                                        <Button type="submit" variant="contained" color="primary" fullwidth>Submit</Button>
+--                                    </Grid >
+--                                </Grid > 
+--                            </form >
+--                        </CardContent>
+--                    </Card>
+-+                                                    precision={1}
+-+                                                    onChange={StarOnChange}
+-+                                                    tabIndex={null} //Change to null instead of zero because zero will makes tab key on PC bug happen where it creates the unwanted behavior that tabs to the rating input field. This set to zero prevents bug where a non-null-value of this.StarRatingComponent value gets passed to the RatingInputField input and then this.StarRatingComponent passes a null value then the input allows the form to get submitted.
+-+                                                    />
+-+                                                    <br></br>
+-+                                                    <div className="cover-input-box-rating">
+-+                                                        {/* cover element to overlay rating input field for form */}
+-+                                                    </div>
+-+                                                    <input
+-+                                                        ref={RatingInputField}
+-+                                                        id="RatingInput"
+-+                                                        name="RatingInput"
+-+                                                        className='input-box-rating'
+-+                                                        type="number"
+-+                                                        onInvalid={(e) => e.currentTarget.setCustomValidity('Please select a Rating') }
+-+                                                        value={StarValue}
+-+                                                        onFocus={MoveFocusToReviewField}
+-+                                                        onChange={MoveFocusToReviewField}
+-+                                                        //hidden
+-+                                                        //readOnly
+-+                                                        required
+-+                                                    />
+-+                                                </div>
+-+                                        </Grid> 
+-+                                        <Grid xs={12} item> 
+-+                                            <TextField label="Reviewer" className='responsivelayoutforWidth' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
+-+                                        </Grid> 
+-+                                        <Grid xs={12} item> 
+-+                                            <TextField label="Summary" inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
+-+                                        </Grid> 
+-+                                        <Grid xs={12} item> 
+-+                                            <Button type="submit" variant="contained" color="primary" fullwidth>Submit</Button>
+-+                                        </Grid >
+-+                                    </Grid > 
+-+                                </form >
+-+                            </CardContent>
+-+                        </Card>
+-+                </div>
+-+            </div>    
+-         </div>
+-         );
+- }
+-\ No newline at end of file
 -diff --git a/src/MyComponents/BookView.js b/src/MyComponents/BookView.js
--index 28fbb56..7ec9053 100644
+-index dcce526..9ee1db1 100644
 ---- a/src/MyComponents/BookView.js
 -+++ b/src/MyComponents/BookView.js
--@@ -1,7 +1,8 @@
-- import './BookView.css';
--+import './spinner.css';
-- //import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
-- import { useNavigate } from 'react-router-dom';
---import {useEffect, useRef} from 'react';
--+import {useEffect, useRef, useState} from 'react';
-- import {Rating, Button, Typography} from "@mui/material";
-- //stuff for basic modal with redux
-- import BasicModal from './BasicModal';
--@@ -11,10 +12,19 @@ import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBoo
-- 
-- var CreatedResponseStatusCode = 0;
-- export function BookView(props) {
--+    ///SPINNER state
--+    const [ShowSpinner, setShowSpinner] = useState(false);
--+
--     //Material UI Modal and redux
--     const dispatch = useDispatch();
---    
--+    dispatch(setBasicModalTitle("Error"));
--+    dispatch(setBasicModalDescription("Error,testing at top of BOOKView page."));
--+    dispatch(setBookViewUsingModal(true));
--+    dispatch(setShowBasicModal(true));
--+
--+    //navigate
--     const navigate = useNavigate();//initilize navigation for homepage if needed.
--+    
--     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
+-@@ -25,7 +25,8 @@ export function BookView(props) {
 -     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
 -           checkIfDataExistFromBookItem();
--@@ -37,6 +47,7 @@ export function BookView(props) {
--     }
-- 
--     function DeleteBook () {
--+      setShowSpinner(true);//show spinner
--       console.log("deleting title: "+props.UserBookItem.title);//test
--       console.log("deleting id: "+props.UserBookItem.id);
-- 
--@@ -50,6 +61,7 @@ export function BookView(props) {
--               "Access-Control-Allow-Origin": "*",
--           },
--       }).then(response => {
--+              //setShowSpinner(false);//hide spinner
--               CreatedResponseStatusCode = response.status;
--               //setShowSpinner(false);//hide spinner
--               // if(response.status === 200){
--@@ -60,6 +72,8 @@ export function BookView(props) {
--                   return response.text();//convert to string to print my API response
--               //}
--           }).then(textData => {
--+                  setShowSpinner(false);//hide spinner
--+                  throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only 
--                   if(CreatedResponseStatusCode === 200){
--                       /* Show success modal by using Redux*/ 
--                       dispatch(setBasicModalTitle("Success"));
--@@ -70,22 +84,33 @@ export function BookView(props) {
--                       navigate("/");//Go to homepage after deleting item on the BookView page, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
--                       // window.location.reload(); // this worked before the modal.
--                   } else if (CreatedResponseStatusCode === 404){
---                      console.log("404 status code returned. Book review id not found.");
--+                      console.log("CODE 1.1; 404 status code returned. Book review id not found.");
--+                      dispatch(setBasicModalTitle("Error"));
--+                      dispatch(setBasicModalDescription("Error, Code 1.1 failed to delete a book review, please try again later!"));
--+                      dispatch(setBookViewUsingModal(true));
--+                      dispatch(setShowBasicModal(true));
--                   }else{
---                      console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
---                      throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
--+                    /* Show error modal by using Redux*/ 
--+                    console.log("CODE 1.2; 404 status code returned. Book review id not found.");
--+                    dispatch(setBasicModalTitle("Error"));
--+                    dispatch(setBasicModalDescription("Error, CODE 1.2; failed to delete a book review, please try again later!"));
--+                    dispatch(setBookViewUsingModal(true));
--+                    dispatch(setShowBasicModal(true));
--+                    console.log("CODE 1.2; Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
--+                    throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch."); 
--                   }    
--                })
--           .catch(error =>{
--               /* Show error modal by using Redux*/ 
--               dispatch(setBasicModalTitle("Error"));
---              dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
--+              dispatch(setBasicModalDescription("Error,CODE 1.3; Something went wrong! Sorry the book review you selected was not deleted out of our library of reviews. Please try again later."));
--               dispatch(setBookViewUsingModal(true));
--               dispatch(setShowBasicModal(true));
---              console.log("Something went wrong(alert from fetch's catch statement)");//test
---              //setShowSpinner(false);//hide spinner
--+              console.log("CODE 1.3; Something went wrong(alert from fetch's catch statement)");//test
--+
--               //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
---              console.log("my catch error: "+error)
--+              console.log("CODE 1.3; my catch error: "+error);
--+              //setShowSpinner(false);//hide spinner
--           });
--     }
--      function NavigateToBookList() {
--@@ -98,10 +123,14 @@ export function BookView(props) {
--         //     <div>{JSON.stringify(props.UserBookItem)}</div>
--         // </div>
--         <div className="book-container">
--+
--+            {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
--+            { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}
--+
--           <center>
--             <Button variant="contained" size="small" style={{color: "ffffff !important",fontweight:"bolder", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button> 
--             <Button variant="contained" size="medium" style={{color: "ffffff", fontweight:"bolder"}} onClick={NavigateToBookList}>Home</Button>
---            <Button variant="contained" size="medium" style={{color: "ffffff",fontweight:"bolder", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
--+            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
--             
--             <h1 className='my-H-Tags'>Title</h1>
--             {props.UserBookItem.title}
+-           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
+--    }, []);
+-+          // eslint-disable-next-line 
+-+    }, [checkIfDataExistFromBookItem()]);
+-     function checkIfDataExistFromBookItem(){
+-         console.log("hello world title:"+props.UserBookItem.title);//test prints
+-         console.log("hello world:"+JSON.stringify(props.UserBookItem));//test prints
 -diff --git a/updates.txt b/updates.txt
--index 1ebfc0a..2b4a402 100644
+-index 673cefc..4912a68 100644
 ---- a/updates.txt
 -+++ b/updates.txt
--@@ -1,414 +0,0 @@
---diff --git a/README.md b/README.md
---index 58beeac..27740cf 100644
------ a/README.md
---+++ b/README.md
---@@ -1,3 +1,8 @@
---+# How I generated my library reviews project logo (A.I. converstion with Gemini)
---+https://gemini.google.com/share/bbd47e8b1979
---+
---+
---+
--- # Getting Started with Create React App
--- 
--- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
---diff --git a/public/favicon.ico b/public/favicon.ico
---deleted file mode 100644
---index a11777c..0000000
---Binary files a/public/favicon.ico and /dev/null differ
---diff --git a/public/index.html b/public/index.html
---index 48c09be..7bd0212 100644
------ a/public/index.html
---+++ b/public/index.html
---@@ -3,7 +3,7 @@
---   <head>
---     <meta charset="utf-8" />
---     <meta name="viewport" content="width=device-width" initial-scale="1.00" maximum-scale="1.0" />
----    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
---+    <link rel="icon" href="%PUBLIC_URL%/favicon.jpg" />
---     <meta name="viewport" content="width=device-width, initial-scale=1" />
---     <meta name="theme-color" content="#000000" />
---     <meta
---diff --git a/src/MyComponents/BasicModal.js b/src/MyComponents/BasicModal.js
---index 4faf0cc..b13f43e 100644
------ a/src/MyComponents/BasicModal.js
---+++ b/src/MyComponents/BasicModal.js
---@@ -3,15 +3,18 @@ import Box from '@mui/material/Box';
--- import Button from '@mui/material/Button';
--- import Typography from '@mui/material/Typography';
--- import Modal from '@mui/material/Modal';
---+import { useNavigate } from 'react-router-dom';
--- //redux
----import { setShowBasicModal, setBookItemUsingModal } from '../librarySlice';
---+import { setShowBasicModal, setBookItemUsingModal, setBookViewUsingModal } from '../librarySlice';
--- import { useSelector, useDispatch } from 'react-redux';
--- 
--- var style = {}
--- export default function BasicModal(props) {
---+  const navigate = useNavigate();
---   // Redux state and mutator
---   const library = useSelector(state => state.library);
---   const dispatch = useDispatch();
---+  //Modal style
---   style = {
---     position: 'absolute',
---     top: '50%',
---@@ -24,13 +27,20 @@ export default function BasicModal(props) {
---     boxShadow: 24,
---     p: 4,
---     color: library.BasicModalTitle === 'Error' ? 'red' : 'green' ,//success/fail message 
---+    //opacity: '0.1',
---   };
---   
---   function OnModalClose(){
----    if(library.BookItemUsingModal === true){
---+    if(library.BookItemUsingModal === true){//for the delete action on BookItem page
---       dispatch(setBookItemUsingModal(false)); //reset for next component to reuse modal
---       dispatch(setShowBasicModal(false)) // close model
---       window.location.reload();       
---+    }
---+    else if(library.BookViewUsingModal === true) {//for the delete action on BookView 
---+        dispatch(setBookViewUsingModal(false)); //reset for next component to reuse modal
---+        dispatch(setShowBasicModal(false)) // close model
---+        console.log("Navigating To BookLIst.");
---+        navigate("/");
---     }
---      else {
---        // library.BookCreateUsingModal == true
---@@ -41,7 +51,7 @@ export default function BasicModal(props) {
---   return (
---     <div>
---       <Modal
----        open={library.ShowBasicModal}
---+        open={library.ShowBasicModal}//library.ShowBasicModal
---         onClose={() => dispatch(setShowBasicModal(true))}//keep modal open
---         aria-labelledby="modal-modal-title"
---         aria-describedby="modal-modal-description"
---diff --git a/src/MyComponents/BookCreate.css b/src/MyComponents/BookCreate.css
---index 6ae483c..dd839c6 100644
------ a/src/MyComponents/BookCreate.css
---+++ b/src/MyComponents/BookCreate.css
---@@ -2,13 +2,13 @@
---     position: relative;
---   }
---   
----  @media screen and (max-width: 600px) {/*Galaxy Z Fold 4*/
---+  @media screen and (max-width: 600px) {/*Galaxy Z Fold 4 (it's small screen)*/
---     .responsivelayout {
---       width: 100%;
---       /*margin-top: 0;*/
---     }
---   }
----  @media screen and (min-width: 601px) {/*Galaxy Z Fold 4*/
---+  @media screen and (min-width: 601px) {/*laptop and tablet*/
---     .responsivelayout {
---       width: 60%;
---       /*margin-top: 0;*/
+-@@ -1,712 +0,0 @@
+--diff --git a/src/App.js b/src/App.js
+--index 2d8039e..c9f54b6 100644
+----- a/src/App.js
+--+++ b/src/App.js
+--@@ -15,12 +15,12 @@ function App() {
+--     <HashRouter >
+--       <Routes> {/*root path, doesn't work locally without "/Library-of-Books-React-UI-Public" from the homepage variable in package.json*/}
+--           <Route index path="/" element={<div className="App">
+---              <header>
+---                <div>
+---                  <form className="my-form" >
+---                      <center>
+---                        <label htmlFor="search">Search: </label>
+---                        <input className="search-box" type="text" id="search" name="Search"/>
+--+              <header style={{height:"2.5rem"}}>
+--+                <div style={{height:" 100%"}}>
+--+                  <form className="my-form" style={{height:" 100%"}}>
+--+                      <center style={{height:" 100%"}}>
+--+                        <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label>
+--+                        <input className="search-box" type="text" id="search" name="Search" style={{height:" 75%", width:"50%"}}/>
+--                       </center>
+--                   </form>
+--                 </div>
 --diff --git a/src/MyComponents/BookCreate.js b/src/MyComponents/BookCreate.js
---index 7d6bf77..dc1aa62 100644
+--index dc1aa62..2f56271 100644
 ----- a/src/MyComponents/BookCreate.js
 --+++ b/src/MyComponents/BookCreate.js
---@@ -1,6 +1,7 @@
--- import './BookCreate.css';
--- import './spinner.css';
--- import {useEffect, useRef, useState, React} from 'react';
---+import { useNavigate } from 'react-router-dom';
--- //responsive cards
--- import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mui/material";
--- //modal
---@@ -21,7 +22,8 @@ export function BookCreate (props){
---     var CreatedResponseStatusCode = null;
---     const [StarValue, setRating] = useState(null);
---     const StarRatingComponent = useRef(null);//get state from the Star Rating component.
----    
---+    const navigate = useNavigate();//initilize navigation for homepage if needed.
---+
---     //FORM state
---     const TitleFieldRef = useRef(null);
---     const AuthorFieldRef = useRef(null);
---@@ -127,22 +129,28 @@ export function BookCreate (props){
---          }
---          ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
---        }
---+     function NavigateToBookList() {//for home button
---+        console.log("called NavigateToBookList(Homepage).");
---+        navigate("/");
---+      }
--- 
---         return (
---             
---             <div style={{background: "#fce305", width: "100%", height:"100%", position: "absolute", /* margin: "auto", display: "block" */}}> {/**/}
---                 
---                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
----                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> } 
---+                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/} 
--- 
--- 
---                 {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
---                 <BasicModal />
--- 
--- 
----                <Typography variant="h4" align="center">            
----                    Create Book Review: 
----                </Typography>    
---+                <center>
---+                    <Button variant="contained" size="medium" align="center" style={{color: "ffffff", fontweight:"bolder",display:"inline-block", left:"-14%",}} onClick={NavigateToBookList}>Home</Button>
---+                    <Typography variant="h4" style={{display:"inline-block"}}> Create Book Review: </Typography>
---+                </center>
+--@@ -96,10 +96,11 @@ export function BookCreate (props){
+--                     return response.json(); 
+--                 }
+--                 else{
+---                    alert("Something went wrong(from then else statement)");//test
+--+                    console.log("CODE 1.1; Something went wrong(from then else statement)");//test
+--                     return response.text();
+--                 }    
+--             }).then(textData => {
+--+                //throw new Error('CODE test...; Something went wrong(from then-then else statement) "+textData');//for testing catch only
+--                     if(CreatedResponseStatusCode === 201) {
+--                         console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+--                     }
+--@@ -111,14 +112,19 @@ export function BookCreate (props){
+--                         dispatch(setShowBasicModal(true)); 
+--                     }
+--                     else{
+---                        console.log("Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
+---                        
+--+                        console.log("CODE 1.2; Tried creating a book review, Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
+--+                        throw new Error('CODE 1.2; Something went wrong(from then-then else statement) "+textData');
+--                     }
+--                  })
+--             .catch(error =>{
+--                 setShowSpinner(false);//hide spinner
 --+                
---                     <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
---                         <CardContent> 
---                             <form onSubmit={onSubmit}> 
+--+                console.log("CODE 1.3; my catch error: "+error);
+--+                /* Show thrown error modal by using Redux*/
+--+                dispatch(setBasicModalTitle("Error"));
+--+                dispatch(setBasicModalDescription("Error while creating your book review, please try again later. CODE 1.3"));
+--+                dispatch(setShowBasicModal(true)); 
+--                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+---                console.log("my catch error: "+error)
+--             });
+--       };   
+--          
 --diff --git a/src/MyComponents/BookItem.js b/src/MyComponents/BookItem.js
---index fdc0b24..b57a868 100644
+--index b57a868..abfec6f 100644
 ----- a/src/MyComponents/BookItem.js
 --+++ b/src/MyComponents/BookItem.js
---@@ -9,7 +9,7 @@ import { CardActionArea } from '@mui/material';
--- import CardMedia from '@mui/material/CardMedia';
--- // import DeleteIcon from '@mui/icons-material/Delete';
+--@@ -1,6 +1,7 @@
+-- import './BookItem.css';
+--+import './spinner.css';
+-- import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
+---import {useEffect, useRef, React} from 'react';
+--+import {useEffect, useRef, useState, React} from 'react';
+-- import { useNavigate } from 'react-router-dom';
+-- //import { useLocation } from 'react-router'
+-- //responsive cards
+--@@ -11,7 +12,7 @@ import CardMedia from '@mui/material/CardMedia';
 -- // import MyDeleteIcon from '@mui/icons-material/DeleteRounded ';
----//stuff for basic modal
---+//stuff for basic modal with redux
+-- //stuff for basic modal with redux
 -- import BasicModal from './BasicModal';
--- import { /*useSelector,*/ useDispatch } from 'react-redux';
+---import { /*useSelector,*/ useDispatch } from 'react-redux';
+--+import { useDispatch } from 'react-redux';
 -- import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
---@@ -68,7 +68,7 @@ export function BookItem (props){
---                         dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
---                         dispatch(setBookItemUsingModal(true));
---                         dispatch(setShowBasicModal(true)); 
----                        console.log("my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
---+                        console.log("From BookItem page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+-- 
+-- 
+--@@ -24,6 +25,9 @@ export function BookItem (props){
+--     //const library = useSelector(state => state.library);
+--     const dispatch = useDispatch();
+-- 
+--+    ///SPINNER state
+--+    const [ShowSpinner, setShowSpinner] = useState(false);
+--+
+--     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
+--     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
+--         if (!renderAfterCalled.current) { //only fetch once
+--@@ -31,6 +35,7 @@ export function BookItem (props){
+--             //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
+--           }//else do nothing
+--           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
+--+          // eslint-disable-next-line
+--          }, []);
+--     function NavigateToBookView () {
+--         console.log("called NavigateToBookView.");
+--@@ -39,6 +44,7 @@ export function BookItem (props){
+--     }
+--     //const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }//test
+--     function DeleteBook () {
+--+        setShowSpinner(true);//show spinner
+--         console.log("deleting title: "+props.bookJSON.title);//test
+--         console.log("deleting id: "+props.bookJSON.id);
+-- 
+--@@ -52,8 +58,8 @@ export function BookItem (props){
+--                 "Access-Control-Allow-Origin": "*",
+--             },
+--         }).then(response => {
+--+                setShowSpinner(false);//hide spinner
+--                 CreatedResponseStatusCode = response.status;
+---                //setShowSpinner(false);//hide spinner
+--                 // if(response.status === 200){
+--                     //alert("deleted book");//test
+--                     /* Show success modal*/ 
+--@@ -62,6 +68,7 @@ export function BookItem (props){
+--                     return response.text();//convert to string to print my API response
+--                 //}
+--             }).then(textData => {
+--+                //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only   
+--                     if(CreatedResponseStatusCode === 200){
+--                         /* Show success modal by using Redux*/ 
+--                         dispatch(setBasicModalTitle("Success"));
+--@@ -72,22 +79,28 @@ export function BookItem (props){
 --                         //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
 --                         // window.location.reload(); // this worked before the modal.
 --                     } else if (CreatedResponseStatusCode === 404){
---@@ -84,7 +84,7 @@ export function BookItem (props){
---                 dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
+---                        console.log("404 status code returned. Book review id not found.");
+--+                        /* Show error modal by using Redux*/ 
+--+                        console.log("CODE 1.1; 404 status code returned. Book review id not found.");
+--+                        dispatch(setBasicModalTitle("Error"));
+--+                        dispatch(setBasicModalDescription("Error, CODE 1.1 failed to delete a book review, please try again later!"));
+--+                        dispatch(setBookItemUsingModal(true));
+--+                        dispatch(setShowBasicModal(true));
+--                     }else{
+---                        console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
+---                        throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
+--+                        console.log("CODE 1.2; Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
+--+                        throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch.");                   
+--                     }    
+--                  })
+--             .catch(error =>{
+--+                setShowSpinner(false);//hide spinner
+--                 /* Show error modal by using Redux*/ 
+--                 dispatch(setBasicModalTitle("Error"));
+---                dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
+--+                dispatch(setBasicModalDescription("Error, CODE 1.3 Something went wrong! Sorry the book review you selected was not deleted out of our library of reviews. Please try again later."));
 --                 dispatch(setBookItemUsingModal(true));
 --                 dispatch(setShowBasicModal(true));
----                console.log("Something went wrong(alert from fetch's catch statement)");//test
---+                console.log("From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
+---                console.log("From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
+--+                console.log("CODE 1.3; From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
 --                 //setShowSpinner(false);//hide spinner
 --                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
---                 console.log("my catch error: "+error)
---@@ -122,9 +122,9 @@ export function BookItem (props){
---                             </CardContent>
---                         </CardActionArea>
---                         <CardActions> 
----                        <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
---+                            <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
---                             <Button variant="contained" size="medium" onClick={NavigateToBookView}>Info</Button>
----                            
---+                            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
---                         </CardActions>
---                     </Card>
---                 {/* ))} */}
---diff --git a/src/MyComponents/BookList.js b/src/MyComponents/BookList.js
---index ef7dd03..eebd353 100644
------ a/src/MyComponents/BookList.js
---+++ b/src/MyComponents/BookList.js
---@@ -104,7 +104,7 @@ export function BookList (props) {
---       return (
---         <>
---         {/* <div className='booklist-container'>  */}
----        { (loading) ? <><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></> 
---+        { (loading) ? <div style={{ background: "#fce305",position: "absolute", height:"100%", width: "100%"}}><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></div> 
---       
---         : 
---             (finishedList) 
+---                console.log("my catch error: "+error)
+--+                console.log("CODE 1.3 my catch error: "+error)
+--             });
+-- 
+--     }
+--@@ -101,7 +114,10 @@ export function BookItem (props){
+--                 
+--             // </div>
+-- 
+---            <>          
+--+            <>      
+--+                    {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
+--+                    { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}     
+--+                    
+--                     <BasicModal />      
+--                     <Card sx={{maxwidth: 345 }}> 
+--                         <CardActionArea> 
 --diff --git a/src/MyComponents/BookView.js b/src/MyComponents/BookView.js
---index ea9dcaf..28fbb56 100644
+--index 28fbb56..7ec9053 100644
 ----- a/src/MyComponents/BookView.js
 --+++ b/src/MyComponents/BookView.js
---@@ -2,9 +2,18 @@ import './BookView.css';
+--@@ -1,7 +1,8 @@
+-- import './BookView.css';
+--+import './spinner.css';
 -- //import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
 -- import { useNavigate } from 'react-router-dom';
--- import {useEffect, useRef} from 'react';
----import {Rating} from "@mui/material";
---+import {Rating, Button, Typography} from "@mui/material";
---+//stuff for basic modal with redux
---+import BasicModal from './BasicModal';
---+import { /*useSelector,*/ useDispatch } from 'react-redux';
---+import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookViewUsingModal  } from '../librarySlice';
+---import {useEffect, useRef} from 'react';
+--+import {useEffect, useRef, useState} from 'react';
+-- import {Rating, Button, Typography} from "@mui/material";
+-- //stuff for basic modal with redux
+-- import BasicModal from './BasicModal';
+--@@ -11,10 +12,19 @@ import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBoo
 -- 
---+
---+var CreatedResponseStatusCode = 0;
+-- var CreatedResponseStatusCode = 0;
 -- export function BookView(props) {
---+    //Material UI Modal and redux
---+    const dispatch = useDispatch();
---+    
+--+    ///SPINNER state
+--+    const [ShowSpinner, setShowSpinner] = useState(false);
+--+
+--     //Material UI Modal and redux
+--     const dispatch = useDispatch();
+---    
+--+    dispatch(setBasicModalTitle("Error"));
+--+    dispatch(setBasicModalDescription("Error,testing at top of BOOKView page."));
+--+    dispatch(setBookViewUsingModal(true));
+--+    dispatch(setShowBasicModal(true));
+--+
+--+    //navigate
 --     const navigate = useNavigate();//initilize navigation for homepage if needed.
+--+    
 --     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
 --     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
---@@ -18,7 +27,7 @@ export function BookView(props) {
---         var emptyObj = {};//using var for comparison since adding {} to if condition always returns false.
---         console.log("(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) is: "+(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)));//test print
---         if (JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) {
----            console.log("rerouting back to homepage because props.UserBookItem was empty object because user went to BookView page without using homepage");
---+            console.log("rerouting back to homepage because props.UserBookItem was empty object because user went to BookView page without using homepage, and if I allow this it will cause the BookView page to not have any book/movie review data.");
---             renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
---             navigate("/");//route back to homepage
---           }//else do nothing
---@@ -26,6 +35,63 @@ export function BookView(props) {
---             console.log("NOT rerouting back to homepage because props.UserBookItem was defined so this means user went to homepage and use the app to navigate to BookView page");
---         }
+--           checkIfDataExistFromBookItem();
+--@@ -37,6 +47,7 @@ export function BookView(props) {
 --     }
---+
---+    function DeleteBook () {
---+      console.log("deleting title: "+props.UserBookItem.title);//test
---+      console.log("deleting id: "+props.UserBookItem.id);
---+
---+      fetch('https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books/'+props.UserBookItem.id,{
---+          method: 'DELETE',
---+          mode: "cors",
---+          headers: {
---+              //Accept: 'application/json',
---+              //"Origin": "https://programminghobby101.github.io",
---+              'Content-Type': 'application/json',
---+              "Access-Control-Allow-Origin": "*",
---+          },
---+      }).then(response => {
---+              CreatedResponseStatusCode = response.status;
+-- 
+--     function DeleteBook () {
+--+      setShowSpinner(true);//show spinner
+--       console.log("deleting title: "+props.UserBookItem.title);//test
+--       console.log("deleting id: "+props.UserBookItem.id);
+-- 
+--@@ -50,6 +61,7 @@ export function BookView(props) {
+--               "Access-Control-Allow-Origin": "*",
+--           },
+--       }).then(response => {
 --+              //setShowSpinner(false);//hide spinner
---+              // if(response.status === 200){
---+                  //alert("deleted book");//test
---+                  /* Show success modal*/ 
---+                  //handleShow();
---+                  //NOTE: I refreshed page in the next Then statement powered by the next line.
---+                  return response.text();//convert to string to print my API response
---+              //}
---+          }).then(textData => {
---+                  if(CreatedResponseStatusCode === 200){
---+                      /* Show success modal by using Redux*/ 
---+                      dispatch(setBasicModalTitle("Success"));
---+                      dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
+--               CreatedResponseStatusCode = response.status;
+--               //setShowSpinner(false);//hide spinner
+--               // if(response.status === 200){
+--@@ -60,6 +72,8 @@ export function BookView(props) {
+--                   return response.text();//convert to string to print my API response
+--               //}
+--           }).then(textData => {
+--+                  setShowSpinner(false);//hide spinner
+--+                  throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only 
+--                   if(CreatedResponseStatusCode === 200){
+--                       /* Show success modal by using Redux*/ 
+--                       dispatch(setBasicModalTitle("Success"));
+--@@ -70,22 +84,33 @@ export function BookView(props) {
+--                       navigate("/");//Go to homepage after deleting item on the BookView page, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+--                       // window.location.reload(); // this worked before the modal.
+--                   } else if (CreatedResponseStatusCode === 404){
+---                      console.log("404 status code returned. Book review id not found.");
+--+                      console.log("CODE 1.1; 404 status code returned. Book review id not found.");
+--+                      dispatch(setBasicModalTitle("Error"));
+--+                      dispatch(setBasicModalDescription("Error, Code 1.1 failed to delete a book review, please try again later!"));
 --+                      dispatch(setBookViewUsingModal(true));
---+                      dispatch(setShowBasicModal(true)); 
---+                      console.log("From BookView page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
---+                      navigate("/");//Go to homepage after deleting item on the BookView page, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
---+                      // window.location.reload(); // this worked before the modal.
---+                  } else if (CreatedResponseStatusCode === 404){
---+                      console.log("404 status code returned. Book review id not found.");
---+                  }else{
---+                      console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
---+                      throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
---+                  }    
---+               })
---+          .catch(error =>{
---+              /* Show error modal by using Redux*/ 
---+              dispatch(setBasicModalTitle("Error"));
---+              dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
---+              dispatch(setBookViewUsingModal(true));
---+              dispatch(setShowBasicModal(true));
---+              console.log("Something went wrong(alert from fetch's catch statement)");//test
+--+                      dispatch(setShowBasicModal(true));
+--                   }else{
+---                      console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
+---                      throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
+--+                    /* Show error modal by using Redux*/ 
+--+                    console.log("CODE 1.2; 404 status code returned. Book review id not found.");
+--+                    dispatch(setBasicModalTitle("Error"));
+--+                    dispatch(setBasicModalDescription("Error, CODE 1.2; failed to delete a book review, please try again later!"));
+--+                    dispatch(setBookViewUsingModal(true));
+--+                    dispatch(setShowBasicModal(true));
+--+                    console.log("CODE 1.2; Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
+--+                    throw new Error("CODE 1.2; Something else went wrong!, in the else of then.then of fetch."); 
+--                   }    
+--                })
+--           .catch(error =>{
+--               /* Show error modal by using Redux*/ 
+--               dispatch(setBasicModalTitle("Error"));
+---              dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
+--+              dispatch(setBasicModalDescription("Error,CODE 1.3; Something went wrong! Sorry the book review you selected was not deleted out of our library of reviews. Please try again later."));
+--               dispatch(setBookViewUsingModal(true));
+--               dispatch(setShowBasicModal(true));
+---              console.log("Something went wrong(alert from fetch's catch statement)");//test
+---              //setShowSpinner(false);//hide spinner
+--+              console.log("CODE 1.3; Something went wrong(alert from fetch's catch statement)");//test
+--+
+--               //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+---              console.log("my catch error: "+error)
+--+              console.log("CODE 1.3; my catch error: "+error);
 --+              //setShowSpinner(false);//hide spinner
---+              //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
---+              console.log("my catch error: "+error)
---+          });
---+    }
---+     function NavigateToBookList() {
---+        console.log("called  NavigateToBookList(Homepage).");
---+        navigate("/");
---+      }
---     return (
---         // <div>
---         //     <p>hello world!</p>
---@@ -33,6 +99,10 @@ export function BookView(props) {
+--           });
+--     }
+--      function NavigateToBookList() {
+--@@ -98,10 +123,14 @@ export function BookView(props) {
+--         //     <div>{JSON.stringify(props.UserBookItem)}</div>
 --         // </div>
 --         <div className="book-container">
+--+
+--+            {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
+--+            { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}
+--+
 --           <center>
---+            <Button variant="contained" size="small" style={{color: "ffffff !important",fontweight:"bolder", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button> 
---+            <Button variant="contained" size="medium" style={{color: "ffffff", fontweight:"bolder"}} onClick={NavigateToBookList}>Home</Button>
---+            <Button variant="contained" size="medium" style={{color: "ffffff",fontweight:"bolder", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
---+            
+--             <Button variant="contained" size="small" style={{color: "ffffff !important",fontweight:"bolder", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button> 
+--             <Button variant="contained" size="medium" style={{color: "ffffff", fontweight:"bolder"}} onClick={NavigateToBookList}>Home</Button>
+---            <Button variant="contained" size="medium" style={{color: "ffffff",fontweight:"bolder", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
+--+            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
+--             
 --             <h1 className='my-H-Tags'>Title</h1>
 --             {props.UserBookItem.title}
---             <h1 className='my-H-Tags'>Author</h1>
---diff --git a/src/MyComponents/spinner.css b/src/MyComponents/spinner.css
---index d72dc7f..a602bec 100644
------ a/src/MyComponents/spinner.css
---+++ b/src/MyComponents/spinner.css
---@@ -30,19 +30,39 @@
--- 	to {transform:rotate(360deg);}
--- }
--- 
----#semiTransparenDiv::after {
----    content:'';
----    display:block;
----    position:absolute;
----    left:48%;top:40%;
----    width:80px;height:80px;
----    border-style:solid;
----    border: 5px solid rgb(255, 255, 255);
----	border-top-color: #6CC4EE;
----    border-width: 7px;
----    border-radius:50%;
----    -webkit-animation: spin .8s linear infinite;
----    
----    /* Lets make it go round */
----    animation: spin .8s linear infinite;
---+@media screen and (max-width: 600px) {/*Galaxy Z Fold 4*/
---+    #semiTransparenDiv::after {
---+        content:'';
---+        display:block;
---+        position:absolute;
---+        left:35%;top:40%;
---+        width:80px; height:80px;
---+        border-style:solid;
---+        border: 5rem solid rgb(255, 255, 255);
---+        border-top-color: #6CC4EE;
---+        border-width: 0.5rem;
---+        border-radius:50%;
---+        -webkit-animation: spin .8s linear infinite;
---+        
---+        /* Lets make it go round */
---+        animation: spin .8s linear infinite;
---+    }
---+}
---+@media screen and (min-width: 601px) {/*Galaxy Z Fold 4*/
---+    #semiTransparenDiv::after {
---+        content:'';
---+        display:block;
---+        position:absolute;
---+        left:48%;top:40%;
---+        width:80px; height:80px;
---+        border-style:solid;
---+        border: 5px solid rgb(255, 255, 255);
---+        border-top-color: #6CC4EE;
---+        border-width: 7px;
---+        border-radius:50%;
---+        -webkit-animation: spin .8s linear infinite;
---+        
---+        /* Lets make it go round */
---+        animation: spin .8s linear infinite;
---+    }
--- }
---\ No newline at end of file
---diff --git a/src/librarySlice.js b/src/librarySlice.js
---index 4d47772..e88f9dd 100644
------ a/src/librarySlice.js
---+++ b/src/librarySlice.js
---@@ -4,6 +4,7 @@ const initialState = {
---     BasicModalDescription: "Error, missing description.",
---     ShowBasicModal: false,
---     BookItemUsingModal: false,
---+    BookViewUsingModal: false,
--- }
--- 
--- export const librarySlice = createSlice({
---@@ -22,6 +23,9 @@ reducers: {
---         setBookItemUsingModal: (state, action) => {//mutate
---             state.BookItemUsingModal = action.payload;
---         },
---+        setBookViewUsingModal: (state, action) => {//mutate
---+            state.BookViewUsingModal = action.payload;
---+        },
---     }
--- });
--- 
---@@ -29,5 +33,6 @@ export const { setBasicModalTitle,
---                setBasicModalDescription, 
---                setShowBasicModal,
---                setBookItemUsingModal,
---+               setBookViewUsingModal,
---              } = librarySlice.actions;
--- export default librarySlice.reducer;
---\ No newline at end of file
+--diff --git a/updates.txt b/updates.txt
+--index 1ebfc0a..2b4a402 100644
+----- a/updates.txt
+--+++ b/updates.txt
+--@@ -1,414 +0,0 @@
+---diff --git a/README.md b/README.md
+---index 58beeac..27740cf 100644
+------ a/README.md
+---+++ b/README.md
+---@@ -1,3 +1,8 @@
+---+# How I generated my library reviews project logo (A.I. converstion with Gemini)
+---+https://gemini.google.com/share/bbd47e8b1979
+---+
+---+
+---+
+--- # Getting Started with Create React App
+--- 
+--- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---diff --git a/public/favicon.ico b/public/favicon.ico
+---deleted file mode 100644
+---index a11777c..0000000
+---Binary files a/public/favicon.ico and /dev/null differ
+---diff --git a/public/index.html b/public/index.html
+---index 48c09be..7bd0212 100644
+------ a/public/index.html
+---+++ b/public/index.html
+---@@ -3,7 +3,7 @@
+---   <head>
+---     <meta charset="utf-8" />
+---     <meta name="viewport" content="width=device-width" initial-scale="1.00" maximum-scale="1.0" />
+----    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+---+    <link rel="icon" href="%PUBLIC_URL%/favicon.jpg" />
+---     <meta name="viewport" content="width=device-width, initial-scale=1" />
+---     <meta name="theme-color" content="#000000" />
+---     <meta
+---diff --git a/src/MyComponents/BasicModal.js b/src/MyComponents/BasicModal.js
+---index 4faf0cc..b13f43e 100644
+------ a/src/MyComponents/BasicModal.js
+---+++ b/src/MyComponents/BasicModal.js
+---@@ -3,15 +3,18 @@ import Box from '@mui/material/Box';
+--- import Button from '@mui/material/Button';
+--- import Typography from '@mui/material/Typography';
+--- import Modal from '@mui/material/Modal';
+---+import { useNavigate } from 'react-router-dom';
+--- //redux
+----import { setShowBasicModal, setBookItemUsingModal } from '../librarySlice';
+---+import { setShowBasicModal, setBookItemUsingModal, setBookViewUsingModal } from '../librarySlice';
+--- import { useSelector, useDispatch } from 'react-redux';
+--- 
+--- var style = {}
+--- export default function BasicModal(props) {
+---+  const navigate = useNavigate();
+---   // Redux state and mutator
+---   const library = useSelector(state => state.library);
+---   const dispatch = useDispatch();
+---+  //Modal style
+---   style = {
+---     position: 'absolute',
+---     top: '50%',
+---@@ -24,13 +27,20 @@ export default function BasicModal(props) {
+---     boxShadow: 24,
+---     p: 4,
+---     color: library.BasicModalTitle === 'Error' ? 'red' : 'green' ,//success/fail message 
+---+    //opacity: '0.1',
+---   };
+---   
+---   function OnModalClose(){
+----    if(library.BookItemUsingModal === true){
+---+    if(library.BookItemUsingModal === true){//for the delete action on BookItem page
+---       dispatch(setBookItemUsingModal(false)); //reset for next component to reuse modal
+---       dispatch(setShowBasicModal(false)) // close model
+---       window.location.reload();       
+---+    }
+---+    else if(library.BookViewUsingModal === true) {//for the delete action on BookView 
+---+        dispatch(setBookViewUsingModal(false)); //reset for next component to reuse modal
+---+        dispatch(setShowBasicModal(false)) // close model
+---+        console.log("Navigating To BookLIst.");
+---+        navigate("/");
+---     }
+---      else {
+---        // library.BookCreateUsingModal == true
+---@@ -41,7 +51,7 @@ export default function BasicModal(props) {
+---   return (
+---     <div>
+---       <Modal
+----        open={library.ShowBasicModal}
+---+        open={library.ShowBasicModal}//library.ShowBasicModal
+---         onClose={() => dispatch(setShowBasicModal(true))}//keep modal open
+---         aria-labelledby="modal-modal-title"
+---         aria-describedby="modal-modal-description"
+---diff --git a/src/MyComponents/BookCreate.css b/src/MyComponents/BookCreate.css
+---index 6ae483c..dd839c6 100644
+------ a/src/MyComponents/BookCreate.css
+---+++ b/src/MyComponents/BookCreate.css
+---@@ -2,13 +2,13 @@
+---     position: relative;
+---   }
+---   
+----  @media screen and (max-width: 600px) {/*Galaxy Z Fold 4*/
+---+  @media screen and (max-width: 600px) {/*Galaxy Z Fold 4 (it's small screen)*/
+---     .responsivelayout {
+---       width: 100%;
+---       /*margin-top: 0;*/
+---     }
+---   }
+----  @media screen and (min-width: 601px) {/*Galaxy Z Fold 4*/
+---+  @media screen and (min-width: 601px) {/*laptop and tablet*/
+---     .responsivelayout {
+---       width: 60%;
+---       /*margin-top: 0;*/
+---diff --git a/src/MyComponents/BookCreate.js b/src/MyComponents/BookCreate.js
+---index 7d6bf77..dc1aa62 100644
+------ a/src/MyComponents/BookCreate.js
+---+++ b/src/MyComponents/BookCreate.js
+---@@ -1,6 +1,7 @@
+--- import './BookCreate.css';
+--- import './spinner.css';
+--- import {useEffect, useRef, useState, React} from 'react';
+---+import { useNavigate } from 'react-router-dom';
+--- //responsive cards
+--- import {Grid, Card, CardContent,Typography, Button, TextField, Rating} from "@mui/material";
+--- //modal
+---@@ -21,7 +22,8 @@ export function BookCreate (props){
+---     var CreatedResponseStatusCode = null;
+---     const [StarValue, setRating] = useState(null);
+---     const StarRatingComponent = useRef(null);//get state from the Star Rating component.
+----    
+---+    const navigate = useNavigate();//initilize navigation for homepage if needed.
+---+
+---     //FORM state
+---     const TitleFieldRef = useRef(null);
+---     const AuthorFieldRef = useRef(null);
+---@@ -127,22 +129,28 @@ export function BookCreate (props){
+---          }
+---          ReviewerFieldRef.current.focus(); // move focus to Review TextField form input element.
+---        }
+---+     function NavigateToBookList() {//for home button
+---+        console.log("called NavigateToBookList(Homepage).");
+---+        navigate("/");
+---+      }
+--- 
+---         return (
+---             
+---             <div style={{background: "#fce305", width: "100%", height:"100%", position: "absolute", /* margin: "auto", display: "block" */}}> {/**/}
+---                 
+---                 {/* below spinner source is from: https://www.youtube.com/watch?v=xkf0tJq-sNY*/}
+----                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> } 
+---+                { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/} 
+--- 
+--- 
+---                 {/* <BasicModal open={true} title="Success" description="Success, you've created a book review in our Library of reviews!"/> */}
+---                 <BasicModal />
+--- 
+--- 
+----                <Typography variant="h4" align="center">            
+----                    Create Book Review: 
+----                </Typography>    
+---+                <center>
+---+                    <Button variant="contained" size="medium" align="center" style={{color: "ffffff", fontweight:"bolder",display:"inline-block", left:"-14%",}} onClick={NavigateToBookList}>Home</Button>
+---+                    <Typography variant="h4" style={{display:"inline-block"}}> Create Book Review: </Typography>
+---+                </center>
+---+                
+---                     <Card style={{maxWidth:800, margin: "0 auto", padding: "20px 5px"}}> 
+---                         <CardContent> 
+---                             <form onSubmit={onSubmit}> 
+---diff --git a/src/MyComponents/BookItem.js b/src/MyComponents/BookItem.js
+---index fdc0b24..b57a868 100644
+------ a/src/MyComponents/BookItem.js
+---+++ b/src/MyComponents/BookItem.js
+---@@ -9,7 +9,7 @@ import { CardActionArea } from '@mui/material';
+--- import CardMedia from '@mui/material/CardMedia';
+--- // import DeleteIcon from '@mui/icons-material/Delete';
+--- // import MyDeleteIcon from '@mui/icons-material/DeleteRounded ';
+----//stuff for basic modal
+---+//stuff for basic modal with redux
+--- import BasicModal from './BasicModal';
+--- import { /*useSelector,*/ useDispatch } from 'react-redux';
+--- import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
+---@@ -68,7 +68,7 @@ export function BookItem (props){
+---                         dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
+---                         dispatch(setBookItemUsingModal(true));
+---                         dispatch(setShowBasicModal(true)); 
+----                        console.log("my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+---+                        console.log("From BookItem page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+---                         //navigate("/");//refresh homepage, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+---                         // window.location.reload(); // this worked before the modal.
+---                     } else if (CreatedResponseStatusCode === 404){
+---@@ -84,7 +84,7 @@ export function BookItem (props){
+---                 dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
+---                 dispatch(setBookItemUsingModal(true));
+---                 dispatch(setShowBasicModal(true));
+----                console.log("Something went wrong(alert from fetch's catch statement)");//test
+---+                console.log("From BookItem page, Something went wrong(alert from fetch's catch statement)");//test
+---                 //setShowSpinner(false);//hide spinner
+---                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+---                 console.log("my catch error: "+error)
+---@@ -122,9 +122,9 @@ export function BookItem (props){
+---                             </CardContent>
+---                         </CardActionArea>
+---                         <CardActions> 
+----                        <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+---+                            <Button variant="contained" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+---                             <Button variant="contained" size="medium" onClick={NavigateToBookView}>Info</Button>
+----                            
+---+                            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
+---                         </CardActions>
+---                     </Card>
+---                 {/* ))} */}
+---diff --git a/src/MyComponents/BookList.js b/src/MyComponents/BookList.js
+---index ef7dd03..eebd353 100644
+------ a/src/MyComponents/BookList.js
+---+++ b/src/MyComponents/BookList.js
+---@@ -104,7 +104,7 @@ export function BookList (props) {
+---       return (
+---         <>
+---         {/* <div className='booklist-container'>  */}
+----        { (loading) ? <><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></> 
+---+        { (loading) ? <div style={{ background: "#fce305",position: "absolute", height:"100%", width: "100%"}}><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></div> 
+---       
+---         : 
+---             (finishedList) 
+---diff --git a/src/MyComponents/BookView.js b/src/MyComponents/BookView.js
+---index ea9dcaf..28fbb56 100644
+------ a/src/MyComponents/BookView.js
+---+++ b/src/MyComponents/BookView.js
+---@@ -2,9 +2,18 @@ import './BookView.css';
+--- //import BookThumbnail from '../my_images/default-book-thumbnail-bookstack.jpg';
+--- import { useNavigate } from 'react-router-dom';
+--- import {useEffect, useRef} from 'react';
+----import {Rating} from "@mui/material";
+---+import {Rating, Button, Typography} from "@mui/material";
+---+//stuff for basic modal with redux
+---+import BasicModal from './BasicModal';
+---+import { /*useSelector,*/ useDispatch } from 'react-redux';
+---+import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookViewUsingModal  } from '../librarySlice';
+--- 
+---+
+---+var CreatedResponseStatusCode = 0;
+--- export function BookView(props) {
+---+    //Material UI Modal and redux
+---+    const dispatch = useDispatch();
+---+    
+---     const navigate = useNavigate();//initilize navigation for homepage if needed.
+---     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
+---     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
+---@@ -18,7 +27,7 @@ export function BookView(props) {
+---         var emptyObj = {};//using var for comparison since adding {} to if condition always returns false.
+---         console.log("(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) is: "+(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)));//test print
+---         if (JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) {
+----            console.log("rerouting back to homepage because props.UserBookItem was empty object because user went to BookView page without using homepage");
+---+            console.log("rerouting back to homepage because props.UserBookItem was empty object because user went to BookView page without using homepage, and if I allow this it will cause the BookView page to not have any book/movie review data.");
+---             renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
+---             navigate("/");//route back to homepage
+---           }//else do nothing
+---@@ -26,6 +35,63 @@ export function BookView(props) {
+---             console.log("NOT rerouting back to homepage because props.UserBookItem was defined so this means user went to homepage and use the app to navigate to BookView page");
+---         }
+---     }
+---+
+---+    function DeleteBook () {
+---+      console.log("deleting title: "+props.UserBookItem.title);//test
+---+      console.log("deleting id: "+props.UserBookItem.id);
+---+
+---+      fetch('https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books/'+props.UserBookItem.id,{
+---+          method: 'DELETE',
+---+          mode: "cors",
+---+          headers: {
+---+              //Accept: 'application/json',
+---+              //"Origin": "https://programminghobby101.github.io",
+---+              'Content-Type': 'application/json',
+---+              "Access-Control-Allow-Origin": "*",
+---+          },
+---+      }).then(response => {
+---+              CreatedResponseStatusCode = response.status;
+---+              //setShowSpinner(false);//hide spinner
+---+              // if(response.status === 200){
+---+                  //alert("deleted book");//test
+---+                  /* Show success modal*/ 
+---+                  //handleShow();
+---+                  //NOTE: I refreshed page in the next Then statement powered by the next line.
+---+                  return response.text();//convert to string to print my API response
+---+              //}
+---+          }).then(textData => {
+---+                  if(CreatedResponseStatusCode === 200){
+---+                      /* Show success modal by using Redux*/ 
+---+                      dispatch(setBasicModalTitle("Success"));
+---+                      dispatch(setBasicModalDescription("Success, deleted a book review out of our library of reviews!"));
+---+                      dispatch(setBookViewUsingModal(true));
+---+                      dispatch(setShowBasicModal(true)); 
+---+                      console.log("From BookView page, my API delete success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+---+                      navigate("/");//Go to homepage after deleting item on the BookView page, NOTE: this does not work when I use the alert("") function dialogs in the fetch promises.
+---+                      // window.location.reload(); // this worked before the modal.
+---+                  } else if (CreatedResponseStatusCode === 404){
+---+                      console.log("404 status code returned. Book review id not found.");
+---+                  }else{
+---+                      console.log("Tried deleting a book review, Something else went wrong!, in the else of then.then of fetch.");//test 
+---+                      throw new Error("Something else went wrong!, in the else of then.then of fetch.");                   
+---+                  }    
+---+               })
+---+          .catch(error =>{
+---+              /* Show error modal by using Redux*/ 
+---+              dispatch(setBasicModalTitle("Error"));
+---+              dispatch(setBasicModalDescription("Error, Something went wrong! Sorry but the book review you selected was not deleted out of our library of reviews. Please try again later."));
+---+              dispatch(setBookViewUsingModal(true));
+---+              dispatch(setShowBasicModal(true));
+---+              console.log("Something went wrong(alert from fetch's catch statement)");//test
+---+              //setShowSpinner(false);//hide spinner
+---+              //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
+---+              console.log("my catch error: "+error)
+---+          });
+---+    }
+---+     function NavigateToBookList() {
+---+        console.log("called  NavigateToBookList(Homepage).");
+---+        navigate("/");
+---+      }
+---     return (
+---         // <div>
+---         //     <p>hello world!</p>
+---@@ -33,6 +99,10 @@ export function BookView(props) {
+---         // </div>
+---         <div className="book-container">
+---           <center>
+---+            <Button variant="contained" size="small" style={{color: "ffffff !important",fontweight:"bolder", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button> 
+---+            <Button variant="contained" size="medium" style={{color: "ffffff", fontweight:"bolder"}} onClick={NavigateToBookList}>Home</Button>
+---+            <Button variant="contained" size="medium" style={{color: "ffffff",fontweight:"bolder", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
+---+            
+---             <h1 className='my-H-Tags'>Title</h1>
+---             {props.UserBookItem.title}
+---             <h1 className='my-H-Tags'>Author</h1>
+---diff --git a/src/MyComponents/spinner.css b/src/MyComponents/spinner.css
+---index d72dc7f..a602bec 100644
+------ a/src/MyComponents/spinner.css
+---+++ b/src/MyComponents/spinner.css
+---@@ -30,19 +30,39 @@
+--- 	to {transform:rotate(360deg);}
+--- }
+--- 
+----#semiTransparenDiv::after {
+----    content:'';
+----    display:block;
+----    position:absolute;
+----    left:48%;top:40%;
+----    width:80px;height:80px;
+----    border-style:solid;
+----    border: 5px solid rgb(255, 255, 255);
+----	border-top-color: #6CC4EE;
+----    border-width: 7px;
+----    border-radius:50%;
+----    -webkit-animation: spin .8s linear infinite;
+----    
+----    /* Lets make it go round */
+----    animation: spin .8s linear infinite;
+---+@media screen and (max-width: 600px) {/*Galaxy Z Fold 4*/
+---+    #semiTransparenDiv::after {
+---+        content:'';
+---+        display:block;
+---+        position:absolute;
+---+        left:35%;top:40%;
+---+        width:80px; height:80px;
+---+        border-style:solid;
+---+        border: 5rem solid rgb(255, 255, 255);
+---+        border-top-color: #6CC4EE;
+---+        border-width: 0.5rem;
+---+        border-radius:50%;
+---+        -webkit-animation: spin .8s linear infinite;
+---+        
+---+        /* Lets make it go round */
+---+        animation: spin .8s linear infinite;
+---+    }
+---+}
+---+@media screen and (min-width: 601px) {/*Galaxy Z Fold 4*/
+---+    #semiTransparenDiv::after {
+---+        content:'';
+---+        display:block;
+---+        position:absolute;
+---+        left:48%;top:40%;
+---+        width:80px; height:80px;
+---+        border-style:solid;
+---+        border: 5px solid rgb(255, 255, 255);
+---+        border-top-color: #6CC4EE;
+---+        border-width: 7px;
+---+        border-radius:50%;
+---+        -webkit-animation: spin .8s linear infinite;
+---+        
+---+        /* Lets make it go round */
+---+        animation: spin .8s linear infinite;
+---+    }
+--- }
+---\ No newline at end of file
+---diff --git a/src/librarySlice.js b/src/librarySlice.js
+---index 4d47772..e88f9dd 100644
+------ a/src/librarySlice.js
+---+++ b/src/librarySlice.js
+---@@ -4,6 +4,7 @@ const initialState = {
+---     BasicModalDescription: "Error, missing description.",
+---     ShowBasicModal: false,
+---     BookItemUsingModal: false,
+---+    BookViewUsingModal: false,
+--- }
+--- 
+--- export const librarySlice = createSlice({
+---@@ -22,6 +23,9 @@ reducers: {
+---         setBookItemUsingModal: (state, action) => {//mutate
+---             state.BookItemUsingModal = action.payload;
+---         },
+---+        setBookViewUsingModal: (state, action) => {//mutate
+---+            state.BookViewUsingModal = action.payload;
+---+        },
+---     }
+--- });
+--- 
+---@@ -29,5 +33,6 @@ export const { setBasicModalTitle,
+---                setBasicModalDescription, 
+---                setShowBasicModal,
+---                setBookItemUsingModal,
+---+               setBookViewUsingModal,
+---              } = librarySlice.actions;
+--- export default librarySlice.reducer;
+---\ No newline at end of file

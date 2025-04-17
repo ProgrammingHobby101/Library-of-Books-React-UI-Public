@@ -76,7 +76,8 @@ export function BookCreate (props){
         }).then(response => {
                 setShowSpinner(false);//hide spinner
                 CreatedResponseStatusCode = response.status;
-                if(response.status === 201){
+                // CreatedResponseStatusCode = 400;//test only
+                if(response.status === 201){//tested works!
                     //alert("created book");//test
                     /* Reset form fields */
                     TitleFieldRef.current.value = null;
@@ -90,39 +91,40 @@ export function BookCreate (props){
                     dispatch(setBasicModalDescription("Success, you've created a book review in our library of reviews!"));
                     dispatch(setShowBasicModal(true)); 
 
-                    return response.text();//convert to string to print my API response
+                    return response.json();//convert to string to print my API response
                 }
-                else if(response.status === 500){
-                    return response.json(); 
-                }
-                else{
+                // else if(response.status === 500){//this is not being used, instead the 500 status request is being handled in the next .then promise.
+                //     return response.json(); 
+                // }
+                else{//Tested works!
                     console.log("CODE 1.1; Something went wrong(from then else statement)");//test
-                    return response.text();
+                    return response.json();
                 }    
-            }).then(textData => {
-                //throw new Error('CODE test...; Something went wrong(from then-then else statement) "+textData');//for testing catch only
-                    if(CreatedResponseStatusCode === 201) {
-                        console.log("my API create/put success response: "+textData); // Now you have the string data , // Use the textData as needed in your component
+            }).then((json) => {
+                //throw new Error('CODE test...; Something went wrong(from then-then else statement) "+json');//for testing catch only
+                    if(CreatedResponseStatusCode === 201) {//tested works!
+                        console.log("my API create/put success response: "+json); // Now you have the string data , // Use the json as needed in your component
                     }
-                    else if(CreatedResponseStatusCode === 500 ){
-                        console.log("my API create/put DB limit error"+textData );
+                    else if(CreatedResponseStatusCode === 500 ){//tested works!
+                        console.log("my API create/put DB limit error"+json );
+                        console.log("Library book creation limit of "+JSON.parse(json).limit+" books reached.");
                         /* Show error modal by using Redux*/
+                        var errorJSON = JSON.parse(json);
                         dispatch(setBasicModalTitle("Error"));
-                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+JSON.parse(textData).limit+" books reached. Please try creating your book review, after deleting at least one book review on our homepage."));
+                        dispatch(setBasicModalDescription("Error, Library book creation limit of "+errorJSON.limit+" books reached. Please try creating your book review, after deleting at least one book review on our homepage."));
                         dispatch(setShowBasicModal(true)); 
                     }
-                    else{
-                        console.log("CODE 1.2; Tried creating a book review, Something went wrong(from then-then else statement) "+textData); // Now you have the string data , // Use the textData as needed in your component
-                        throw new Error('CODE 1.2; Something went wrong(from then-then else statement) "+textData');
+                    else{//Tested works!
+                        console.log("CODE 1.2; Tried creating a book review, Something went wrong(from then-then else statement) "+json); // Now you have the string data , // Use the json as needed in your component
+                        throw new Error('CODE 1.2; Something went wrong(from then-then else statement) "+json');
                     }
                  })
-            .catch(error =>{
+            .catch((error) =>{//Tested works!
                 setShowSpinner(false);//hide spinner
-                
                 console.log("CODE 1.3; my catch error: "+error);
                 /* Show thrown error modal by using Redux*/
                 dispatch(setBasicModalTitle("Error"));
-                dispatch(setBasicModalDescription("Error while creating your book review, please try again later. CODE 1.3"));
+                dispatch(setBasicModalDescription("CODE 1.3; Error while creating your book review, please try again later."));
                 dispatch(setShowBasicModal(true)); 
                 //alert("Something went wrong(in catch)");//I only need the alert display if the API request fails //test
             });
