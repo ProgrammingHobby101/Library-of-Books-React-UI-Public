@@ -31,6 +31,10 @@ export function BookEdit (props){
     const RatingInputField = useRef(null);
     const ReviewerFieldRef = useRef(null);
     const SummaryFieldRef = useRef(null);
+    const [TitleValue, setTitleValue] = useState(props.UserBookItem.title);
+    const [AuthorValue, setAuthorValue] = useState(props.UserBookItem.author);
+    const [ReviewerValue, setReviewerValue] = useState(props.UserBookItem.reviewer);
+    const [SummaryValue, setSummaryValue] = useState(props.UserBookItem.summary);
     
     //Material UI Modal and redux
     //const library = useSelector(state => state.library);
@@ -46,8 +50,25 @@ export function BookEdit (props){
             console.log("loaded book create page.");
             //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
           }//else do nothing
+          checkIfDataExistFromBookItem();//check if user used homepage to first select a book review, then if not then reroute to homepage.
           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
-        }, []);
+        }, [checkIfDataExistFromBookItem()]);
+        
+    function checkIfDataExistFromBookItem(){
+            console.log("hello world title:"+props.UserBookItem.title);//test prints
+            console.log("hello world:"+JSON.stringify(props.UserBookItem));//test prints
+            console.log("props.UserBookItem"+props.UserBookItem);//test prints
+            var emptyObj = {};//using var for comparison since adding {} to if condition always returns false.
+            console.log("(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) is: "+(JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)));//test print
+            if (JSON.stringify(props.UserBookItem) === JSON.stringify(emptyObj)) {
+                console.log("rerouting back to homepage because props.UserBookItem was empty object because user went to BookView page without using homepage, and if I allow this it will cause the BookView page to not have any book/movie review data.");
+                renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
+                navigate("/");//route back to homepage
+              }//else do nothing
+            else {
+                console.log("NOT rerouting back to homepage because props.UserBookItem was defined so this means user went to homepage and use the app to navigate to BookView page");
+            }
+        }
 
     function StarOnChange (event, value) {
         if(value != null){
@@ -57,6 +78,58 @@ export function BookEdit (props){
             //StarRatingComponent.current.value = StarValue;//use last value set by "setRating" hook function. 
         }
         console.log("star component value: "+value+", previous StarValue state: "+StarValue+", event.target.value: "+event.target.value+", StarRatingComponent.current.value: "+ StarRatingComponent.current.value);//this console.log uses the previous state of StarValue because  
+    }
+    function TitleValueOnInput(event, value) {
+        //console.log("summary oninput event.target.value"+event.target.value);//works! and test only.
+        if(event.target.value != null){
+            console.log("oninput hello if.");
+            setTitleValue(event.target.value);
+        }else{
+            //console.log("oninput hello else. value: "+event.target.value);//works! test only.
+            // console.log("StarRatingComponent.current.value: "+StarRatingComponent.current.value);
+            // StarRatingComponent.current.value = StarValue;//use last value set by "setRating" hook function. 
+        }
+        // console.log("form title value: "+value+", previous StarValue state: "+StarValue+", event.target.value: "+event.target.value+", StarRatingComponent.current.value: "+ StarRatingComponent.current.value);//this console.log uses the previous state of StarValue because  
+    
+    }
+    function AuthorValueOnInput(event, value) {
+        //console.log("summary oninput event.target.value"+event.target.value);//works! and test only.
+        if(event.target.value != null){
+            console.log("oninput hello if.");
+            setAuthorValue(event.target.value);
+        }else{
+            //console.log("oninput hello else. value: "+event.target.value);//works! test only.
+            // console.log("StarRatingComponent.current.value: "+StarRatingComponent.current.value);
+            // StarRatingComponent.current.value = StarValue;//use last value set by "setRating" hook function. 
+        }
+        // console.log("form title value: "+value+", previous StarValue state: "+StarValue+", event.target.value: "+event.target.value+", StarRatingComponent.current.value: "+ StarRatingComponent.current.value);//this console.log uses the previous state of StarValue because  
+    
+    }
+    function ReviewerValueOnInput(event, value) {
+        //console.log("summary oninput event.target.value"+event.target.value);//works! and test only.
+        if(event.target.value != null){
+            console.log("oninput hello if.");
+            setReviewerValue(event.target.value);
+        }else{
+            //console.log("oninput hello else. value: "+event.target.value);//works! test only.
+            // console.log("StarRatingComponent.current.value: "+StarRatingComponent.current.value);
+            // StarRatingComponent.current.value = StarValue;//use last value set by "setRating" hook function. 
+        }
+        // console.log("form title value: "+value+", previous StarValue state: "+StarValue+", event.target.value: "+event.target.value+", StarRatingComponent.current.value: "+ StarRatingComponent.current.value);//this console.log uses the previous state of StarValue because  
+    
+    }    
+    function SummaryValueOnInput(event, value) {
+        //console.log("summary oninput event.target.value"+event.target.value);//works! and test only.
+        if(event.target.value != null){
+            console.log("oninput hello if.");
+            setSummaryValue(event.target.value);
+        }else{
+            //console.log("oninput hello else. value: "+event.target.value);//works! test only.
+            // console.log("StarRatingComponent.current.value: "+StarRatingComponent.current.value);
+            // StarRatingComponent.current.value = StarValue;//use last value set by "setRating" hook function. 
+        }
+        // console.log("form title value: "+value+", previous StarValue state: "+StarValue+", event.target.value: "+event.target.value+", StarRatingComponent.current.value: "+ StarRatingComponent.current.value);//this console.log uses the previous state of StarValue because  
+    
     }
     function onSubmit (event, data) {//TEST this alert later and add the empty box to end of useEffect.
         setShowSpinner(true);//show spinner
@@ -73,12 +146,12 @@ export function BookEdit (props){
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
             },
-            body: JSON.stringify({"title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":""+StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value })
+            body: JSON.stringify({"id":props.UserBookItem.id, "title":TitleFieldRef.current.value, "author":AuthorFieldRef.current.value, "rating":""+StarValue, "reviewer":ReviewerFieldRef.current.value, "summary":SummaryFieldRef.current.value })
         }).then(response => {
                 setShowSpinner(false);//hide spinner
                 CreatedResponseStatusCode = response.status;
                 // CreatedResponseStatusCode = 400;//test only
-                if(response.status === 201){//tested works!
+                if(response.status === 200){//tested works!
                     //alert("created book");//test
                     /* Reset form fields */
                     TitleFieldRef.current.value = null;
@@ -89,7 +162,7 @@ export function BookEdit (props){
                     SummaryFieldRef.current.value = null;
                     /* Show success modal by using Redux*/ 
                     dispatch(setBasicModalTitle("Success"));
-                    dispatch(setBasicModalDescription("Success, you've created a book review in our library of reviews!"));
+                    dispatch(setBasicModalDescription("Success, you've edited a book review in our library of reviews!"));
                     dispatch(setShowBasicModal(true)); 
 
                     return response.json();//convert to string to print my API response
@@ -103,7 +176,7 @@ export function BookEdit (props){
                 }    
             }).then((json) => {
                 //throw new Error('CODE test...; Something went wrong(from then-then else statement) "+json');//for testing catch only
-                    if(CreatedResponseStatusCode === 201) {//tested works!
+                    if(CreatedResponseStatusCode === 200) {//tested works!
                         console.log("my API create/put success response: "+json); // Now you have the string data , // Use the json as needed in your component
                     }
                     else if(CreatedResponseStatusCode === 500 ){//tested works!
@@ -167,10 +240,10 @@ export function BookEdit (props){
                                 <form onSubmit={onSubmit}> 
                                     <Grid container spacing={2}> 
                                         <Grid xs={12} item> 
-                                            <TextField label="Title" slotProps={{ htmlInput: { value: ""+props.UserBookItem.title, minlength:"1", maxlength:"400" } }} className='responsivelayoutforWidth' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
+                                            <TextField label="Title" value={TitleValue} slotProps={{ htmlInput: { minlength:"1", maxlength:"400" } }} onInput={TitleValueOnInput} className='responsivelayoutforWidth' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
                                         </Grid> 
                                         <Grid xs={12} item> 
-                                            <TextField label="Author" slotProps={{ htmlInput: { value: ""+props.UserBookItem.author, minlength:"1", maxlength:"200" } }} className='responsivelayoutforWidth' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
+                                            <TextField label="Author" value={AuthorValue} slotProps={{ htmlInput: { minlength:"1", maxlength:"200" } }} onInput={AuthorValueOnInput} className='responsivelayoutforWidth' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
                                         </Grid> 
                                         <Grid xs={12} item> 
                                             <Typography component="legend" className='star-rating'>Rating</Typography>
@@ -204,10 +277,10 @@ export function BookEdit (props){
                                                 </div>
                                         </Grid> 
                                         <Grid xs={12} item> 
-                                            <TextField label="Reviewer" slotProps={{ htmlInput: { value: ""+props.UserBookItem.reviewer, minlength:"1", maxlength:"200" } }} className='responsivelayoutforWidth' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
+                                            <TextField label="Reviewer" value={ReviewerValue} slotProps={{ htmlInput: { minlength:"1", maxlength:"200" } }} onInput={ReviewerValueOnInput} className='responsivelayoutforWidth' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
                                         </Grid> 
                                         <Grid xs={12} item> 
-                                            <TextField label="Summary" slotProps={{ htmlInput: { value: ""+props.UserBookItem.summary, minlength:"2", maxlength:"3000" } }} inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
+                                            <TextField label="Summary" value={SummaryValue} slotProps={{ htmlInput: { minlength:"2", maxlength:"3000" } }} onInput={SummaryValueOnInput} inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
                                         </Grid> 
                                         <Grid xs={12} item> 
                                             <Button type="submit" variant="contained" color="primary" fullwidth>Submit</Button>
