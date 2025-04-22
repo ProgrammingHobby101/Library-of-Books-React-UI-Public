@@ -4,6 +4,7 @@ import './App.css';
 import { BookList } from './MyComponents/BookList.js';
 import { BookView } from './MyComponents/BookView.js';
 import { BookCreate } from './MyComponents/BookCreate.js';
+import { BookEdit } from './MyComponents/BookEdit.js';
 import { useState } from "react";
 
 //import { ClipLoader } from '@storybook/react';
@@ -28,8 +29,9 @@ function App() {
               
               <BookList setUserBookItem={setUserBookItem}/>
             </div> }/>
-            <Route path="/BookView" element={<BookView UserBookItem={UserBookItem} />} />
+            <Route path="/BookView" element={<BookView UserBookItem={UserBookItem} setUserBookItem={setUserBookItem}/>} />
             <Route path="/BookCreate" element={<BookCreate/>} />
+            <Route path="/BookEdit" element={<BookEdit UserBookItem={UserBookItem}/>} />
           <Route path="*" element={<div><center>Sorry, Page not available. Please go back to the home page.</center></div>} />
       </Routes>
     </HashRouter>

@@ -110,6 +110,11 @@ export function BookView(props) {
         console.log("called  NavigateToBookList(Homepage).");
         navigate("/");
       }
+      function NavigateToBookEdit (){
+        console.log("nav to edit.");
+        props.setUserBookItem(props.UserBookItem);//pass to BookEdit page
+        navigate("/BookEdit");
+    }
     return (
         // <div>
         //     <p>hello world!</p>
@@ -126,7 +131,7 @@ export function BookView(props) {
           <center>
             <Button variant="contained" size="small" style={{color: "ffffff !important",fontweight:"bolder", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button> 
             <Button variant="contained" size="medium" style={{color: "ffffff", fontweight:"bolder"}} onClick={NavigateToBookList}>Home</Button>
-            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>  
+            <Button variant="contained" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>  
             
                 <h1 className='my-H-Tags'>Title</h1>
                 {props.UserBookItem.title}

@@ -2,6 +2,7 @@
     position: relative;
   }
   
+  /* following makes form fields responsive */
   @media screen and (max-width: 600px) {/*for form fields, Galaxy Z Fold 4 (it's small screen)*/
     .responsivelayoutforWidth {
       width: 100%;
@@ -15,7 +16,7 @@
     }
   }
 
-  /*  */
+  /*following responsive-layout-for-height  class makes component container div background color stretch across the page in all situations.*/
   @media screen and (max-height: 635px) { /*for form fields, Galaxy Z Fold 4 (it's small screen)*/
     .responsive-layout-for-height {
       position: relative;

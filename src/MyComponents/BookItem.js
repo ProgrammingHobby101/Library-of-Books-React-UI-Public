@@ -41,8 +41,13 @@ export function BookItem (props){
          }, []);
     function NavigateToBookView () {
         console.log("called NavigateToBookView.");
-        props.setUserBookItem(props.bookJSON);
+        props.setUserBookItem(props.bookJSON);//pass to BookView page
         navigate("/BookView");
+    }
+    function NavigateToBookEdit (){
+        console.log("nav to edit.");
+        props.setUserBookItem(props.bookJSON);//pass to BookEdit page
+        navigate("/BookEdit");
     }
     //const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }//test
     function DeleteBook () {
@@ -59,7 +64,7 @@ export function BookItem (props){
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
             },
-        }).then(response => {
+        }).then(response => {//tested works!
                 setShowSpinner(false);//hide spinner
                 CreatedResponseStatusCode = response.status;
                 //  CreatedResponseStatusCode = 500;//test only
@@ -70,7 +75,7 @@ export function BookItem (props){
                     //NOTE: I refreshed page in the next Then statement powered by the next line.
                     return response.text();//convert to string to print my API response
                 //}
-            }).then(textData => {
+            }).then(textData => {//tested works!
                 //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//test only   
                     if(CreatedResponseStatusCode === 200){//tested works!
                         /* Show success modal by using Redux*/ 
@@ -142,7 +147,7 @@ export function BookItem (props){
                         <CardActions> 
                             <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
                             <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" onClick={NavigateToBookView}>Info</Button>
-                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={() => alert("to edit.")}>Edit</Button>
+                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
                         </CardActions>
                     </Card>
                 {/* ))} */}

@@ -166,10 +166,10 @@ export function BookCreate (props){
                                 <form onSubmit={onSubmit}> 
                                     <Grid container spacing={2}> 
                                         <Grid xs={12} item> 
-                                            <TextField label="Title" className='responsivelayoutforWidth' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
+                                            <TextField label="Title" slotProps={{ htmlInput: { minlength:"1", maxlength:"400" } }} className='responsivelayoutforWidth' placeholder="Enter Title" inputRef={TitleFieldRef} variant="outlined" fullwidth required /> 
                                         </Grid> 
                                         <Grid xs={12} item> 
-                                            <TextField label="Author" className='responsivelayoutforWidth' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
+                                            <TextField label="Author" slotProps={{ htmlInput: { minlength:"1", maxlength:"200" } }} className='responsivelayoutforWidth' placeholder="Enter Author" inputRef={AuthorFieldRef} variant="outlined" fullwidth required /> 
                                         </Grid> 
                                         <Grid xs={12} item> 
                                             <Typography component="legend" className='star-rating'>Rating</Typography>
@@ -203,10 +203,10 @@ export function BookCreate (props){
                                                 </div>
                                         </Grid> 
                                         <Grid xs={12} item> 
-                                            <TextField label="Reviewer" className='responsivelayoutforWidth' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
+                                            <TextField label="Reviewer" slotProps={{ htmlInput: {  minlength:"1", maxlength:"200" } }} className='responsivelayoutforWidth' inputRef={ReviewerFieldRef}  id="ReviewerID" name="ReviewerID" placeholder="Enter Reviewer" variant="outlined"  fullwidth required />
                                         </Grid> 
                                         <Grid xs={12} item> 
-                                            <TextField label="Summary" inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
+                                            <TextField label="Summary" slotProps={{ htmlInput: { minlength:"2", maxlength:"3000" } }} inputRef={SummaryFieldRef} multiline rows={4} placeholder="Type your Summary here" variant="outlined" sx={{ width: "99%" }} required /> 
                                         </Grid> 
                                         <Grid xs={12} item> 
                                             <Button type="submit" variant="contained" color="primary" fullwidth>Submit</Button>
