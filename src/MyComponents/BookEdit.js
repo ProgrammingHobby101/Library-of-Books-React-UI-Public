@@ -51,6 +51,7 @@ export function BookEdit (props){
             //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
           }//else do nothing
           checkIfDataExistFromBookItem();//check if user used homepage to first select a book review, then if not then reroute to homepage.
+          ScrollToBeginningOfPage();
           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
         }, [checkIfDataExistFromBookItem()]);
         
@@ -69,6 +70,13 @@ export function BookEdit (props){
                 console.log("NOT rerouting back to homepage because props.UserBookItem was defined so this means user went to homepage and use the app to navigate to BookView page");
             }
         }
+    function ScrollToBeginningOfPage (){//cthis code will get rid of bug that scrolls to bottom of page. 
+        const body = document.querySelector('#root');
+
+        body.scrollIntoView({
+            behavior: 'smooth'
+        }, 500)
+    }
 
     function StarOnChange (event, value) {
         if(value != null){

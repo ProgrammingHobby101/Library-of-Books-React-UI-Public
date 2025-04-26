@@ -43,11 +43,19 @@ export function BookCreate (props){
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
         if (!renderAfterCalled.current) { //only fetch once
             console.log("loaded book create page.");
+            ScrollToBeginningOfPage();
             //props.setUserBookItem(props.bookJSON);//don't change global state inside the componentDidMount method
           }//else do nothing
           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
         }, []);
+    
+    function ScrollToBeginningOfPage (){
+        const body = document.querySelector('#root');
 
+        body.scrollIntoView({
+            behavior: 'smooth'
+        }, 500)
+    }
     function StarOnChange (event, value) {
         if(value != null){
             setRating(value);

@@ -127,10 +127,11 @@ export function BookItem (props){
                     { ShowSpinner ? <div id="semiTransparenDiv" ></div> : <></> }{/*ShowSpinner*/}     
                     
                     <BasicModal />      
-                    <Card id="booklistitem" sx={{maxwidth: 345, }}> 
+                    <Card id="booklistitem" sx={{maxwidth: 345}}> 
                         <CardActionArea> 
                             <CardMedia 
                               component="img" 
+                              zindex="9999"
                               height="140.m/l" 
                               image={BookThumbnail}
                               alt="BookThumbnail"
@@ -145,9 +146,9 @@ export function BookItem (props){
                             </CardContent>
                         </CardActionArea>
                         <CardActions> 
-                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
-                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" onClick={NavigateToBookView}>Info</Button>
-                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
+                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{ color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{}} onClick={NavigateToBookView}>Info</Button>
+                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{ color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
                         </CardActions>
                     </Card>
                 {/* ))} */}

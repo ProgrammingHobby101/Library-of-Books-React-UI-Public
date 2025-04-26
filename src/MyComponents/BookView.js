@@ -24,6 +24,7 @@ export function BookView(props) {
     const renderAfterCalled = useRef(false);// this paired with useEffect will prevent useEffect from running twice in Dev mode.
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
           checkIfDataExistFromBookItem();
+          ScrollToBeginningOfPage();
           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
           // eslint-disable-next-line 
     }, [checkIfDataExistFromBookItem()]);
@@ -42,6 +43,13 @@ export function BookView(props) {
             console.log("NOT rerouting back to homepage because props.UserBookItem was defined so this means user went to homepage and use the app to navigate to BookView page");
         }
     }
+    function ScrollToBeginningOfPage (){
+      const body = document.querySelector('#root');
+
+      body.scrollIntoView({
+          behavior: 'smooth'
+      }, 500)
+  }
 
     function DeleteBook () {
       setShowSpinner(true);//show spinner

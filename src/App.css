@@ -1,14 +1,24 @@
 .App{
   background-color: #fce305;
 } 
-.my-form{
+
+
+
+
+/* the .my-form and .search-box were used with the search box and were moved to BookList*/
+/* .my-form{
   align-items: center;
   background-color: black;
   color: white;
 }
 .search-box{
   text-align: center;
-}
+} */
+
+
+
+
+
 /*.App {
   text-align: center;
 }*/

@@ -17,3 +17,14 @@
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   }
+
+
+ /*for the search bar*/ 
+.my-form{
+  align-items: center;
+  background-color: black;
+  color: white;
+}
+.search-box{
+  text-align: center;
+}

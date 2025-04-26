@@ -9,15 +9,22 @@ import Container from "@mui/material/Container";
 import BasicModal from './BasicModal';
 import { useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookListUsingModal  } from '../librarySlice';
+import Headroom from 'react-headroom'; //import for; make the search bar sticky and show only when scroll up.
+
  
 var list = [];
-var finishedList = null;
+var finishedList = (<></>);
 var BooksReviewedCount = 0;
 var CreatedResponseStatusCode = 0;
+var SearchJSON = null;
+//var loading = true;
 export function BookList (props) {
     var [loading, setLoading] = useState(true);//show spinner
-    var [myJSON, setMyJSON] = useState([]); 
+    //const [myJSON, setMyJSON] = useState([]); //only used for test json
+    //const [SearchJSON, setSearchJSON] = useState([{}]);//doesn't allow parsed json to be assigned to this useState variable.
+
     
+    const [test, forceUpdate] = useState();
     //Material UI Modal and redux
     //const library = useSelector(state => state.library);
     const dispatch = useDispatch();
@@ -27,6 +34,7 @@ export function BookList (props) {
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
       if (!renderAfterCalled.current) { //only fetch once
         console.log("hello world fetch");
+        ScrollToBeginningOfPage();
         list = [];//reset list to prevent doubles of everything being displayed in the list 
         fetch("https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?")
         .then((response) => {
@@ -39,6 +47,7 @@ export function BookList (props) {
           //throw new Error("CODE 1.0; Something else went wrong!, in the else of then.then of fetch.");//tested and test only   
           if(CreatedResponseStatusCode === 200){ //tested works!
             //console.log("json.length or json string: "+json);
+            SearchJSON = json;//save json for search json.
             getList(json);//create list of cards
             //IMPORTANT! No need to display success modal 
               /* Show success modal by using Redux*/ 
@@ -61,6 +70,7 @@ export function BookList (props) {
                  </Grid>
                </Container> ) ;//added each book item to my "Material UI" library responsive grid code
               
+              loading = false;
               setLoading(false);//hide spinner and rerender UI
               /* Show error modal by using Redux*/ 
               console.log("CODE 1.1; 404 status code returned. Empty list of Book reviews.");
@@ -78,9 +88,10 @@ export function BookList (props) {
           finishedList =  (
             <Container maxwidth="1g">
               <Typography variant="h4" align="center">
-                 This website is running into errors, we apologize for the inconvience. Please revisit our homepage later...
+                 This website is running into errors, we apologize for the inconvience. Please re-visit our homepage later...
               </Typography> 
              </Container> ) ;
+          loading = false;
           setLoading(false);//hide spinner and rerender UI
           /* Show error modal by using Redux*/ 
           dispatch(setBasicModalTitle("Error"));
@@ -131,15 +142,73 @@ export function BookList (props) {
       //const refresh = useRefresh();
       //const [, forceRender] = useState({});
       //const forceUpdate = React.useReducer(bool => !bool, true)[1];
-      function NavigateToBookCreate () {
+  function ScrollToBeginningOfPage (){
+        const body = document.querySelector('#root');
+
+        body.scrollIntoView({
+            behavior: 'smooth'
+        }, 500)
+    }
+  function NavigateToBookCreate () {
         console.log("called NavigateToBookCreate.");
         //props.setUserBookItem(props.bookJSON);
         navigate("/BookCreate");
     }
-    function getList (json) {
+  function SearchBoxSubmit(event) {
+      event.preventDefault();//prevent refresh on submit.
+      var SearchValue = event.target.value;
+      console.log("SearchBoxSubmit(), event.target.value: "+event.target.value);
+      setLoading(true);//show spinner and rerender UI
+      // console.log("event.target.elements.Search.value: "+event.target.elements.Search.value+", JSON.stringify(event)"+JSON.stringify(event));
+      // console.log("search submit function value; "+event.target.elements.Search.value);
+      // var SearchValue = event.target.elements.Search.value;
+      //console.log("SearchJSON: "+JSON.stringify(SearchJSON));//works!
+      //var temp = JSON.parse(SearchJSON);
+      //setSearchJSON(temp);//save parsed json
+      var foundObjects = SearchJSON.filter(item => item.title.includes(''+SearchValue) 
+                                                         || item.author.includes(''+SearchValue) 
+                                                         || item.rating.includes(''+SearchValue)
+                                                         || item.reviewer.includes(''+SearchValue)
+                                                         || item.summary.includes(''+SearchValue)); 
+      console.log("SearchBoxSubmit foundObjects; "+foundObjects);  
+      getSearchList(foundObjects,event);                                                       
+      //getList(foundObjects);
+  }
+  function SearchBoxHeader (){ //a reuseable function for showing the search box header
+    
+    return (
+      <Headroom>
+          <header style={{height:"2.5rem", 
+          // position: 'fixed', /* WORKS! always shows search bar.
+          // top: 0, /* WORKS! always shows search bar.
+          // width: '100%', 
+          // display: "block",
+          // zIndex: 2147483647, /* WORKS! always shows search bar, Ensure it's above other content*/
+          }}>
+              <div style={{height:"100%"}}>
+                <form className="my-form" style={{height:" 100%" }}>
+                    <center style={{height:" 100%"}}>
+                      <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label>
+                      <input className="search-box" onChange={SearchBoxSubmit} type="text" id="search" name="Search" style={{height:" 75%", width:"50%", borderRadius:"1rem"}}/>
+                    </center>
+                </form>
+              </div>
+            </header>
+      </Headroom>);
+    }
+
+    function getSearchList (json) {
+      setLoading(true);//show spinner and rerender UI
+      console.log("loading var after setLoading: "+loading);
+        list = []; //reset for the searchbox call.
+        finishedList = (<></>); //reset for the searchbox call.
         //setMyJSON(json);
-        console.log("json: "+json);
-        console.log("myJSON.length: "+json.length);
+        console.log("getSearchList json: "+json);
+        console.log("getSearchList json.length: "+json.length);
+        console.log("json/foundObjects: "+json);
+        //console.log("myJSON.length: "+myJSON.length);
+        SearchJSON = json;
+        console.log("SearchJSON.length: "+SearchJSON.length);
         BooksReviewedCount = json.length;
         // json.sort((a,b) => { // Old sorting method
         //     return b.modifiedDate.localeCompare(a.modifiedDate) // Sort Descending, try modifiedDate
@@ -157,29 +226,101 @@ export function BookList (props) {
           //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
           console.log("running BookItem loop, count: "+x);
         }
-        finishedList =  (
-          <Container maxwidth="1g">
-            <Typography variant="h4" align="center">
-            {BooksReviewedCount} Books Reviewed: 
-            </Typography> 
-            <Button variant="contained" size="medium" onClick={NavigateToBookCreate}>Create a Review</Button>
-            <Grid container spacing={5} style={{ marginTop: "20px"}}>
-              {list} 
-             </Grid>
-           </Container> ) ;//added each book item to my "Material UI" library responsive grid code
+        console.log("getSearhList finished list: "+list);
+        finishedList =  ( 
+          <div>
+              <SearchBoxHeader style={{display: "block"}}></SearchBoxHeader>
+                <Container maxwidth="1g">
+                {//<div style={{top:"2.5rem",height:"2.5rem"}} /> {/* Add space between 'Books Reviewed' UI so that the search box won't cover up the total books reviewed div. */}
+                }
+                  <Typography variant="h4" align="center" style={{height:"2.5rem"}}>
+                  {BooksReviewedCount} Books Reviewed:
+                  Search Results book found: {json.length}
+                  </Typography> 
+                  <Button variant="contained" size="medium" onClick={NavigateToBookCreate}>Create a Review</Button>
+                  <Grid container spacing={5} style={{ marginTop: "20px"}}>
+                    {list} 
+                  </Grid>
+                </Container>
+              
+           </div> ) ;//added each book item to my "Material UI" library responsive grid code
+        //loading = false;
         setLoading(false);//hide spinner and rerender UI
-        setMyJSON(json);//rerender UI
-        console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
-        console.log("after setLoading, loading: "+loading);
+
+        // const rerender = () => forceUpdate({});
+        // var test = rerender;
+        console.log("getSearchList() UI; finishedList: "+finishedList);
+        //setMyJSON(json);//rerender UI
+        //console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
+        console.log("in getSearchList() after setLoading, loading: "+loading);
+    }
+    
+    function getList (json) {
+        list = []; //reset for the searchbox call.
+        // finishedList = null; //reset for the searchbox call.
+        //setMyJSON(json);
+        console.log("getList json: "+json);
+        console.log("getList json.length: "+json.length);
+        //console.log("myJSON.length: "+myJSON.length);
+        SearchJSON = json;
+        console.log("SearchJSON.length: "+SearchJSON.length);
+        BooksReviewedCount = json.length;
+        // json.sort((a,b) => { // Old sorting method
+        //     return b.modifiedDate.localeCompare(a.modifiedDate) // Sort Descending, try modifiedDate
+        // });  
+        json.sort((a,b) => {
+              return new Date(b.modifiedDate) - new Date(a.modifiedDate) // Sort Descending, try modifiedDate
+          });
+        for(let x=0; x<json.length; x++){//don't need because .map iterated through all of them
+          list.push(
+                <Grid item xs={12} sm={4} ms={4} key={json[x].id}>
+                  <BookItem key={json[x].id} bookJSON={json[x]} setUserBookItem={props.setUserBookItem}/>
+                </Grid>
+              );
+
+          //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
+          console.log("running BookItem loop, count: "+x);
+        }
+        finishedList =  ( 
+          <div>
+              <SearchBoxHeader style={{display: "block"}}></SearchBoxHeader>
+                <Container maxwidth="1g">
+                {//<div style={{top:"2.5rem",height:"2.5rem"}} /> {/* Add space between 'Books Reviewed' UI so that the search box won't cover up the total books reviewed div. */}
+                }
+                  
+                  <Typography variant="h4" align="center" style={{height:"2.5rem"}}>
+                  {BooksReviewedCount} Books Reviewed: 
+                  </Typography> 
+                  <Button variant="contained" size="medium" onClick={NavigateToBookCreate}>Create a Review</Button>
+                  <Grid container spacing={5} style={{ marginTop: "20px"}}>
+                    {list} 
+                  </Grid>
+                </Container>
+              
+           </div> ) ;//added each book item to my "Material UI" library responsive grid code
+        loading = false;
+        setLoading(false);//hide spinner and rerender UI
+        //setMyJSON(json);//rerender UI
+        //console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
+        console.log("in getList() after setLoading, loading: "+loading);
+    }
+    function SearchButtonListener(){
+       //alert("my alert.");
+      setLoading(true);//show spinner and rerender UI
+        //setMyJSON(json);//rerender UI
+        //console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
+        console.log("in buttonAction() after setLoading to true, loading: "+loading);
     }
       return (
         <>
             <BasicModal />   
+            
             {/* <div className='booklist-container'>  */}
             { (loading) ? <div style={{ background: "#fce305",position: "absolute", height:"100%", width: "100%"}}><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></div> 
           
             : 
-                (finishedList) 
+
+            (finishedList) 
             } 
             
             {/*  </div> */}

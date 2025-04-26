@@ -1,4 +1,8 @@
-- components that I need to test their http requests; (+)BookCreate, (+)BookList, (+)BookItem, (+)BookView, 
+
+-Options for updating react render; redux, button press, class component (force update function)
+
+(+)- npm install react-headroom
+(+)- components that I need to test their http requests; (+)BookCreate, (+)BookList, (+)(+)BookItem, (+)BookView, 
 (+)- pass props from bookcreate to modal component.
 (+)- test hiding the Material UI ratings element, then see what the html input element.
 - test if any of the StarOnChange values used in the function are null when using keyboard to control star ratings component.
@@ -6,7 +10,7 @@
 - need to print in console the 400 error of PUT request in BookCreate
 (+)- need to add loading and success/failure status for delete request to BookList.
 - BookCreate why do I have to hit the submit button twice to submit form request?
-(+)- round edges of all modals. 
+(+)- round edges of all modals.  
 (+)- need to refresh BookList
 (+)- check styles.css.
 - possibly change the star ratings component to this one; https://www.geeksforgeeks.org/how-to-create-a-rating-component-in-reactjs/
