@@ -10,7 +10,7 @@ import BasicModal from './BasicModal';
 import { useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookListUsingModal  } from '../librarySlice';
 import Headroom from 'react-headroom'; //import for; make the search bar sticky and show only when scroll up.
-
+//import { BsSearch } from "react-icons/bs";//react search icon
  
 var list = [];
 var finishedList = (<></>);
@@ -37,6 +37,7 @@ export function BookList (props) {
     useEffect(() => { // with the useEffect empty array at end will Code here will run just like componentDidMount so that fetch only loads once
       if (!renderAfterCalled.current) { //only fetch once
         console.log("hello world fetch");
+        DisableEnterKeyforSearchBar();//WORKS!
         ScrollToBeginningOfPage();
         list = [];//reset list to prevent doubles of everything being displayed in the list 
         fetch("https://xgmdaokmq4.execute-api.us-east-2.amazonaws.com/books?")
@@ -159,6 +160,18 @@ export function BookList (props) {
         //props.setUserBookItem(props.bookJSON);
         navigate("/BookCreate");
     }
+
+  function DisableEnterKeyforSearchBar(){
+    window.addEventListener('keydown',function(e) {
+      if (e.keyIdentifier=='U+000A' || e.keyIdentifier=='Enter' || e.keyCode==13) {
+          if (e.target.nodeName=='INPUT' && e.target.type=='search') {
+              e.preventDefault();
+
+              return false;
+          }
+      }
+  }, true);
+  }
   function SearchBoxSubmit(event) {
       event.preventDefault();//prevent refresh on submit.
       console.log("SearchValue.length: "+SearchValue.length+" , event.target.value.length: "+event.target.value.length);
@@ -181,11 +194,11 @@ export function BookList (props) {
       //var temp = JSON.parse(SearchJSON);
       //setSearchJSON(temp);//save parsed json  
       SearchJSON = GlobalJSON;//important, gets rid of bug when backspacing/deleting values in the search bar! reset sort for all cases including when the user deletes/backspaces the search value. 
-      foundObjects = SearchJSON.filter(item => item.title.includes(''+SearchValue) 
-                                                         || item.author.includes(''+SearchValue) 
-                                                         || item.rating.includes(''+SearchValue)
-                                                         || item.reviewer.includes(''+SearchValue)
-                                                         || item.summary.includes(''+SearchValue)); 
+      foundObjects = SearchJSON.filter(item => item.title.toLowerCase().includes(''+SearchValue.toLowerCase()) 
+                                                         || item.author.toLowerCase().includes(''+SearchValue.toLowerCase()) 
+                                                         || item.rating.toLowerCase().includes(''+SearchValue.toLowerCase())
+                                                         || item.reviewer.toLowerCase().includes(''+SearchValue.toLowerCase())
+                                                         || item.summary.toLowerCase().includes(''+SearchValue.toLowerCase())); //I used toLowerCase() to include uppercase and lowercase together non-sensitive.
       console.log("SearchBoxSubmit foundObjects; "+foundObjects);  
       forceUpdate();//WORKS! re-render UI 
       if( document.getElementById("search").value===""){//
@@ -209,8 +222,8 @@ export function BookList (props) {
               <div style={{height:"100%"}}>
                 <form className="my-form" onSubmit={SearchBoxSubmit} style={{height:" 100%" }}>
                     <center style={{height:" 100%"}}>
-                      <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label>
-                      <input className="search-box" onInput={SearchBoxSubmit} placeholder="Search Here" type="text" id="search" name="Search" style={{height:" 75%", width:"50%", borderRadius:"1rem"}}/>
+                      {/* <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label> */}
+                      <input className="search-box" onInput={SearchBoxSubmit} placeholder="Search Reviews" type="search" id="search" name="Search" style={{height:" 75%", width:"50%", borderRadius:"1rem"}}/>
                     </center>
                 </form>
               </div>
@@ -253,11 +266,12 @@ export function BookList (props) {
               <SearchBoxHeader style={{display: "block"}}></SearchBoxHeader>
                 <Container maxwidth="1g">
                 {//<div style={{top:"2.5rem",height:"2.5rem"}} /> {/* Add space between 'Books Reviewed' UI so that the search box won't cover up the total books reviewed div. */}
-                }
-                  <Typography variant="h4" align="center" style={{height:"2.2rem"}}>
-                    { ( document.getElementById("search").value==="") ? BooksReviewedCount+" Books Reviewed:" : "Search Results book(s) found:"+json.length }
-                  </Typography> 
-                  <Button variant="contained" size="medium" onClick={NavigateToBookCreate}>Create a Review</Button>
+                }<center>
+                      <Typography sx={{display: "block", align:"center"}} variant="h4"  style={{height:"2.2rem"}}>
+                        { ( document.getElementById("search").value==="") ? BooksReviewedCount+" Books Reviewed:" : "Search Results book(s) found:"+json.length }
+                      </Typography> 
+                 </center>
+                  <Button variant="contained" size="medium" sx={{display: "block"}} onClick={NavigateToBookCreate}>Create a Review</Button>
                   <Grid container spacing={5} style={{ marginTop: "20px"}}>
                     {list} 
                   </Grid>
@@ -324,13 +338,6 @@ export function BookList (props) {
         //setMyJSON(json);//rerender UI
         //console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
         console.log("in getList() after setLoading, loading: "+loading);
-    }
-    function SearchButtonListener(){
-       //alert("my alert.");
-      setLoading(true);//show spinner and rerender UI
-        //setMyJSON(json);//rerender UI
-        //console.log("after setMyJSON, myJSON.length: "+myJSON.length);//after setMyJSON
-        console.log("in buttonAction() after setLoading to true, loading: "+loading);
     }
       return (
         <>
