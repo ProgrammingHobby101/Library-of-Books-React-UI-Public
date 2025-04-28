@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState,useReducer } from 'react';
 import { BookItem } from './BookItem.js';
 import './BookList.css';
 import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px.svg';
@@ -16,15 +16,18 @@ var list = [];
 var finishedList = (<></>);
 var BooksReviewedCount = 0;
 var CreatedResponseStatusCode = 0;
-var SearchJSON = null;
+var SearchJSON = [];
+var GlobalJSON = [];
+var SearchValue = "";
+var foundObjects ; 
 //var loading = true;
 export function BookList (props) {
     var [loading, setLoading] = useState(true);//show spinner
     //const [myJSON, setMyJSON] = useState([]); //only used for test json
     //const [SearchJSON, setSearchJSON] = useState([{}]);//doesn't allow parsed json to be assigned to this useState variable.
 
-    
-    const [test, forceUpdate] = useState();
+    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);//WORKS! works better than useState, to re-render
+    // const [test, forceUpdate] = useState();
     //Material UI Modal and redux
     //const library = useSelector(state => state.library);
     const dispatch = useDispatch();
@@ -48,6 +51,8 @@ export function BookList (props) {
           if(CreatedResponseStatusCode === 200){ //tested works!
             //console.log("json.length or json string: "+json);
             SearchJSON = json;//save json for search json.
+            GlobalJSON = json; // save backup json for search json and the original JSON book reviews list.
+            BooksReviewedCount=json.length;
             getList(json);//create list of cards
             //IMPORTANT! No need to display success modal 
               /* Show success modal by using Redux*/ 
@@ -156,22 +161,38 @@ export function BookList (props) {
     }
   function SearchBoxSubmit(event) {
       event.preventDefault();//prevent refresh on submit.
-      var SearchValue = event.target.value;
+      console.log("SearchValue.length: "+SearchValue.length+" , event.target.value.length: "+event.target.value.length);
+      console.log("SearchValue: "+SearchValue+" , event.target.value: "+event.target.value);
+      console.log("SearchValue.length >= event.target.value.length: "+(SearchValue.length >= event.target.value.length));
+      // if(SearchValue.length < event.target.value.length  ){
+          SearchValue = event.target.value;
+          // console.log("Calling; SearchValue = event.target.value; ");
+      //  }else {
+        //console.log("Didn't Call; SearchValue = event.target.value; ");
+          /*do nothing and let the default SearchBoxSubmit do all the work.*/
+        // };
       console.log("SearchBoxSubmit(), event.target.value: "+event.target.value);
       setLoading(true);//show spinner and rerender UI
+
       // console.log("event.target.elements.Search.value: "+event.target.elements.Search.value+", JSON.stringify(event)"+JSON.stringify(event));
       // console.log("search submit function value; "+event.target.elements.Search.value);
       // var SearchValue = event.target.elements.Search.value;
       //console.log("SearchJSON: "+JSON.stringify(SearchJSON));//works!
       //var temp = JSON.parse(SearchJSON);
-      //setSearchJSON(temp);//save parsed json
-      var foundObjects = SearchJSON.filter(item => item.title.includes(''+SearchValue) 
+      //setSearchJSON(temp);//save parsed json  
+      SearchJSON = GlobalJSON;//important, gets rid of bug when backspacing/deleting values in the search bar! reset sort for all cases including when the user deletes/backspaces the search value. 
+      foundObjects = SearchJSON.filter(item => item.title.includes(''+SearchValue) 
                                                          || item.author.includes(''+SearchValue) 
                                                          || item.rating.includes(''+SearchValue)
                                                          || item.reviewer.includes(''+SearchValue)
                                                          || item.summary.includes(''+SearchValue)); 
       console.log("SearchBoxSubmit foundObjects; "+foundObjects);  
-      getSearchList(foundObjects,event);                                                       
+      forceUpdate();//WORKS! re-render UI 
+      if( document.getElementById("search").value===""){//
+        getList(GlobalJSON);//use the Global JSON that was saved in the componentDidMount request.
+      }else{
+        getSearchList(foundObjects);//getSearchList(foundObjects,event)
+      }                                                    
       //getList(foundObjects);
   }
   function SearchBoxHeader (){ //a reuseable function for showing the search box header
@@ -186,10 +207,10 @@ export function BookList (props) {
           // zIndex: 2147483647, /* WORKS! always shows search bar, Ensure it's above other content*/
           }}>
               <div style={{height:"100%"}}>
-                <form className="my-form" style={{height:" 100%" }}>
+                <form className="my-form" onSubmit={SearchBoxSubmit} style={{height:" 100%" }}>
                     <center style={{height:" 100%"}}>
                       <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label>
-                      <input className="search-box" onChange={SearchBoxSubmit} type="text" id="search" name="Search" style={{height:" 75%", width:"50%", borderRadius:"1rem"}}/>
+                      <input className="search-box" onInput={SearchBoxSubmit} placeholder="Search Here" type="text" id="search" name="Search" style={{height:" 75%", width:"50%", borderRadius:"1rem"}}/>
                     </center>
                 </form>
               </div>
@@ -203,13 +224,13 @@ export function BookList (props) {
         list = []; //reset for the searchbox call.
         finishedList = (<></>); //reset for the searchbox call.
         //setMyJSON(json);
-        console.log("getSearchList json: "+json);
-        console.log("getSearchList json.length: "+json.length);
-        console.log("json/foundObjects: "+json);
+        // console.log("getSearchList json: "+json);
+        // console.log("getSearchList json.length: "+json.length);
+        // console.log("json/foundObjects: "+json);
         //console.log("myJSON.length: "+myJSON.length);
         SearchJSON = json;
         console.log("SearchJSON.length: "+SearchJSON.length);
-        BooksReviewedCount = json.length;
+        //BooksReviewedCount = json.length;//don't use because it makes the overall count be the same the search bar count.
         // json.sort((a,b) => { // Old sorting method
         //     return b.modifiedDate.localeCompare(a.modifiedDate) // Sort Descending, try modifiedDate
         // });  
@@ -233,9 +254,8 @@ export function BookList (props) {
                 <Container maxwidth="1g">
                 {//<div style={{top:"2.5rem",height:"2.5rem"}} /> {/* Add space between 'Books Reviewed' UI so that the search box won't cover up the total books reviewed div. */}
                 }
-                  <Typography variant="h4" align="center" style={{height:"2.5rem"}}>
-                  {BooksReviewedCount} Books Reviewed:
-                  Search Results book found: {json.length}
+                  <Typography variant="h4" align="center" style={{height:"2.2rem"}}>
+                    { ( document.getElementById("search").value==="") ? BooksReviewedCount+" Books Reviewed:" : "Search Results book(s) found:"+json.length }
                   </Typography> 
                   <Button variant="contained" size="medium" onClick={NavigateToBookCreate}>Create a Review</Button>
                   <Grid container spacing={5} style={{ marginTop: "20px"}}>
@@ -244,9 +264,9 @@ export function BookList (props) {
                 </Container>
               
            </div> ) ;//added each book item to my "Material UI" library responsive grid code
-        //loading = false;
+        loading = false;
         setLoading(false);//hide spinner and rerender UI
-
+        forceUpdate();//WORKS! re-render UI 
         // const rerender = () => forceUpdate({});
         // var test = rerender;
         console.log("getSearchList() UI; finishedList: "+finishedList);
@@ -264,7 +284,7 @@ export function BookList (props) {
         //console.log("myJSON.length: "+myJSON.length);
         SearchJSON = json;
         console.log("SearchJSON.length: "+SearchJSON.length);
-        BooksReviewedCount = json.length;
+        //BooksReviewedCount = json.length;//don't use because it makes the overall count be the same the search bar count.
         // json.sort((a,b) => { // Old sorting method
         //     return b.modifiedDate.localeCompare(a.modifiedDate) // Sort Descending, try modifiedDate
         // });  
@@ -281,6 +301,7 @@ export function BookList (props) {
           //list.push(myJSON.map((bookJSON) => <BookItem bookJSON={bookJSON}/>));
           console.log("running BookItem loop, count: "+x);
         }
+        console.log("in getList(), and BooksReviewedCount: "+BooksReviewedCount);
         finishedList =  ( 
           <div>
               <SearchBoxHeader style={{display: "block"}}></SearchBoxHeader>

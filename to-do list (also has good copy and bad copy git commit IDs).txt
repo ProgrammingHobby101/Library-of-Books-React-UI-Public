@@ -1,5 +1,6 @@
 
--Options for updating react render; redux, button press, class component (force update function)
+-Options for updating react render; onInput, redux, button press(invoke click), class component (force update function)
+- where to put SearchJSON = GlobalJSON, to reset for the search engine not being able to find any matches for the searched query. 
 
 (+)- npm install react-headroom
 (+)- components that I need to test their http requests; (+)BookCreate, (+)BookList, (+)(+)BookItem, (+)BookView, 
