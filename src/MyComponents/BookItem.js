@@ -14,6 +14,7 @@ import CardMedia from '@mui/material/CardMedia';
 import BasicModal from './BasicModal';
 import { useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
+import { toHaveDisplayValue } from '@testing-library/jest-dom/matchers';
 
 
 var CreatedResponseStatusCode = 0;
@@ -146,9 +147,15 @@ export function BookItem (props){
                             </CardContent>
                         </CardActionArea>
                         <CardActions> 
-                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{ color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
-                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{}} onClick={NavigateToBookView}>Info</Button>
-                            <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{ color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
+                            <div style={{display: "block", width: "100%"}}>
+                                <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{width: "100%", color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+                            </div>
+                            <div style={{display: "block", width: "100%"}}>
+                                <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{width: "100%"}} onClick={NavigateToBookView}>Info</Button>
+                            </div>
+                            <div style={{display: "block", width: "100%"}}>
+                                <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{width: "100%", color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
+                            </div>
                         </CardActions>
                     </Card>
                 {/* ))} */}

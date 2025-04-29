@@ -54,4 +54,6 @@ need to print in console the 400 error of PUT request in BookCreate. Need to add
 - commit 4-2-2025; fixed BookView page's background to stretch full page. Tried out Material UI's delete button with dustbin icon, but it didn't work. Made BookCreate form fields responsive for different devices.
 
 - finished a working version of the search engine/bar working. other miscellaneous changes.
-- Added element type='search' to search bar input element, so that it will add a 'x' button for the user to clear the text in it. Disabled 'enter' key to get rid of error when submitting search engine text. Added code to make search engine text non-case-sensitive.  Added react-icons library to this project.
+- Added element type='search' to search bar input element, so that it will add a 'x' button for the user to clear the text in it. Disabled 'enter' key to get rid of error when submitting search engine text. Added code to make search engine text non-case-sensitive.   Added react-icons library to this project.
+
+-made search reviews search input field taller. Made "Create a review" button show under the search reviews display. 

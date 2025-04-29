@@ -223,7 +223,7 @@ export function BookList (props) {
                 <form className="my-form" onSubmit={SearchBoxSubmit} style={{height:" 100%" }}>
                     <center style={{height:" 100%"}}>
                       {/* <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label> */}
-                      <input className="search-box" onInput={SearchBoxSubmit} placeholder="Search Reviews" type="search" id="search" name="Search" style={{height:" 75%", width:"50%", borderRadius:"1rem"}}/>
+                      <input className="search-box" onInput={SearchBoxSubmit} placeholder="Search Reviews" type="search" id="search" name="Search" style={{height:"100%", width:"50%", borderRadius:"1rem"}}/>
                     </center>
                 </form>
               </div>
@@ -266,11 +266,12 @@ export function BookList (props) {
               <SearchBoxHeader style={{display: "block"}}></SearchBoxHeader>
                 <Container maxwidth="1g">
                 {//<div style={{top:"2.5rem",height:"2.5rem"}} /> {/* Add space between 'Books Reviewed' UI so that the search box won't cover up the total books reviewed div. */}
-                }<center>
-                      <Typography sx={{display: "block", align:"center"}} variant="h4"  style={{height:"2.2rem"}}>
-                        { ( document.getElementById("search").value==="") ? BooksReviewedCount+" Books Reviewed:" : "Search Results book(s) found:"+json.length }
+                }<center style={{display: "block"}}>
+                      <Typography sx={{display: "block", whiteSpace: 'pre-line', align:"center", height:"-2.2rem"}} variant="h4"  >{/*IMPORTANT! Need height:"-2.2rem" to be negative number in this 'Typography' for it to make the 'Create a Review' button to go to next line. */}
+                        { ( document.getElementById("search").value==="") ? BooksReviewedCount+" Books Reviewed:" : "Search Results books reviewed: "+json.length }
                       </Typography> 
                  </center>
+                 
                   <Button variant="contained" size="medium" sx={{display: "block"}} onClick={NavigateToBookCreate}>Create a Review</Button>
                   <Grid container spacing={5} style={{ marginTop: "20px"}}>
                     {list} 
