@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/Library-of-Books-React-UI-Public/static/css/main.de54711a.css",
-    "main.js": "/Library-of-Books-React-UI-Public/static/js/main.891200e7.js",
+    "main.js": "/Library-of-Books-React-UI-Public/static/js/main.29058fdd.js",
     "static/js/453.ed3810f9.chunk.js": "/Library-of-Books-React-UI-Public/static/js/453.ed3810f9.chunk.js",
     "static/media/default-book-thumbnail-bookstack.jpg": "/Library-of-Books-React-UI-Public/static/media/default-book-thumbnail-bookstack.570d4446422b55da0164.jpg",
     "static/media/Spinner@1x-1.0s-200px-200px-white.svg": "/Library-of-Books-React-UI-Public/static/media/Spinner@1x-1.0s-200px-200px-white.1a57ba54dae9f73c25cb845c35d154a3.svg",
     "index.html": "/Library-of-Books-React-UI-Public/index.html",
     "main.de54711a.css.map": "/Library-of-Books-React-UI-Public/static/css/main.de54711a.css.map",
-    "main.891200e7.js.map": "/Library-of-Books-React-UI-Public/static/js/main.891200e7.js.map",
+    "main.29058fdd.js.map": "/Library-of-Books-React-UI-Public/static/js/main.29058fdd.js.map",
     "453.ed3810f9.chunk.js.map": "/Library-of-Books-React-UI-Public/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.de54711a.css",
-    "static/js/main.891200e7.js"
+    "static/js/main.29058fdd.js"
   ]
 }
