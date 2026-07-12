@@ -216,25 +216,25 @@ export function BookList (props) {
           <header style={{height:"2.5rem", 
           // position: 'fixed', /* WORKS! always shows search bar.
           // top: 0, /* WORKS! always shows search bar.
-          // width: '100%', 
-          // display: "block",
+          width: '100%', 
+          display: "block",
           // zIndex: 2147483647, /* WORKS! always shows search bar, Ensure it's above other content*/
           }}>
-            <div  style={{height:" 100%", display: "flex", alignItems: "center"}}>
-                          <BsQuestionCircle style={{fontSize:"5rem", height:"100%", display: "flex", alignItems: "center"}} onClick={()=>{alert("showing help dialogue.")}}/>
+            <div  style={{height:"100%", display: "flex", alignItems: "center"}}>
+              <BsQuestionCircle style={{fontSize:"5rem", height:"100%", display: "flex", alignItems: "center"}} onClick={()=>{alert("showing help dialogue.")}}/>
                   
-              <div style={{height:"100%"}}>
+              <div style={{height:"100%", width: "100%", borderRadius: "1rem"}}>
                   
-                <form className="my-form" onSubmit={SearchBoxSubmit} style={{height:" 100%" }}>
+                <form className="my-form" onSubmit={SearchBoxSubmit} style={{height:" 100%", width: "100%" }}>
                
-                    <center style={{height:" 100%"}}>
+                    <center style={{height:"100%", width: "100%"}}>
                     
                       {/* <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label> */}
-                      <input className="search-box" onInput={SearchBoxSubmit} slotProps={{htmlInput: { minlength:"1", maxlength:"3000" } }} placeholder="Search Reviews" type="search" id="search" name="Search" style={{height:"100%", width:"50%",display: "flex",float:"center", borderRadius:"1rem"}}/>
+                      <input className="search-box" onInput={SearchBoxSubmit} slotprops={{htmlInput: { minlength:"1", maxlength:"3000" } }} placeholder="Search Reviews" type="search" id="search" name="Search" style={{height:"100%", width:"50%",display: "flex",float:"center", borderRadius:"1rem"}}/>
                       
                     </center>
                 </form>
-                </div>
+              </div>
 
               </div>
             </header>
@@ -273,7 +273,7 @@ export function BookList (props) {
         console.log("getSearhList finished list: "+list);
         finishedList =  ( 
           <div>
-              <SearchBoxHeader style={{display: "block"}}></SearchBoxHeader>
+              <SearchBoxHeader ></SearchBoxHeader>
                 <Container maxwidth="1g">
                 {//<div style={{top:"2.5rem",height:"2.5rem"}} /> {/* Add space between 'Books Reviewed' UI so that the search box won't cover up the total books reviewed div. */}
                 }<center style={{display: "block"}}>
