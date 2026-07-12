@@ -221,7 +221,7 @@ export function BookList (props) {
           // zIndex: 2147483647, /* WORKS! always shows search bar, Ensure it's above other content*/
           }}>
             <div  style={{height:"100%", display: "flex", alignItems: "center"}}>
-              <BsQuestionCircle style={{fontSize:"5rem", height:"100%", display: "flex", alignItems: "center"}} onClick={()=>{alert("showing help dialogue.")}}/>
+              <BsQuestionCircle style={{fontSize:"5rem", height:"100%", display: "flex", alignItems: "center"}} onClick={()=>{alert("Hit the \"Create A Review\" button to starting making book reviews")}}/>
                   
               <div style={{height:"100%", width: "100%", borderRadius: "1rem"}}>
                   
