@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState,useReducer } from 'react';
 import { BookItem } from './BookItem.js';
 import './BookList.css';
-import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px.svg';
+import Spinner from '../my_images/Spinner@1x-1.0s-200px-200px-white.svg';
 import { useNavigate } from 'react-router-dom';
 import {Grid, Typography, Button} from "@mui/material";//don't upgrade Grid to Grid2 because Grid2 looks bad.
 import Container from "@mui/material/Container";

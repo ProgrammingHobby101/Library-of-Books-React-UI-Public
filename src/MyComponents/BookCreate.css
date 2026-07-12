@@ -20,7 +20,7 @@
   @media screen and (max-height: 635px) { /*for form fields, Galaxy Z Fold 4 (it's small screen)*/
     .responsive-layout-for-height {
       position: relative;
-      background: #fce305; 
+      background: #ffffff; 
       width: 100%; 
       height: 100%;
     }
@@ -28,7 +28,7 @@
   @media screen and (min-height: 636px) {  /*for form fields, laptop and tablet*/
     .responsive-layout-for-height {
       position: absolute;
-      background: #fce305; 
+      background: #ffffff; 
       width: 100%; 
       height:100%;
     }

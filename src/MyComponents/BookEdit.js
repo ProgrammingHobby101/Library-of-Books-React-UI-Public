@@ -53,7 +53,7 @@ export function BookEdit (props){
           checkIfDataExistFromBookItem();//check if user used homepage to first select a book review, then if not then reroute to homepage.
           ScrollToBeginningOfPage();
           renderAfterCalled.current = true;//need this with useEffect this paired with useEffect will prevent useEffect from running twice in Dev mode.
-        }, [checkIfDataExistFromBookItem()]);
+        }, );
         
     function checkIfDataExistFromBookItem(){
             console.log("hello world title:"+props.UserBookItem.title);//test prints
