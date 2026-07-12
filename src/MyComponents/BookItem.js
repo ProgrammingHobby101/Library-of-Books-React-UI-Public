@@ -14,7 +14,6 @@ import CardMedia from '@mui/material/CardMedia';
 import BasicModal from './BasicModal';
 import { useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookItemUsingModal  } from '../librarySlice';
-import { toHaveDisplayValue } from '@testing-library/jest-dom/matchers';
 
 
 var CreatedResponseStatusCode = 0;
@@ -129,7 +128,7 @@ export function BookItem (props){
                     
                     <BasicModal />      
                     <Card id="booklistitem" sx={{maxwidth: 345}}> 
-                        <CardActionArea> 
+                        <CardActionArea onClick={NavigateToBookView}> {/*navigate to book review info page when card thumbnail or author/title are clicked.*/}
                             <CardMedia 
                               component="img" 
                               zindex="9999"

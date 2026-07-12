@@ -56,4 +56,9 @@ need to print in console the 400 error of PUT request in BookCreate. Need to add
 - finished a working version of the search engine/bar working. other miscellaneous changes.
 - Added element type='search' to search bar input element, so that it will add a 'x' button for the user to clear the text in it. Disabled 'enter' key to get rid of error when submitting search engine text. Added code to make search engine text non-case-sensitive.   Added react-icons library to this project.
 
--made search reviews search input field taller. Made "Create a review" button show under the search reviews display. 
+-made search reviews search input field taller. Made 'Create a review' button show under the search reviews display. tried to make the three buttons on the BookList page responsive with adding the container div's but it didn't work.
+
+- 5-2-2025 commit - got bookitem to thumbnail, author and title, to be clickable and now goes to the book info/view page. 
+
+- Matt; make review cards book picture be clickable action that takes. Add help button on homepage. make topics with multiple reviewers per topic and page. Later; let user upload picture of movie/book that they review. maybe use regular expressions to search.
+- Amanda; different font's. Now; movie trailers , drop-down for book or movie or "book and movie". 

@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import BasicModal from './BasicModal';
 import { useDispatch } from 'react-redux';
 import { setBasicModalTitle, setBasicModalDescription, setShowBasicModal, setBookListUsingModal  } from '../librarySlice';
+import { BsQuestionCircle } from "react-icons/bs";//question mark icon, and it was gotten by; https://react-icons.github.io/react-icons/icons/bs/
 import Headroom from 'react-headroom'; //import for; make the search bar sticky and show only when scroll up.
 //import { BsSearch } from "react-icons/bs";//react search icon
  
@@ -76,7 +77,7 @@ export function BookList (props) {
                  </Grid>
                </Container> ) ;//added each book item to my "Material UI" library responsive grid code
               
-              loading = false;
+              //loading = false;//use the useState function below here,instead of a regular variable assignment in this line.
               setLoading(false);//hide spinner and rerender UI
               /* Show error modal by using Redux*/ 
               console.log("CODE 1.1; 404 status code returned. Empty list of Book reviews.");
@@ -97,7 +98,7 @@ export function BookList (props) {
                  This website is running into errors, we apologize for the inconvience. Please re-visit our homepage later...
               </Typography> 
              </Container> ) ;
-          loading = false;
+          // loading = false;//use the useState function below here,instead of a regular variable assignment in this line.
           setLoading(false);//hide spinner and rerender UI
           /* Show error modal by using Redux*/ 
           dispatch(setBasicModalTitle("Error"));
@@ -111,7 +112,7 @@ export function BookList (props) {
         });
       }//else do nothing
       renderAfterCalled.current = true;
-     }, []);
+     }, ); //deleted dependency array
     // var myJSON = {};
     // var myJSONtest = [{
     //   "summary": "myTest",
@@ -161,10 +162,10 @@ export function BookList (props) {
         navigate("/BookCreate");
     }
 
-  function DisableEnterKeyforSearchBar(){
+  function DisableEnterKeyforSearchBar(){//got this from stackoverflow and I think I put this in bookmarks.
     window.addEventListener('keydown',function(e) {
-      if (e.keyIdentifier=='U+000A' || e.keyIdentifier=='Enter' || e.keyCode==13) {
-          if (e.target.nodeName=='INPUT' && e.target.type=='search') {
+      if (e.keyIdentifier==='U+000A' || e.keyIdentifier==='Enter' || e.keyCode===13) {
+          if (e.target.nodeName==='INPUT' && e.target.type==='search') {
               e.preventDefault();
 
               return false;
@@ -219,13 +220,22 @@ export function BookList (props) {
           // display: "block",
           // zIndex: 2147483647, /* WORKS! always shows search bar, Ensure it's above other content*/
           }}>
+            <div  style={{height:" 100%", display: "flex", alignItems: "center"}}>
+                          <BsQuestionCircle style={{fontSize:"5rem", height:"100%", display: "flex", alignItems: "center"}} onClick={()=>{alert("showing help dialogue.")}}/>
+                  
               <div style={{height:"100%"}}>
+                  
                 <form className="my-form" onSubmit={SearchBoxSubmit} style={{height:" 100%" }}>
+               
                     <center style={{height:" 100%"}}>
+                    
                       {/* <label htmlFor="search" style={{fontSize:"1.5rem"}}>Search: </label> */}
-                      <input className="search-box" onInput={SearchBoxSubmit} placeholder="Search Reviews" type="search" id="search" name="Search" style={{height:"100%", width:"50%", borderRadius:"1rem"}}/>
+                      <input className="search-box" onInput={SearchBoxSubmit} slotProps={{htmlInput: { minlength:"1", maxlength:"3000" } }} placeholder="Search Reviews" type="search" id="search" name="Search" style={{height:"100%", width:"50%",display: "flex",float:"center", borderRadius:"1rem"}}/>
+                      
                     </center>
                 </form>
+                </div>
+
               </div>
             </header>
       </Headroom>);
@@ -342,10 +352,11 @@ export function BookList (props) {
     }
       return (
         <>
+        {ignored<0 ? <></> : <></>}{/* gets rid of ignored' is assigned a value but never used, WARNING */}
             <BasicModal />   
             
             {/* <div className='booklist-container'>  */}
-            { (loading) ? <div style={{ background: "#fce305",position: "absolute", height:"100%", width: "100%"}}><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></div> 
+            { (loading) ? <div style={{ background: "#ffffff",position: "absolute", height:"100%", width: "100%"}}><center>Loading...<p></p><img src={Spinner} style={{height: "50%"}} alt="loading spinner..." /></center></div> 
           
             : 
 
