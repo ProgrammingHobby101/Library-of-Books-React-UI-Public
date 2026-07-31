@@ -49,6 +49,35 @@ export function BookItem (props){
         props.setUserBookItem(props.bookJSON);//pass to BookEdit page
         navigate("/BookEdit");
     }
+    function LimitTileDisplay(){
+        if(props.bookJSON.title.length<55){
+            return props.bookJSON.title//normal title
+        }
+        else{
+            const original = props.bookJSON.title//"Hello World";
+            const index = 55; // Replace everything after index 5
+            const replacement = "...";
+
+            const result = original.slice(0, index + 1) + replacement; 
+            console.log(result); // Output: "Hello Everyone!"
+            return result //parsed title
+        }
+        
+    }
+    function LimitAuthorDisplay(){
+        if(props.bookJSON.author.length<25){
+            return props.bookJSON.author//normal title
+        }
+        else{
+            const original = props.bookJSON.author//"Hello World";
+            const index = 25; // Replace everything after index 5
+            const replacement = "...";
+
+            const result = original.slice(0, index + 1) + replacement; 
+            console.log(result); // Output: "Hello Everyone!"
+            return result //parsed title
+        }
+    }
     //const increment = () => { setMyTest(mytest+1); console.log("mytest: "+mytest); }//test
     function DeleteBook () {
         setShowSpinner(true);//show spinner
@@ -138,10 +167,10 @@ export function BookItem (props){
                             />
                             <CardContent> 
                                 <Typography gutterBottom variant="h5" component="div">
-                                    {props.bookJSON.title} 
+                                    {LimitTileDisplay()} 
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary"> 
-                                    {props.bookJSON.author}
+                                    {LimitAuthorDisplay()}
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
