@@ -49,7 +49,7 @@ export function BookItem (props){
         props.setUserBookItem(props.bookJSON);//pass to BookEdit page
         navigate("/BookEdit");
     }
-    function LimitTileDisplay(){
+    function LimitTileDisplay(){//limit Title length display
         if(props.bookJSON.title.length<55){
             return props.bookJSON.title//normal title
         }
@@ -64,7 +64,7 @@ export function BookItem (props){
         }
         
     }
-    function LimitAuthorDisplay(){
+    function LimitAuthorDisplay(){//limit Author length display
         if(props.bookJSON.author.length<25){
             return props.bookJSON.author//normal title
         }
