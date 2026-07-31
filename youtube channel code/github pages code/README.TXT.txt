@@ -15,3 +15,7 @@ DESCRIPTION:   this tutorial is from YouTube channel #Code Commerce, need to swi
 - can't download video into repository.
 LINK:   https://www.youtube.com/watch?v=hrwl5jVcfXc
 DESCRIPTION:   (WORKS! simple replace "BrowserRouter' with "HashRouter" without touching anything else and deploy your application @inderpalsingh3387, video solution didn't work) 
+
+"nothing new between this commit and last commit, just testing the Gitlab TLS security. Need to fix the edit page so that the selected stars is saved on screen even after the edit has been saved. Also I need to Need to work on UI responsiveness for BookList items because it covers up Edit button when small screens."
+
+Fixed the edit page so that the selected stars is saved on screen even after the edit has been saved. Also I need to Need to work on UI responsiveness for BookList items because it covers up Edit button when small screens.

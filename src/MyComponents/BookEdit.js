@@ -165,7 +165,7 @@ export function BookEdit (props){
                     TitleFieldRef.current.value = null;
                     AuthorFieldRef.current.value = null;
                     StarRatingComponent.current.value = 0;
-                    setRating(0);
+                    //setRating(0);//this allows the changes made in the user's edit stay on screen after the save, because the other fields in the edit page are still on page too. 
                     ReviewerFieldRef.current.value = null;
                     SummaryFieldRef.current.value = null;
                     /* Show success modal by using Redux*/ 
