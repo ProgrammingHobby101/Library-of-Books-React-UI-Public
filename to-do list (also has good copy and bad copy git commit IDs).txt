@@ -1,3 +1,8 @@
+to deploy to GitHub Pages
+-----------------------------
+- npm run deploy    #from package.json; "deploy": "gh-pages -d build"
+
+
 
 -Options for updating react render; onInput, redux, button press(invoke click), class component (force update function)
 - where to put SearchJSON = GlobalJSON, to reset for the search engine not being able to find any matches for the searched query. 
