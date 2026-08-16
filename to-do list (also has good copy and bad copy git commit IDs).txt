@@ -3,6 +3,21 @@ to deploy to GitHub Pages
 - npm run deploy    #from package.json; "deploy": "gh-pages -d build"
 
 
+Good Ideals for adding features
+-----------------------------------
+- Allow people to add reviews for Books, Movies, and Shows.
+- Allow people to have a account so people don't delete your review post.
+
+Responsive UI
+-------------------
+.responsive-layout-for-container-for-buttons-BookItem{
+        flex:"1";
+       flex-Direction:"column";
+        width: "100%";
+      }
+
+
+
 
 -Options for updating react render; onInput, redux, button press(invoke click), class component (force update function)
 - where to put SearchJSON = GlobalJSON, to reset for the search engine not being able to find any matches for the searched query. 

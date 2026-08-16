@@ -28,6 +28,26 @@
         min-width: "15rem";
         width: 100%;
       }
+       .responsive-layout-for-container-for-buttons-BookItem{
+          flex:1; 
+          flex-direction: column; 
+          
+       }
+      .responsive-layout-for-buttons-BookItem
+      {
+        width: 100%;
+      }
+    }
+    @media screen and (min-width: 781px) {/*for form fields, Galaxy Z Fold 4 (it's small screen)*/
+      #booklistitem{
+        min-width: "15rem";
+        width: 100%;
+      }
+       .responsive-layout-for-container-for-buttons-BookItem{
+          flex:1; 
+          flex-direction: row; 
+          
+       }
       .responsive-layout-for-buttons-BookItem
       {
         width: 100%;

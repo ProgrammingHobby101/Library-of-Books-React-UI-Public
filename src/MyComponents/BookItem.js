@@ -175,14 +175,16 @@ export function BookItem (props){
                             </CardContent>
                         </CardActionArea>
                         <CardActions> 
-                            <div style={{display: "block", width: "100%"}}>
-                                <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{width: "100%", color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
-                            </div>
-                            <div style={{display: "block", width: "100%"}}>
-                                <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{width: "100%"}} onClick={NavigateToBookView}>Info</Button>
-                            </div>
-                            <div style={{display: "block", width: "100%"}}>
-                                <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{width: "100%", color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
+                            <div className="responsive-layout-for-container-for-buttons-BookItem">
+                                <div style={{display: "block", width: "100%"}}>
+                                    <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{width: "100%", color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+                                </div>
+                                <div style={{display: "block", width: "100%"}}>
+                                    <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{width: "100%"}} onClick={NavigateToBookView}>Info</Button>
+                                </div>
+                                <div style={{display: "block", width: "100%"}}>
+                                    <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{width: "100%", color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
+                                </div>
                             </div>
                         </CardActions>
                     </Card>
