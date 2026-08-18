@@ -234,7 +234,7 @@ export function BookList (props) {
                     </center>
                 </form>
               </div>
-              <BsQuestionCircle style={{fontSize:"5rem", height:"100%", display: "flex", alignItems: "center"}} onClick={()=>{alert("Hit the \"Create A Review\" button to starting making book reviews. This app is made by Nicholas Donald.")}}/>
+              <BsQuestionCircle style={{fontSize:"5rem", height:"100%", display: "flex", alignItems: "center"}} onClick={()=>{alert("Hit the \"Create A Review\" button to start making book reviews. This app is made by Nicholas Donald.")}}/>
 
               </div>
             </header>
