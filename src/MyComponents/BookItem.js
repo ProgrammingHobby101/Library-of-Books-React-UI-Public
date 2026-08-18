@@ -176,14 +176,14 @@ export function BookItem (props){
                         </CardActionArea>
                         <CardActions> 
                             <div className="responsive-layout-for-container-for-buttons-BookItem">
-                                <div style={{display: "block", width: "100%"}}>
-                                    <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="small" style={{width: "100%", color: "ffffff !important", backgroundColor: "#db2828"}} onClick={DeleteBook}> Delete </Button>
+                                <div style={{ flex: "1"}}> {/*match flex: "1" with the 'flex' setting on the button and do this for all the buttons} */}
+                                    <Button variant="contained" size="small" style={{flex: "1", width: '100%', color: "ffffff !important", backgroundColor: "#db2828"}} className=".responsive-layout-for-buttons-BookItem" onClick={DeleteBook}> Delete </Button>
                                 </div>
-                                <div style={{display: "block", width: "100%"}}>
-                                    <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{width: "100%"}} onClick={NavigateToBookView}>Info</Button>
+                                <div style={{ flex: "1"}}>
+                                    <Button variant="contained" size="medium" style={{flex: "1", width: '100%'}} onClick={NavigateToBookView}>Info</Button>
                                 </div>
-                                <div style={{display: "block", width: "100%"}}>
-                                    <Button variant="contained" className="responsive-layout-for-buttons-BookItem" size="medium" style={{width: "100%", color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
+                                <div style={{ flex: "1"}}>
+                                    <Button variant="contained" size="medium" style={{ flex: "1", width: '100%', color: "ffffff", backgroundColor:"rgb(255, 181, 45)"}} onClick={NavigateToBookEdit}>Edit</Button>
                                 </div>
                             </div>
                         </CardActions>

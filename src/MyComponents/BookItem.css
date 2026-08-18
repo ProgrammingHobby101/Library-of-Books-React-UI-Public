@@ -23,30 +23,44 @@
     color: "black";
      font-size: "0.5rem"; 
     }
-    @media screen and (max-width: 600px) {/*for form fields, Galaxy Z Fold 4 (it's small screen)*/
-      #booklistitem{
+    @media screen and (max-width: 800px) {/*stack vertically from 800px to 600px*/
+      /* #booklistitem{
         min-width: "15rem";
         width: 100%;
-      }
+      } */
        .responsive-layout-for-container-for-buttons-BookItem{
-          display: 'flex';  /* better layout than using "flex: 1," */
-          flex-Direction: row;
+          display: flex;/* better layout than using "flex: 1," */
+          flex-direction: column;
           width: 100%;
-          
        }
-      .responsive-layout-for-buttons-BookItem
+      /* .responsive-layout-for-buttons-BookItem
       {
         width: 100%;
-      }
+      } */
     }
-    @media screen and (min-width: 601px) {/*for form fields, Galaxy Z Fold 4 (it's small screen)*/
-      #booklistitem{
-        min-width: "15rem";
+    @media screen and (max-width: 600px) {/* stack horizontally from 0px and up to 600px. */
+      /* #booklistitem{
+         min-width: "15rem";
         width: 100%;
-      }
+      } */
        .responsive-layout-for-container-for-buttons-BookItem{
-          display: 'flex';  /* better layout than using "flex: 1," */
-          flex-Direction: row; 
+          display: flex;/* better layout than using "flex: 1," */
+          flex-direction: row;
+          width: 100%;
+       }
+      /* .responsive-layout-for-buttons-BookItem
+      {
+        width: 100%;
+      } */
+    }
+    @media screen and (min-width: 801px) {/* stack horizontally from 801px and up to infinite. */
+      /* #booklistitem{
+         min-width: "15rem";
+        width: 100%;
+      } */
+       .responsive-layout-for-container-for-buttons-BookItem{
+          display: flex;/* better layout than using "flex: 1," */
+          flex-direction: row;
           width: 100%;
        }
       /* .responsive-layout-for-buttons-BookItem
